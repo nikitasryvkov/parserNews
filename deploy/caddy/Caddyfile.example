@@ -1,0 +1,17 @@
+# Скопируйте в /etc/caddy/Caddyfile (или подключите через import).
+# Замените parser.drivebro.ru на свой домен, если другой.
+
+parser.drivebro.ru {
+	encode gzip zstd
+
+	# Прокси на приложение (Docker слушает только localhost:3000)
+	reverse_proxy 127.0.0.1:3000 {
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Forwarded-Host {host}
+	}
+
+	# Опционально (Caddy 2.10+): лимит тела запроса для больших загрузок Excel
+	# request_body {
+	# 	max_size 50MB
+	# }
+}
