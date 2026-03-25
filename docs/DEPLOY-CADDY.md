@@ -18,6 +18,8 @@
 10. [Резервное копирование](#10-резервное-копирование)
 11. [Устранение неполадок](#11-устранение-неполадок)
 
+Подробно про **фоновый запуск, автозапуск после перезагрузки, PM2 и systemd** — см. **[RUN-AUTONOMOUS.md](./RUN-AUTONOMOUS.md)**.
+
 ---
 
 ## 1. Что понадобится
@@ -29,6 +31,8 @@
 - На сервере: **Docker Engine** + **Docker Compose plugin** (v2).
 
 Стек приложения: **Node.js** (внутри образа), **PostgreSQL**, **Redis**, **BullMQ**, статика и API.
+
+**Версия Node.js:** проект рассчитан на **Node.js 20.18.1+** (см. `engines` в `package.json`). Запуск без Docker на **Node 18** не поддерживается: зависимость **cheerio** использует **undici 7**, которому нужен глобальный `File` (есть в Node 20+). Обновите Node через [NodeSource](https://github.com/nodesource/distributions), [nvm](https://github.com/nvm-sh/nvm) или пакеты дистрибутива.
 
 ---
 
@@ -330,6 +334,7 @@ docker compose up -d
 | **Нет HTTPS / ошибка сертификата** | DNS `parser.drivebro.ru` → IP сервера; порты 80/443 не блокируются; firewall. |
 | **База не подключается** | Совпадение `DB_PASSWORD` и `POSTGRES_PASSWORD`; сервис `postgres` в статусе `running`. |
 | **Очередь не работает** | Redis: `docker compose logs redis`; переменные `REDIS_HOST=redis` внутри сети Compose. |
+| **`ReferenceError: File is not defined`** (undici) | Установлен **Node.js 18** или ниже. Нужен **Node 20.18.1+**: `node -v`, затем обновление Node (nvm / NodeSource / пакет ОС). |
 
 ---
 
