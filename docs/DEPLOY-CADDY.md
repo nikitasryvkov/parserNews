@@ -334,6 +334,7 @@ docker compose up -d
 | **Нет HTTPS / ошибка сертификата** | DNS `parser.drivebro.ru` → IP сервера; порты 80/443 не блокируются; firewall. |
 | **База не подключается** | Совпадение `DB_PASSWORD` и `POSTGRES_PASSWORD`; сервис `postgres` в статусе `running`. |
 | **Очередь не работает** | Redis: `docker compose logs redis`; переменные `REDIS_HOST=redis` внутри сети Compose. |
+| **`database "parser_news" does not exist`** | Том PostgreSQL создан **раньше**, чем в `docker-compose` появился `POSTGRES_DB`, или БД не создалась. Создайте вручную: `docker compose exec postgres psql -U postgres -c "CREATE DATABASE parser_news;"` (пароль из `DB_PASSWORD`). Либо **с нуля** (удалит данные БД): `docker compose down -v` и снова `up -d`. |
 | **`ReferenceError: File is not defined`** (undici) | Установлен **Node.js 18** или ниже. Нужен **Node 20.18.1+**: `node -v`, затем обновление Node (nvm / NodeSource / пакет ОС). |
 
 ---
