@@ -46,7 +46,8 @@ export function createApp(): express.Express {
 export async function startApi(): Promise<void> {
   const app = createApp();
   const { port } = getConfig();
-  app.listen(port, () => {
-    log.info({ port }, 'API listening');
+  const host = process.env.LISTEN_HOST ?? '0.0.0.0';
+  app.listen(port, host, () => {
+    log.info({ port, host }, 'API listening');
   });
 }

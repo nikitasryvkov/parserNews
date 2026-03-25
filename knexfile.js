@@ -1,4 +1,6 @@
-/** Knex config for migrations. Uses process.env. */
+/** Knex config for migrations. Uses process.env; подхватывает `.env` в корне проекта. */
+import 'dotenv/config';
+
 export default {
   client: 'pg',
   connection: {

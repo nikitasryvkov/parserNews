@@ -267,6 +267,63 @@ docker compose logs app
 
 ## 11. Устранение неполадок
 
+### «Страница недоступна» / не открывается в браузере
+
+Выполните на **сервере по SSH** по порядку:
+
+1. **Статус Docker и приложения**
+
+   ```bash
+   cd /opt/parser-news   # или ваш каталог
+   docker compose ps
+   docker compose logs --tail=80 app
+   ```
+
+   У контейнера `app` должно быть `Up`. В логах — строка `API listening` (и без ошибок после неё).
+
+2. **Ответ приложения на localhost (без Caddy)**
+
+   ```bash
+   curl -sS -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3000/
+   curl -sS http://127.0.0.1:3000/api/health
+   ```
+
+   Если здесь **ошибка соединения** — приложение не слушает порт 3000 (контейнер перезапускается или не запустился). Смотрите логи: `docker compose logs app`. Убедитесь, что есть файл **`cp .env.example .env`** и задан **`DB_PASSWORD`**.
+
+3. **Caddy**
+
+   ```bash
+   sudo systemctl status caddy
+   sudo caddy validate --config /etc/caddy/Caddyfile
+   journalctl -u caddy -n 40 --no-pager
+   ```
+
+   В `Caddyfile` в `reverse_proxy` должен быть **`127.0.0.1:3000`** (как в пробросе порта в `docker-compose`).
+
+4. **DNS**
+
+   С вашего ПК: `ping parser.drivebro.ru` — IP должен совпадать с публичным IP VPS.
+
+5. **Firewall на сервере**
+
+   ```bash
+   sudo ufw status
+   ```
+
+   Должны быть разрешены **80/tcp** и **443/tcp** (и **22** для SSH).
+
+6. **Типичный ответ Caddy**
+
+   - **502 Bad Gateway** — Caddy не достучался до `127.0.0.1:3000`: приложение не запущено или не слушает порт (см. п. 1–2).
+   - **Таймаут / «не удаётся подключиться»** — чаще DNS, firewall или Caddy не запущен.
+
+После обновления образа приложения пересоберите и перезапустите:
+
+```bash
+docker compose build --no-cache app
+docker compose up -d
+```
+
 | Симптом | Что проверить |
 |--------|----------------|
 | **502 Bad Gateway** | `docker compose ps`, логи `app`: `docker compose logs app`. Убедитесь, что `curl http://127.0.0.1:3000/api/health` отвечает. |
