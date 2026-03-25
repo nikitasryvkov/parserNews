@@ -335,6 +335,7 @@ docker compose up -d
 | **База не подключается** | Совпадение `DB_PASSWORD` и `POSTGRES_PASSWORD`; сервис `postgres` в статусе `running`. |
 | **Очередь не работает** | Redis: `docker compose logs redis`; переменные `REDIS_HOST=redis` внутри сети Compose. |
 | **`database "parser_news" does not exist`** | Том PostgreSQL создан **раньше**, чем в `docker-compose` появился `POSTGRES_DB`, или БД не создалась. Создайте вручную: `docker compose exec postgres psql -U postgres -c "CREATE DATABASE parser_news;"` (пароль из `DB_PASSWORD`). Либо **с нуля** (удалит данные БД): `docker compose down -v` и снова `up -d`. |
+| **`Connection ended unexpectedly`**, затем снова `database does not exist` | База **не удаляется сама** по времени. Сначала рвётся TCP (рестарт контейнера Postgres/Redis, OOM, перезагрузка VPS, `docker compose` пересоздал сеть). Дальше приложение подключается к **экземпляру Postgres, где нет `parser_news`** — чаще всего **новый том** или **другой проект** Compose. Проверьте: `docker compose logs postgres`, `docker volume ls`, не запускали ли `down -v` / `volume prune`. В образе есть `docker/entrypoint.sh`, создающий БД при старте `app`. |
 | **`ReferenceError: File is not defined`** (undici) | Установлен **Node.js 18** или ниже. Нужен **Node 20.18.1+**: `node -v`, затем обновление Node (nvm / NodeSource / пакет ОС). |
 
 ---

@@ -87,12 +87,16 @@ export function getKnexConfig(): Knex.Config {
       database: db.name,
       user: db.user,
       password: db.password,
+      // Меньше «тихих» обрывов при долгом простое NAT / Docker-сети
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10_000,
     },
     pool: {
       min: 1,
       max: parseInt(process.env.DB_POOL_MAX ?? '10', 10),
       acquireTimeoutMillis: 30_000,
-      idleTimeoutMillis: 10_000,
+      // Слишком короткий idle усиливает churn соединений; 30s — разумный компромисс
+      idleTimeoutMillis: parseInt(process.env.DB_POOL_IDLE_MS ?? '30000', 10),
     },
     migrations: {
       directory: './migrations',
