@@ -20,9 +20,11 @@ async function updateHealth() {
     const h = await api.fetchHealth();
     const dot = ind.querySelector('.health-dot');
     const txt = ind.querySelector('.health-text');
+    state.authRequired = Boolean(h.authRequired);
     const ok = h.status === 'ok';
     dot.className = `health-dot ${ok ? 'ok' : 'error'}`;
     txt.textContent = ok ? 'Системы в норме' : `Деградация: ${Object.entries(h.checks).filter(([,v]) => v !== 'ok').map(([k]) => k).join(', ')}`;
+    renderAuthState();
   } catch {
     ind.querySelector('.health-dot').className = 'health-dot error';
     ind.querySelector('.health-text').textContent = 'Нет соединения';
@@ -52,7 +54,24 @@ const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
 const state = {
   articles: { page: 1, search: '', totalPages: 1, limit: 20 },
   companies: { page: 1, search: '', totalPages: 1, limit: 20, pool: 'medtech' },
+  authRequired: false,
 };
+
+function renderAuthState() {
+  const statusEl = $('#auth-status');
+  const clearBtn = document.querySelector('[data-action="auth-clear-key"]');
+  const hasKey = api.hasApiKey();
+
+  if (statusEl) {
+    if (state.authRequired) {
+      statusEl.textContent = hasKey ? 'API key сохранен' : 'Сервер требует API key';
+    } else {
+      statusEl.textContent = hasKey ? 'API key сохранен' : 'API key не задан';
+    }
+  }
+
+  if (clearBtn) clearBtn.disabled = !hasKey;
+}
 
 function pageSizeSelectHtml(prefix, currentLimit) {
   const opts = PAGE_SIZE_OPTIONS.map(
@@ -76,7 +95,12 @@ function navigate() {
 }
 
 window.addEventListener('hashchange', navigate);
-window.addEventListener('DOMContentLoaded', () => { navigate(); updateHealth(); setInterval(updateHealth, 30_000); });
+window.addEventListener('DOMContentLoaded', () => {
+  renderAuthState();
+  navigate();
+  updateHealth();
+  setInterval(updateHealth, 30_000);
+});
 
 /* ───── helpers ───── */
 function loading() { return '<div class="loading"><div class="spinner"></div>Загрузка...</div>'; }
@@ -106,6 +130,17 @@ function esc(s) {
   const d = document.createElement('div');
   d.textContent = s;
   return d.innerHTML;
+}
+
+function downloadBlob(blob, fileName) {
+  const objectUrl = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = objectUrl;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
 }
 
 function dynamicsClass(val) {
@@ -275,7 +310,7 @@ async function loadVpoHistory() {
         <div class="vpo-history-item-meta">${fmtDateTime(h.createdAt)} · строк данных: ${h.rowCount} · исходных файлов: ${h.sourceFiles?.length ?? 0}</div>
         <div class="vpo-history-item-files">${esc((h.sourceFiles || []).join(', '))}</div>
         <div class="vpo-history-item-actions">
-          <a class="btn btn-primary btn-sm" href="${api.vpoHistoryDownloadUrl(h.id)}" download>Скачать .xlsx</a>
+          <button type="button" class="btn btn-primary btn-sm" data-action="vpo-history-download" data-id="${h.id}">Скачать .xlsx</button>
           <button class="btn-icon" data-action="vpo-history-delete" data-id="${h.id}" title="Удалить">&times;</button>
         </div>
       </div>`,
@@ -304,7 +339,7 @@ function renderVpo() {
           <div class="card-label">Загрузка файлов</div>
           <p class="ria-settings-hint">Листы <code>Р2_1_2(1)</code>–<code>(4)</code> (кириллическая <strong>Р</strong> или латинская <strong>P</strong>). Отбор направлений по первому столбцу. В результате — один файл <strong>Свод</strong>: для каждой таблицы (листа) Excel отдельный блок под своими заголовками; значения из разных листов не объединяются в одну строку. Несколько загруженных файлов идут в одном .xlsx подряд, каждый со своим именем и блоками.</p>
           <div class="vpo-upload-row">
-            <input type="file" id="vpo-files" multiple accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="search-input vpo-file-input">
+            <input type="file" id="vpo-files" multiple accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="search-input vpo-file-input">
             <button type="button" class="btn btn-primary btn-sm" data-action="vpo-upload">Загрузить и обработать</button>
           </div>
           <p class="settings-page-status" id="vpo-upload-status"></p>
@@ -579,8 +614,35 @@ document.addEventListener('click', async (e) => {
   if (!btn) return;
   const action = btn.dataset.action;
 
+  if (action === 'auth-set-key') {
+    const current = api.getApiKey();
+    const nextValue = window.prompt('Введите API key для доступа к /api', current);
+    if (nextValue === null) return;
+    api.setApiKey(nextValue);
+    renderAuthState();
+    await updateHealth();
+    navigate();
+  }
+
+  if (action === 'auth-clear-key') {
+    api.clearApiKey();
+    renderAuthState();
+    await updateHealth();
+    navigate();
+  }
+
   if (action === 'vpo-history-refresh') {
     loadVpoHistory();
+  }
+
+  if (action === 'vpo-history-download') {
+    const id = btn.dataset.id;
+    btn.disabled = true;
+    try {
+      const { blob, fileName } = await api.downloadVpoHistoryFile(id);
+      downloadBlob(blob, fileName);
+    } catch (err) { toast(err.message, 'error'); }
+    finally { btn.disabled = false; }
   }
 
   if (action === 'vpo-history-delete') {

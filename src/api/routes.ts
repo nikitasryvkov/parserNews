@@ -87,6 +87,7 @@ router.get('/health', asyncHandler(async (_req, res) => {
   res.status(healthy ? 200 : 503).json({
     status: healthy ? 'ok' : 'degraded',
     timestamp: new Date().toISOString(),
+    authRequired: Boolean(process.env.API_KEY?.trim()),
     checks,
   });
 }));
@@ -100,19 +101,19 @@ const PARSER_DEFAULT_URLS: Record<string, string> = {
   edtechs: 'https://edtechs.ru/',
 };
 
-function validateParseRequest(parserName: unknown, url: unknown): string | null {
+async function validateParseRequest(parserName: unknown, url: unknown): Promise<string | null> {
   if (!parserName || typeof parserName !== 'string') return 'parserName is required';
   if (!PARSER_NAME_RE.test(parserName)) return 'parserName contains invalid characters';
   if (url !== undefined && url !== null && url !== '') {
     if (typeof url !== 'string') return 'url must be a string';
-    if (!isSafeUrl(url)) return 'url is not allowed (blocked by security policy)';
+    if (!(await isSafeUrl(url))) return 'url is not allowed (blocked by security policy)';
   }
   return null;
 }
 
 router.post('/parse', asyncHandler(async (req, res) => {
   const { parserName, url } = req.body;
-  const validationError = validateParseRequest(parserName, url);
+  const validationError = await validateParseRequest(parserName, url);
   if (validationError) { res.status(400).json({ error: validationError }); return; }
   const targetUrl = url || PARSER_DEFAULT_URLS[parserName];
   if (!targetUrl) { res.status(400).json({ error: `No default URL for parser "${parserName}". Pass "url" in body.` }); return; }
@@ -124,7 +125,7 @@ router.post('/parse', asyncHandler(async (req, res) => {
 router.post('/parse/:parserName', asyncHandler(async (req, res) => {
   const parserName = req.params.parserName;
   const url = req.body?.url;
-  const validationError = validateParseRequest(parserName, url);
+  const validationError = await validateParseRequest(parserName, url);
   if (validationError) { res.status(400).json({ error: validationError }); return; }
   const targetUrl = url || PARSER_DEFAULT_URLS[parserName];
   if (!targetUrl) { res.status(400).json({ error: `No default URL for parser "${parserName}". Pass "url" in body.` }); return; }
@@ -154,18 +155,19 @@ function vpoUploadMiddleware(req: Request, res: Response, next: NextFunction): v
         cb(null, safe);
       },
     }),
-    limits: { fileSize: 45 * 1024 * 1024, files: 25 },
+    limits: { fileSize: 15 * 1024 * 1024, files: 20 },
     fileFilter: (_req, file, cb) => {
       const name = file.originalname.toLowerCase();
       const ok =
-        file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-        file.mimetype === 'application/vnd.ms-excel' ||
-        file.mimetype === 'application/octet-stream' ||
-        name.endsWith('.xlsx') ||
-        name.endsWith('.xls');
+        name.endsWith('.xlsx') &&
+        (
+          file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+          file.mimetype === 'application/octet-stream' ||
+          file.mimetype === 'application/zip'
+        );
       cb(null, ok);
     },
-  }).array('files', 25);
+  }).array('files', 20);
 
   upload(req, res, (err: unknown) => {
     if (err) {

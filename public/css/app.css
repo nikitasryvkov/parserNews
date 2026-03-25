@@ -79,6 +79,29 @@ a:hover { text-decoration: underline; }
 }
 .health-dot.ok { background: #34d399; box-shadow: 0 0 6px rgba(52,211,153,.5); }
 .health-dot.error { background: var(--danger); box-shadow: 0 0 6px rgba(220,38,38,.4); }
+.auth-panel {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.auth-status {
+  color: var(--text-sidebar);
+  line-height: 1.4;
+}
+.auth-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.auth-btn {
+  background: rgba(255,255,255,.06);
+  color: #fff;
+  border-color: rgba(255,255,255,.1);
+}
+.auth-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,.12);
+}
 
 /* ──────── content ──────── */
 .content {

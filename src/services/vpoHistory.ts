@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto';
 import { getDb } from '../db/index.js';
 import { createChildLogger } from '../lib/logger.js';
 import type { VpoParserOutput } from '../types/vpo.js';
-import { vpoOutputToXlsxBuffer } from './vpoWorkbook.js';
+import { buildVpoWorkbookBufferInSandbox } from './vpoSandbox.js';
 
 const log = createChildLogger('vpoHistory');
 
@@ -34,7 +34,7 @@ export async function persistVpoHistory(output: VpoParserOutput, sourceFileNames
   );
 
   try {
-    const buf = vpoOutputToXlsxBuffer(output);
+    const buf = await buildVpoWorkbookBufferInSandbox(output);
     await writeFile(absPath, buf);
   } catch (err) {
     log.error({ err }, 'Failed to write vpo history xlsx');

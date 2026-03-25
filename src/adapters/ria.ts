@@ -14,14 +14,20 @@ interface RiaItem {
   tags: string[];
 }
 
-function buildDateFromTime(timeStr: string): string | undefined {
-  if (!timeStr || !timeStr.trim()) return undefined;
-  const match = timeStr.match(/(\d{1,2}):(\d{2})/);
-  if (!match) return undefined;
-  const now = new Date();
-  const [, hours, minutes] = match;
-  now.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
-  return now.toISOString();
+const RIA_SOURCE_TZ_OFFSET = '+03:00';
+
+function buildPublishedAt(item: RiaItem): string | undefined {
+  const dateMatch = item.link.match(/ria\.ru\/(\d{4})(\d{2})(\d{2})\//);
+  if (!dateMatch) return undefined;
+
+  const [, year, month, day] = dateMatch;
+  const timeMatch = item.time.match(/(\d{1,2}):(\d{2})/);
+  const hours = (timeMatch?.[1] ?? '00').padStart(2, '0');
+  const minutes = timeMatch?.[2] ?? '00';
+  const parsed = new Date(`${year}-${month}-${day}T${hours}:${minutes}:00${RIA_SOURCE_TZ_OFFSET}`);
+
+  if (Number.isNaN(parsed.getTime())) return undefined;
+  return parsed.toISOString();
 }
 
 const riaAdapter: AdapterFn = (rawData: RawParserOutput, _format: string) => {
@@ -45,7 +51,7 @@ const riaAdapter: AdapterFn = (rawData: RawParserOutput, _format: string) => {
       sourceUrl: item.link,
       source: 'РИА Новости',
       category: item.category || undefined,
-      publishedAt: buildDateFromTime(item.time) ?? undefined,
+      publishedAt: buildPublishedAt(item),
     })),
   };
 };

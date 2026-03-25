@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
+import { timingSafeEqual } from 'crypto';
 import { createChildLogger } from '../lib/logger.js';
 
 const log = createChildLogger('auth');
@@ -9,7 +10,12 @@ const log = createChildLogger('auth');
  * If API_KEY is not configured, auth is disabled (open access) — useful for local dev.
  */
 export function authMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const apiKey = process.env.API_KEY;
+  const apiKey = process.env.API_KEY?.trim();
+
+  if (req.method === 'GET' && req.path === '/health') {
+    next();
+    return;
+  }
 
   if (!apiKey) {
     next();
@@ -23,8 +29,14 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction):
     return;
   }
 
-  const token = header.slice(7);
-  if (token !== apiKey) {
+  const token = header.slice(7).trim();
+  const expected = Buffer.from(apiKey);
+  const actual = Buffer.from(token);
+  const valid =
+    actual.length === expected.length &&
+    timingSafeEqual(actual, expected);
+
+  if (!valid) {
     log.warn({ ip: req.ip, path: req.path }, 'Invalid API key');
     res.status(403).json({ error: 'Invalid API key' });
     return;

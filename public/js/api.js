@@ -1,17 +1,82 @@
 const BASE = '/api';
+const API_KEY_STORAGE_KEY = 'parserNews.apiKey';
+
+function getStoredApiKey() {
+  return localStorage.getItem(API_KEY_STORAGE_KEY)?.trim() || '';
+}
+
+function buildHeaders(extraHeaders = {}, includeJson = true) {
+  const headers = new Headers();
+  if (includeJson) headers.set('Content-Type', 'application/json');
+
+  const apiKey = getStoredApiKey();
+  if (apiKey) headers.set('Authorization', `Bearer ${apiKey}`);
+
+  Object.entries(extraHeaders).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) headers.set(key, value);
+  });
+
+  return headers;
+}
+
+async function readResponsePayload(res) {
+  const text = await res.text();
+  if (!text) return {};
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { error: text };
+  }
+}
+
+function authError(res, data) {
+  const err = new Error(data.error || 'Требуется API key. Нажмите "API key" в боковой панели.');
+  err.code = res.status === 403 ? 'AUTH_FORBIDDEN' : 'AUTH_REQUIRED';
+  err.status = res.status;
+  return err;
+}
 
 async function request(path, options = {}) {
+  const headers = buildHeaders(options.headers, options.body === undefined || !(options.body instanceof FormData));
   const res = await fetch(`${BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
     ...options,
+    headers,
   });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  const data = await readResponsePayload(res);
+  if (!res.ok) {
+    if (res.status === 401 || res.status === 403) throw authError(res, data);
+    throw new Error(data.error || `HTTP ${res.status}`);
+  }
   return data;
 }
 
-export function fetchHealth() {
-  return fetch(`${BASE}/health`).then((r) => r.json());
+export function getApiKey() {
+  return getStoredApiKey();
+}
+
+export function hasApiKey() {
+  return Boolean(getStoredApiKey());
+}
+
+export function setApiKey(value) {
+  const trimmed = String(value ?? '').trim();
+  if (!trimmed) {
+    localStorage.removeItem(API_KEY_STORAGE_KEY);
+    return;
+  }
+  localStorage.setItem(API_KEY_STORAGE_KEY, trimmed);
+}
+
+export function clearApiKey() {
+  localStorage.removeItem(API_KEY_STORAGE_KEY);
+}
+
+export async function fetchHealth() {
+  const res = await fetch(`${BASE}/health`, {
+    headers: buildHeaders({}, false),
+  });
+  return readResponsePayload(res);
 }
 
 export function fetchArticles(page = 1, limit = 20, search = '') {
@@ -20,7 +85,6 @@ export function fetchArticles(page = 1, limit = 20, search = '') {
   return request(`/articles?${params}`);
 }
 
-/** @param {'medtech'|'edtech'} pool */
 export function fetchCompanies(page = 1, limit = 20, search = '', pool = 'medtech') {
   const params = new URLSearchParams({ page: String(page), limit: String(limit) });
   if (search) params.set('search', search);
@@ -48,13 +112,11 @@ export function deleteArticle(id) {
   return request(`/articles/${id}`, { method: 'DELETE' });
 }
 
-/** @param {'medtech'|'edtech'} pool */
 export function deleteAllCompanies(pool = 'medtech') {
   const path = pool === 'edtech' ? '/companies/edtech' : '/companies';
   return request(path, { method: 'DELETE' });
 }
 
-/** @param {'medtech'|'edtech'} pool */
 export function deleteCompany(id, pool = 'medtech') {
   const path = pool === 'edtech' ? `/companies/edtech/${id}` : `/companies/${id}`;
   return request(path, { method: 'DELETE' });
@@ -95,9 +157,16 @@ export function patchRiaSettings(updates) {
 export async function uploadVpoSvod(fileList) {
   const fd = new FormData();
   for (let i = 0; i < fileList.length; i += 1) fd.append('files', fileList.item(i));
-  const res = await fetch(`${BASE}/upload/vpo-svod`, { method: 'POST', body: fd });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  const res = await fetch(`${BASE}/upload/vpo-svod`, {
+    method: 'POST',
+    body: fd,
+    headers: buildHeaders({}, false),
+  });
+  const data = await readResponsePayload(res);
+  if (!res.ok) {
+    if (res.status === 401 || res.status === 403) throw authError(res, data);
+    throw new Error(data.error || `HTTP ${res.status}`);
+  }
   return data;
 }
 
@@ -105,8 +174,23 @@ export function fetchVpoHistory() {
   return request('/vpo/history');
 }
 
-export function vpoHistoryDownloadUrl(id) {
-  return `${BASE}/vpo/history/${encodeURIComponent(id)}/file`;
+export async function downloadVpoHistoryFile(id) {
+  const res = await fetch(`${BASE}/vpo/history/${encodeURIComponent(id)}/file`, {
+    headers: buildHeaders({}, false),
+  });
+  if (!res.ok) {
+    const data = await readResponsePayload(res);
+    if (res.status === 401 || res.status === 403) throw authError(res, data);
+    throw new Error(data.error || `HTTP ${res.status}`);
+  }
+
+  const blob = await res.blob();
+  const contentDisposition = res.headers.get('content-disposition') || '';
+  const fileNameMatch = contentDisposition.match(/filename="?([^"]+)"?/i);
+  return {
+    blob,
+    fileName: fileNameMatch?.[1] || `vpo-${id}.xlsx`,
+  };
 }
 
 export function deleteVpoHistoryEntry(id) {

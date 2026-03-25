@@ -3,9 +3,16 @@ import { isSafeUrl } from './validateUrl.js';
 import { createChildLogger } from './logger.js';
 
 const log = createChildLogger('puppeteer');
+const DEFAULT_NAVIGATION_TIMEOUT_MS = 45_000;
 
 let _browser: Browser | null = null;
 let _launching: Promise<Browser> | null = null;
+
+function parseNavigationTimeout(raw: string | undefined): number {
+  const value = Number.parseInt(String(raw ?? ''), 10);
+  if (!Number.isFinite(value)) return DEFAULT_NAVIGATION_TIMEOUT_MS;
+  return Math.min(120_000, Math.max(5_000, value));
+}
 
 async function getBrowser(): Promise<Browser> {
   if (_browser?.connected) return _browser;
@@ -34,7 +41,7 @@ export type PuppeteerFetchOptions = {
 };
 
 export async function fetchWithPuppeteer(url: string, options?: PuppeteerFetchOptions): Promise<string> {
-  if (!isSafeUrl(url)) {
+  if (!(await isSafeUrl(url))) {
     log.warn({ url }, 'URL blocked by SSRF check in puppeteer');
     return '';
   }
@@ -48,7 +55,7 @@ export async function fetchWithPuppeteer(url: string, options?: PuppeteerFetchOp
     );
     const response = await page.goto(url, {
       waitUntil: 'domcontentloaded',
-      timeout: 90_000,
+      timeout: parseNavigationTimeout(process.env.PUPPETEER_NAVIGATION_TIMEOUT_MS),
     });
     if (!response?.ok()) return '';
     const ms = options?.settleMs ?? 0;
