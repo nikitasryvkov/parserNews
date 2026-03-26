@@ -14,7 +14,7 @@ import { asyncHandler } from './asyncHandler.js';
 import { getAllTags, addTag, updateTag, addManyTags, deleteTag, deleteAllTags, resetToDefaults, type TagMode } from '../services/tags.js';
 import { getRiaParserOptions, updateRiaParserOptions } from '../services/parserSettings.js';
 import { listVpoHistory, resolveVpoHistoryFilePath, deleteVpoHistoryEntry, deleteAllVpoHistory } from '../services/vpoHistory.js';
-import { listManagedUsers, replaceUserAppRoles } from '../auth/admin.js';
+import { KeycloakAdminError, listManagedUsers, replaceUserAppRoles } from '../auth/admin.js';
 import { getAllAppRoles, getPublicAuthConfig, requirePermissions } from './auth.js';
 import { isAppRole, type AppRole } from '../auth/rbac.js';
 
@@ -118,7 +118,17 @@ router.get('/auth/me', asyncHandler(async (req, res) => {
 
 router.get('/auth/users', requirePermissions('access.users.view'), asyncHandler(async (req, res) => {
   const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);
-  const result = await listManagedUsers(search, offset, limit);
+
+  let result;
+  try {
+    result = await listManagedUsers(search, offset, limit);
+  } catch (error) {
+    if (error instanceof KeycloakAdminError) {
+      res.status(error.statusCode).json({ error: error.message });
+      return;
+    }
+    throw error;
+  }
 
   res.json({
     ok: true,
@@ -160,7 +170,17 @@ router.put('/auth/users/:id/roles', requirePermissions('access.roles.manage'), a
     return;
   }
 
-  const user = await replaceUserAppRoles(userId, nextRoles as AppRole[]);
+  let user;
+  try {
+    user = await replaceUserAppRoles(userId, nextRoles as AppRole[]);
+  } catch (error) {
+    if (error instanceof KeycloakAdminError) {
+      res.status(error.statusCode).json({ error: error.message });
+      return;
+    }
+    throw error;
+  }
+
   res.json({ ok: true, user });
 }));
 

@@ -6,6 +6,16 @@ import type { RoleManagedUser } from './types.js';
 
 const log = createChildLogger('auth:keycloak-admin');
 
+export class KeycloakAdminError extends Error {
+  statusCode: number;
+
+  constructor(message: string, statusCode = 502) {
+    super(message);
+    this.name = 'KeycloakAdminError';
+    this.statusCode = statusCode;
+  }
+}
+
 interface CachedAdminToken {
   accessToken: string;
   expiresAt: number;
@@ -67,7 +77,15 @@ async function requestAdminAccessToken(): Promise<string> {
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`Failed to get Keycloak admin token: ${response.status} ${text}`);
+    log.error({ status: response.status, text }, 'Failed to get Keycloak admin token');
+
+    if (response.status === 400 || response.status === 401 || response.status === 403) {
+      throw new KeycloakAdminError(
+        'Не удалось получить сервисный токен Keycloak. Проверьте parser-news-admin client id/secret и включённый Client authentication.',
+      );
+    }
+
+    throw new KeycloakAdminError(`Keycloak не выдал сервисный токен Admin API: HTTP ${response.status}`);
   }
 
   const payload = await response.json() as { access_token: string; expires_in: number };
@@ -94,7 +112,21 @@ async function keycloakAdminRequest<T>(path: string, init: RequestInit = {}): Pr
   if (!response.ok) {
     const text = await response.text();
     log.error({ path, status: response.status, text }, 'Keycloak admin API request failed');
-    throw new Error(`Keycloak admin API error: HTTP ${response.status}`);
+
+    if (response.status === 401) {
+      throw new KeycloakAdminError(
+        'Keycloak отверг сервисный токен Admin API. Проверьте client secret у parser-news-admin.',
+      );
+    }
+
+    if (response.status === 403) {
+      throw new KeycloakAdminError(
+        'У service account клиента parser-news-admin нет прав на Keycloak Admin API. Выдайте realm-management -> realm-admin.',
+        403,
+      );
+    }
+
+    throw new KeycloakAdminError(`Keycloak Admin API вернул ошибку HTTP ${response.status}`);
   }
 
   if (response.status === 204) {
