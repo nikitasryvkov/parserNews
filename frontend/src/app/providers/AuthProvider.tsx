@@ -42,6 +42,20 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+function normalizeStringArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
+}
+
+function normalizeAuthUser(user: AuthUser): AuthUser {
+  return {
+    ...user,
+    realmRoles: normalizeStringArray(user.realmRoles),
+    clientRoles: normalizeStringArray(user.clientRoles),
+    appRoles: normalizeStringArray(user.appRoles) as AppRole[],
+    permissions: normalizeStringArray(user.permissions) as AppPermission[],
+  };
+}
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const { pushToast } = useToast();
   const [status, setStatus] = useState<AuthStatus>('loading');
@@ -78,14 +92,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function hydrateCurrentUser(fallbackErrorMessage: string): Promise<AuthUser | null> {
     const response = await fetchCurrentUser();
+    const normalizedUser = normalizeAuthUser(response.user);
 
     if (!isMountedRef.current) {
-      return response.user;
+      return normalizedUser;
     }
 
-    setUser(response.user);
+    setUser(normalizedUser);
     setError('');
-    return response.user;
+    return normalizedUser;
   }
 
   async function initializeApiKeySession(nextConfig: AuthConfigResponse): Promise<void> {

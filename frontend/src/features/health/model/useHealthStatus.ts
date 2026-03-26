@@ -18,13 +18,50 @@ const INITIAL_HEALTH_STATE: HealthState = {
   error: '',
 };
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function normalizeChecks(value: unknown): Record<string, string> {
+  if (!isRecord(value)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(value)
+      .filter((entry): entry is [string, string] => typeof entry[0] === 'string' && typeof entry[1] === 'string'),
+  );
+}
+
+function normalizeHealthResponse(value: unknown): HealthResponse {
+  if (!isRecord(value)) {
+    throw new Error('Не удалось получить health status');
+  }
+
+  if (typeof value.error === 'string' && value.error.trim()) {
+    throw new Error(value.error);
+  }
+
+  if (typeof value.status !== 'string') {
+    throw new Error('Сервер вернул некорректный health status');
+  }
+
+  return {
+    status: value.status,
+    timestamp: typeof value.timestamp === 'string' ? value.timestamp : '',
+    authRequired: Boolean(value.authRequired),
+    authProvider: typeof value.authProvider === 'string' ? value.authProvider : undefined,
+    checks: normalizeChecks(value.checks),
+  };
+}
+
 export function useHealthStatus(reloadKey: number) {
   const [health, setHealth] = useState<HealthState>(INITIAL_HEALTH_STATE);
 
   usePollingEffect(
     async () => {
       try {
-        const response = await fetchHealth();
+        const response = normalizeHealthResponse(await fetchHealth());
         setHealth({
           ...response,
           loading: false,

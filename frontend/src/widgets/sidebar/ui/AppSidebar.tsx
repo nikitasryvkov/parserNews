@@ -47,7 +47,7 @@ function getHealthText(health: HealthState): string {
   if (health.error) return 'Нет соединения';
   if (health.status === 'ok') return 'Системы в норме';
 
-  const degradedChecks = Object.entries(health.checks)
+  const degradedChecks = Object.entries(health.checks ?? {})
     .filter(([, value]) => value !== 'ok')
     .map(([key]) => key);
 
@@ -60,6 +60,7 @@ function getProviderLabel(provider: string | null): string {
 
 export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
   const auth = useAuth();
+  const userAppRoles = auth.user?.appRoles ?? [];
   const healthDotClassName = !health.loading
     ? health.error || health.status !== 'ok'
       ? 'health-dot error'
@@ -116,9 +117,9 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
             {getProviderLabel(auth.provider)} · {authStatusText}
           </div>
           {auth.error ? <div className="auth-error-text">{auth.error}</div> : null}
-          {auth.user?.appRoles.length ? (
+          {userAppRoles.length ? (
             <div className="role-badges">
-              {auth.user.appRoles.map((role) => (
+              {userAppRoles.map((role) => (
                 <span key={role} className="badge badge-info">
                   {role}
                 </span>

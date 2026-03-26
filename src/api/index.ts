@@ -9,6 +9,7 @@ import { createChildLogger } from '../lib/logger.js';
 import type { Request, Response, NextFunction } from 'express';
 
 const log = createChildLogger('api');
+const PUBLIC_RATE_LIMIT_EXCLUDE = new Set(['/api/health', '/api/auth/config']);
 
 function resolveTrustProxySetting(raw: string | undefined): boolean | number | string {
   const normalized = raw?.trim().toLowerCase() ?? '';
@@ -43,17 +44,19 @@ export function createApp(): express.Express {
 
   app.use(express.json({ limit: '2mb' }));
 
+  app.use(express.static(join(process.cwd(), 'public')));
+
   app.use(
+    '/api',
     rateLimit({
       windowMs: 60_000,
-      max: 60,
+      max: 120,
       standardHeaders: true,
       legacyHeaders: false,
+      skip: (req) => PUBLIC_RATE_LIMIT_EXCLUDE.has(req.originalUrl),
       message: { error: 'Too many requests, please try again later' },
     }),
   );
-
-  app.use(express.static(join(process.cwd(), 'public')));
 
   app.use('/api', authMiddleware, routes);
 

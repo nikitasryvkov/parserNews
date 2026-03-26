@@ -344,26 +344,26 @@ var require_react_production = __commonJS({
     };
     var assign = Object.assign;
     var emptyObject = {};
-    function Component4(props, context, updater) {
+    function Component5(props, context, updater) {
       this.props = props;
       this.context = context;
       this.refs = emptyObject;
       this.updater = updater || ReactNoopUpdateQueue;
     }
-    Component4.prototype.isReactComponent = {};
-    Component4.prototype.setState = function(partialState, callback) {
+    Component5.prototype.isReactComponent = {};
+    Component5.prototype.setState = function(partialState, callback) {
       if ("object" !== typeof partialState && "function" !== typeof partialState && null != partialState)
         throw Error(
           "takes an object of state variables to update or a function which returns an object of state variables."
         );
       this.updater.enqueueSetState(this, partialState, callback, "setState");
     };
-    Component4.prototype.forceUpdate = function(callback) {
+    Component5.prototype.forceUpdate = function(callback) {
       this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
     };
     function ComponentDummy() {
     }
-    ComponentDummy.prototype = Component4.prototype;
+    ComponentDummy.prototype = Component5.prototype;
     function PureComponent(props, context, updater) {
       this.props = props;
       this.context = context;
@@ -372,7 +372,7 @@ var require_react_production = __commonJS({
     }
     var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
     pureComponentPrototype.constructor = PureComponent;
-    assign(pureComponentPrototype, Component4.prototype);
+    assign(pureComponentPrototype, Component5.prototype);
     pureComponentPrototype.isPureReactComponent = true;
     var isArrayImpl = Array.isArray;
     function noop() {
@@ -577,7 +577,7 @@ var require_react_production = __commonJS({
     };
     exports.Activity = REACT_ACTIVITY_TYPE;
     exports.Children = Children2;
-    exports.Component = Component4;
+    exports.Component = Component5;
     exports.Fragment = REACT_FRAGMENT_TYPE;
     exports.Profiler = REACT_PROFILER_TYPE;
     exports.PureComponent = PureComponent;
@@ -2777,9 +2777,9 @@ var require_react_dom_client_production = __commonJS({
     function createFiberImplClass(tag, pendingProps, key, mode) {
       return new FiberNode(tag, pendingProps, key, mode);
     }
-    function shouldConstruct(Component4) {
-      Component4 = Component4.prototype;
-      return !(!Component4 || !Component4.isReactComponent);
+    function shouldConstruct(Component5) {
+      Component5 = Component5.prototype;
+      return !(!Component5 || !Component5.isReactComponent);
     }
     function createWorkInProgress(current, pendingProps) {
       var workInProgress2 = current.alternate;
@@ -4149,7 +4149,7 @@ var require_react_dom_client_production = __commonJS({
         if (!objectIs(nextDeps[i], prevDeps[i])) return false;
       return true;
     }
-    function renderWithHooks(current, workInProgress2, Component4, props, secondArg, nextRenderLanes) {
+    function renderWithHooks(current, workInProgress2, Component5, props, secondArg, nextRenderLanes) {
       renderLanes = nextRenderLanes;
       currentlyRenderingFiber = workInProgress2;
       workInProgress2.memoizedState = null;
@@ -4157,11 +4157,11 @@ var require_react_dom_client_production = __commonJS({
       workInProgress2.lanes = 0;
       ReactSharedInternals.H = null === current || null === current.memoizedState ? HooksDispatcherOnMount : HooksDispatcherOnUpdate;
       shouldDoubleInvokeUserFnsInHooksDEV = false;
-      nextRenderLanes = Component4(props, secondArg);
+      nextRenderLanes = Component5(props, secondArg);
       shouldDoubleInvokeUserFnsInHooksDEV = false;
       didScheduleRenderPhaseUpdateDuringThisPass && (nextRenderLanes = renderWithHooksAgain(
         workInProgress2,
-        Component4,
+        Component5,
         props,
         secondArg
       ));
@@ -4179,7 +4179,7 @@ var require_react_dom_client_production = __commonJS({
       if (didRenderTooFewHooks) throw Error(formatProdErrorMessage(300));
       null === current || didReceiveUpdate || (current = current.dependencies, null !== current && checkIfContextChanged(current) && (didReceiveUpdate = true));
     }
-    function renderWithHooksAgain(workInProgress2, Component4, props, secondArg) {
+    function renderWithHooksAgain(workInProgress2, Component5, props, secondArg) {
       currentlyRenderingFiber = workInProgress2;
       var numberOfReRenders = 0;
       do {
@@ -4197,7 +4197,7 @@ var require_react_dom_client_production = __commonJS({
           null != children.memoCache && (children.memoCache.index = 0);
         }
         ReactSharedInternals.H = HooksDispatcherOnRerender;
-        children = Component4(props, secondArg);
+        children = Component5(props, secondArg);
       } while (didScheduleRenderPhaseUpdateDuringThisPass);
       return children;
     }
@@ -5398,17 +5398,17 @@ var require_react_dom_client_production = __commonJS({
       "function" === typeof instance.UNSAFE_componentWillReceiveProps && instance.UNSAFE_componentWillReceiveProps(newProps, nextContext);
       instance.state !== workInProgress2 && classComponentUpdater.enqueueReplaceState(instance, instance.state, null);
     }
-    function resolveClassComponentProps(Component4, baseProps) {
+    function resolveClassComponentProps(Component5, baseProps) {
       var newProps = baseProps;
       if ("ref" in baseProps) {
         newProps = {};
         for (var propName in baseProps)
           "ref" !== propName && (newProps[propName] = baseProps[propName]);
       }
-      if (Component4 = Component4.defaultProps) {
+      if (Component5 = Component5.defaultProps) {
         newProps === baseProps && (newProps = assign({}, newProps));
-        for (var propName$73 in Component4)
-          void 0 === newProps[propName$73] && (newProps[propName$73] = Component4[propName$73]);
+        for (var propName$73 in Component5)
+          void 0 === newProps[propName$73] && (newProps[propName$73] = Component5[propName$73]);
       }
       return newProps;
     }
@@ -5552,8 +5552,8 @@ var require_react_dom_client_production = __commonJS({
         renderLanes2
       );
     }
-    function updateForwardRef(current, workInProgress2, Component4, nextProps, renderLanes2) {
-      Component4 = Component4.render;
+    function updateForwardRef(current, workInProgress2, Component5, nextProps, renderLanes2) {
+      Component5 = Component5.render;
       var ref = workInProgress2.ref;
       if ("ref" in nextProps) {
         var propsWithoutRef = {};
@@ -5564,7 +5564,7 @@ var require_react_dom_client_production = __commonJS({
       nextProps = renderWithHooks(
         current,
         workInProgress2,
-        Component4,
+        Component5,
         propsWithoutRef,
         ref,
         renderLanes2
@@ -5577,10 +5577,10 @@ var require_react_dom_client_production = __commonJS({
       reconcileChildren(current, workInProgress2, nextProps, renderLanes2);
       return workInProgress2.child;
     }
-    function updateMemoComponent(current, workInProgress2, Component4, nextProps, renderLanes2) {
+    function updateMemoComponent(current, workInProgress2, Component5, nextProps, renderLanes2) {
       if (null === current) {
-        var type = Component4.type;
-        if ("function" === typeof type && !shouldConstruct(type) && void 0 === type.defaultProps && null === Component4.compare)
+        var type = Component5.type;
+        if ("function" === typeof type && !shouldConstruct(type) && void 0 === type.defaultProps && null === Component5.compare)
           return workInProgress2.tag = 15, workInProgress2.type = type, updateSimpleMemoComponent(
             current,
             workInProgress2,
@@ -5589,7 +5589,7 @@ var require_react_dom_client_production = __commonJS({
             renderLanes2
           );
         current = createFiberFromTypeAndProps(
-          Component4.type,
+          Component5.type,
           null,
           nextProps,
           workInProgress2,
@@ -5603,9 +5603,9 @@ var require_react_dom_client_production = __commonJS({
       type = current.child;
       if (!checkScheduledUpdateOrContext(current, renderLanes2)) {
         var prevProps = type.memoizedProps;
-        Component4 = Component4.compare;
-        Component4 = null !== Component4 ? Component4 : shallowEqual;
-        if (Component4(prevProps, nextProps) && current.ref === workInProgress2.ref)
+        Component5 = Component5.compare;
+        Component5 = null !== Component5 ? Component5 : shallowEqual;
+        if (Component5(prevProps, nextProps) && current.ref === workInProgress2.ref)
           return bailoutOnAlreadyFinishedWork(current, workInProgress2, renderLanes2);
       }
       workInProgress2.flags |= 1;
@@ -5614,7 +5614,7 @@ var require_react_dom_client_production = __commonJS({
       current.return = workInProgress2;
       return workInProgress2.child = current;
     }
-    function updateSimpleMemoComponent(current, workInProgress2, Component4, nextProps, renderLanes2) {
+    function updateSimpleMemoComponent(current, workInProgress2, Component5, nextProps, renderLanes2) {
       if (null !== current) {
         var prevProps = current.memoizedProps;
         if (shallowEqual(prevProps, nextProps) && current.ref === workInProgress2.ref)
@@ -5626,7 +5626,7 @@ var require_react_dom_client_production = __commonJS({
       return updateFunctionComponent(
         current,
         workInProgress2,
-        Component4,
+        Component5,
         nextProps,
         renderLanes2
       );
@@ -5786,12 +5786,12 @@ var require_react_dom_client_production = __commonJS({
           workInProgress2.flags |= 4194816;
       }
     }
-    function updateFunctionComponent(current, workInProgress2, Component4, nextProps, renderLanes2) {
+    function updateFunctionComponent(current, workInProgress2, Component5, nextProps, renderLanes2) {
       prepareToReadContext(workInProgress2);
-      Component4 = renderWithHooks(
+      Component5 = renderWithHooks(
         current,
         workInProgress2,
-        Component4,
+        Component5,
         nextProps,
         void 0,
         renderLanes2
@@ -5801,33 +5801,33 @@ var require_react_dom_client_production = __commonJS({
         return bailoutHooks(current, workInProgress2, renderLanes2), bailoutOnAlreadyFinishedWork(current, workInProgress2, renderLanes2);
       isHydrating && nextProps && pushMaterializedTreeId(workInProgress2);
       workInProgress2.flags |= 1;
-      reconcileChildren(current, workInProgress2, Component4, renderLanes2);
+      reconcileChildren(current, workInProgress2, Component5, renderLanes2);
       return workInProgress2.child;
     }
-    function replayFunctionComponent(current, workInProgress2, nextProps, Component4, secondArg, renderLanes2) {
+    function replayFunctionComponent(current, workInProgress2, nextProps, Component5, secondArg, renderLanes2) {
       prepareToReadContext(workInProgress2);
       workInProgress2.updateQueue = null;
       nextProps = renderWithHooksAgain(
         workInProgress2,
-        Component4,
+        Component5,
         nextProps,
         secondArg
       );
       finishRenderingHooks(current);
-      Component4 = checkDidRenderIdHook();
+      Component5 = checkDidRenderIdHook();
       if (null !== current && !didReceiveUpdate)
         return bailoutHooks(current, workInProgress2, renderLanes2), bailoutOnAlreadyFinishedWork(current, workInProgress2, renderLanes2);
-      isHydrating && Component4 && pushMaterializedTreeId(workInProgress2);
+      isHydrating && Component5 && pushMaterializedTreeId(workInProgress2);
       workInProgress2.flags |= 1;
       reconcileChildren(current, workInProgress2, nextProps, renderLanes2);
       return workInProgress2.child;
     }
-    function updateClassComponent(current, workInProgress2, Component4, nextProps, renderLanes2) {
+    function updateClassComponent(current, workInProgress2, Component5, nextProps, renderLanes2) {
       prepareToReadContext(workInProgress2);
       if (null === workInProgress2.stateNode) {
-        var context = emptyContextObject, contextType = Component4.contextType;
+        var context = emptyContextObject, contextType = Component5.contextType;
         "object" === typeof contextType && null !== contextType && (context = readContext(contextType));
-        context = new Component4(nextProps, context);
+        context = new Component5(nextProps, context);
         workInProgress2.memoizedState = null !== context.state && void 0 !== context.state ? context.state : null;
         context.updater = classComponentUpdater;
         workInProgress2.stateNode = context;
@@ -5837,27 +5837,27 @@ var require_react_dom_client_production = __commonJS({
         context.state = workInProgress2.memoizedState;
         context.refs = {};
         initializeUpdateQueue(workInProgress2);
-        contextType = Component4.contextType;
+        contextType = Component5.contextType;
         context.context = "object" === typeof contextType && null !== contextType ? readContext(contextType) : emptyContextObject;
         context.state = workInProgress2.memoizedState;
-        contextType = Component4.getDerivedStateFromProps;
+        contextType = Component5.getDerivedStateFromProps;
         "function" === typeof contextType && (applyDerivedStateFromProps(
           workInProgress2,
-          Component4,
+          Component5,
           contextType,
           nextProps
         ), context.state = workInProgress2.memoizedState);
-        "function" === typeof Component4.getDerivedStateFromProps || "function" === typeof context.getSnapshotBeforeUpdate || "function" !== typeof context.UNSAFE_componentWillMount && "function" !== typeof context.componentWillMount || (contextType = context.state, "function" === typeof context.componentWillMount && context.componentWillMount(), "function" === typeof context.UNSAFE_componentWillMount && context.UNSAFE_componentWillMount(), contextType !== context.state && classComponentUpdater.enqueueReplaceState(context, context.state, null), processUpdateQueue(workInProgress2, nextProps, context, renderLanes2), suspendIfUpdateReadFromEntangledAsyncAction(), context.state = workInProgress2.memoizedState);
+        "function" === typeof Component5.getDerivedStateFromProps || "function" === typeof context.getSnapshotBeforeUpdate || "function" !== typeof context.UNSAFE_componentWillMount && "function" !== typeof context.componentWillMount || (contextType = context.state, "function" === typeof context.componentWillMount && context.componentWillMount(), "function" === typeof context.UNSAFE_componentWillMount && context.UNSAFE_componentWillMount(), contextType !== context.state && classComponentUpdater.enqueueReplaceState(context, context.state, null), processUpdateQueue(workInProgress2, nextProps, context, renderLanes2), suspendIfUpdateReadFromEntangledAsyncAction(), context.state = workInProgress2.memoizedState);
         "function" === typeof context.componentDidMount && (workInProgress2.flags |= 4194308);
         nextProps = true;
       } else if (null === current) {
         context = workInProgress2.stateNode;
-        var unresolvedOldProps = workInProgress2.memoizedProps, oldProps = resolveClassComponentProps(Component4, unresolvedOldProps);
+        var unresolvedOldProps = workInProgress2.memoizedProps, oldProps = resolveClassComponentProps(Component5, unresolvedOldProps);
         context.props = oldProps;
-        var oldContext = context.context, contextType$jscomp$0 = Component4.contextType;
+        var oldContext = context.context, contextType$jscomp$0 = Component5.contextType;
         contextType = emptyContextObject;
         "object" === typeof contextType$jscomp$0 && null !== contextType$jscomp$0 && (contextType = readContext(contextType$jscomp$0));
-        var getDerivedStateFromProps = Component4.getDerivedStateFromProps;
+        var getDerivedStateFromProps = Component5.getDerivedStateFromProps;
         contextType$jscomp$0 = "function" === typeof getDerivedStateFromProps || "function" === typeof context.getSnapshotBeforeUpdate;
         unresolvedOldProps = workInProgress2.pendingProps !== unresolvedOldProps;
         contextType$jscomp$0 || "function" !== typeof context.UNSAFE_componentWillReceiveProps && "function" !== typeof context.componentWillReceiveProps || (unresolvedOldProps || oldContext !== contextType) && callComponentWillReceiveProps(
@@ -5874,12 +5874,12 @@ var require_react_dom_client_production = __commonJS({
         oldContext = workInProgress2.memoizedState;
         unresolvedOldProps || oldState !== oldContext || hasForceUpdate ? ("function" === typeof getDerivedStateFromProps && (applyDerivedStateFromProps(
           workInProgress2,
-          Component4,
+          Component5,
           getDerivedStateFromProps,
           nextProps
         ), oldContext = workInProgress2.memoizedState), (oldProps = hasForceUpdate || checkShouldComponentUpdate(
           workInProgress2,
-          Component4,
+          Component5,
           oldProps,
           nextProps,
           oldState,
@@ -5890,14 +5890,14 @@ var require_react_dom_client_production = __commonJS({
         context = workInProgress2.stateNode;
         cloneUpdateQueue(current, workInProgress2);
         contextType = workInProgress2.memoizedProps;
-        contextType$jscomp$0 = resolveClassComponentProps(Component4, contextType);
+        contextType$jscomp$0 = resolveClassComponentProps(Component5, contextType);
         context.props = contextType$jscomp$0;
         getDerivedStateFromProps = workInProgress2.pendingProps;
         oldState = context.context;
-        oldContext = Component4.contextType;
+        oldContext = Component5.contextType;
         oldProps = emptyContextObject;
         "object" === typeof oldContext && null !== oldContext && (oldProps = readContext(oldContext));
-        unresolvedOldProps = Component4.getDerivedStateFromProps;
+        unresolvedOldProps = Component5.getDerivedStateFromProps;
         (oldContext = "function" === typeof unresolvedOldProps || "function" === typeof context.getSnapshotBeforeUpdate) || "function" !== typeof context.UNSAFE_componentWillReceiveProps && "function" !== typeof context.componentWillReceiveProps || (contextType !== getDerivedStateFromProps || oldState !== oldProps) && callComponentWillReceiveProps(
           workInProgress2,
           context,
@@ -5912,12 +5912,12 @@ var require_react_dom_client_production = __commonJS({
         var newState = workInProgress2.memoizedState;
         contextType !== getDerivedStateFromProps || oldState !== newState || hasForceUpdate || null !== current && null !== current.dependencies && checkIfContextChanged(current.dependencies) ? ("function" === typeof unresolvedOldProps && (applyDerivedStateFromProps(
           workInProgress2,
-          Component4,
+          Component5,
           unresolvedOldProps,
           nextProps
         ), newState = workInProgress2.memoizedState), (contextType$jscomp$0 = hasForceUpdate || checkShouldComponentUpdate(
           workInProgress2,
-          Component4,
+          Component5,
           contextType$jscomp$0,
           nextProps,
           oldState,
@@ -5932,7 +5932,7 @@ var require_react_dom_client_production = __commonJS({
       context = nextProps;
       markRef(current, workInProgress2);
       nextProps = 0 !== (workInProgress2.flags & 128);
-      context || nextProps ? (context = workInProgress2.stateNode, Component4 = nextProps && "function" !== typeof Component4.getDerivedStateFromError ? null : context.render(), workInProgress2.flags |= 1, null !== current && nextProps ? (workInProgress2.child = reconcileChildFibers(
+      context || nextProps ? (context = workInProgress2.stateNode, Component5 = nextProps && "function" !== typeof Component5.getDerivedStateFromError ? null : context.render(), workInProgress2.flags |= 1, null !== current && nextProps ? (workInProgress2.child = reconcileChildFibers(
         workInProgress2,
         current.child,
         null,
@@ -5940,9 +5940,9 @@ var require_react_dom_client_production = __commonJS({
       ), workInProgress2.child = reconcileChildFibers(
         workInProgress2,
         null,
-        Component4,
+        Component5,
         renderLanes2
-      )) : reconcileChildren(current, workInProgress2, Component4, renderLanes2), workInProgress2.memoizedState = context.state, current = workInProgress2.child) : current = bailoutOnAlreadyFinishedWork(
+      )) : reconcileChildren(current, workInProgress2, Component5, renderLanes2), workInProgress2.memoizedState = context.state, current = workInProgress2.child) : current = bailoutOnAlreadyFinishedWork(
         current,
         workInProgress2,
         renderLanes2
@@ -17285,6 +17285,18 @@ function clearApiKey() {
 // frontend/src/app/providers/AuthProvider.tsx
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var AuthContext = (0, import_react2.createContext)(null);
+function normalizeStringArray(value) {
+  return Array.isArray(value) ? value.filter((item) => typeof item === "string") : [];
+}
+function normalizeAuthUser(user) {
+  return {
+    ...user,
+    realmRoles: normalizeStringArray(user.realmRoles),
+    clientRoles: normalizeStringArray(user.clientRoles),
+    appRoles: normalizeStringArray(user.appRoles),
+    permissions: normalizeStringArray(user.permissions)
+  };
+}
 function AuthProvider({ children }) {
   const { pushToast } = useToast();
   const [status, setStatus] = (0, import_react2.useState)("loading");
@@ -17316,12 +17328,13 @@ function AuthProvider({ children }) {
   }
   async function hydrateCurrentUser(fallbackErrorMessage) {
     const response = await fetchCurrentUser();
+    const normalizedUser = normalizeAuthUser(response.user);
     if (!isMountedRef.current) {
-      return response.user;
+      return normalizedUser;
     }
-    setUser(response.user);
+    setUser(normalizedUser);
     setError("");
-    return response.user;
+    return normalizedUser;
   }
   async function initializeApiKeySession(nextConfig) {
     const storedApiKey = getApiKey();
@@ -19826,12 +19839,41 @@ var INITIAL_HEALTH_STATE = {
   loading: true,
   error: ""
 };
+function isRecord(value) {
+  return typeof value === "object" && value !== null;
+}
+function normalizeChecks(value) {
+  if (!isRecord(value)) {
+    return {};
+  }
+  return Object.fromEntries(
+    Object.entries(value).filter((entry) => typeof entry[0] === "string" && typeof entry[1] === "string")
+  );
+}
+function normalizeHealthResponse(value) {
+  if (!isRecord(value)) {
+    throw new Error("\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C health status");
+  }
+  if (typeof value.error === "string" && value.error.trim()) {
+    throw new Error(value.error);
+  }
+  if (typeof value.status !== "string") {
+    throw new Error("\u0421\u0435\u0440\u0432\u0435\u0440 \u0432\u0435\u0440\u043D\u0443\u043B \u043D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 health status");
+  }
+  return {
+    status: value.status,
+    timestamp: typeof value.timestamp === "string" ? value.timestamp : "",
+    authRequired: Boolean(value.authRequired),
+    authProvider: typeof value.authProvider === "string" ? value.authProvider : void 0,
+    checks: normalizeChecks(value.checks)
+  };
+}
 function useHealthStatus(reloadKey) {
   const [health, setHealth] = (0, import_react14.useState)(INITIAL_HEALTH_STATE);
   usePollingEffect(
     async () => {
       try {
-        const response = await fetchHealth();
+        const response = normalizeHealthResponse(await fetchHealth());
         setHealth({
           ...response,
           loading: false,
@@ -19868,7 +19910,7 @@ function getHealthText(health) {
   if (health.loading) return "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430...";
   if (health.error) return "\u041D\u0435\u0442 \u0441\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u044F";
   if (health.status === "ok") return "\u0421\u0438\u0441\u0442\u0435\u043C\u044B \u0432 \u043D\u043E\u0440\u043C\u0435";
-  const degradedChecks = Object.entries(health.checks).filter(([, value]) => value !== "ok").map(([key]) => key);
+  const degradedChecks = Object.entries(health.checks ?? {}).filter(([, value]) => value !== "ok").map(([key]) => key);
   return degradedChecks.length ? `\u0414\u0435\u0433\u0440\u0430\u0434\u0430\u0446\u0438\u044F: ${degradedChecks.join(", ")}` : "\u0415\u0441\u0442\u044C \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u044B \u0441\u043E \u0441\u0432\u044F\u0437\u043D\u043E\u0441\u0442\u044C\u044E";
 }
 function getProviderLabel2(provider) {
@@ -19876,6 +19918,7 @@ function getProviderLabel2(provider) {
 }
 function AppSidebar({ sidebarOpen, health }) {
   const auth = useAuth();
+  const userAppRoles = auth.user?.appRoles ?? [];
   const healthDotClassName = !health.loading ? health.error || health.status !== "ok" ? "health-dot error" : "health-dot ok" : "health-dot";
   const visibleNavItems = NAV_ITEMS.filter((item) => auth.hasPermission(item.permission));
   let authStatusText = "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u0438 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438\u2026";
@@ -19923,7 +19966,7 @@ function AppSidebar({ sidebarOpen, health }) {
           authStatusText
         ] }),
         auth.error ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "auth-error-text", children: auth.error }) : null,
-        auth.user?.appRoles.length ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "role-badges", children: auth.user.appRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "badge badge-info", children: role }, role)) }) : null,
+        userAppRoles.length ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "role-badges", children: userAppRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "badge badge-info", children: role }, role)) }) : null,
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "auth-actions", children: auth.provider === "keycloak" ? auth.isAuthenticated ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.logout(), children: "\u0412\u044B\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.login(), children: "\u0412\u043E\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.promptForApiKey(), children: "API key" }),
           /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
@@ -19980,19 +20023,46 @@ function AppShell({ children }) {
   ] });
 }
 
-// frontend/src/app/App.tsx
+// frontend/src/shared/ui/error-boundary/AppErrorBoundary.tsx
+var import_react16 = __toESM(require_react(), 1);
 var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var AppErrorBoundary = class extends import_react16.Component {
+  state = {
+    hasError: false
+  };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("App render failed", error, errorInfo);
+  }
+  handleReload = () => {
+    window.location.reload();
+  };
+  render() {
+    if (this.state.hasError) {
+      return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("main", { className: "content", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "auth-card", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ErrorCard, { message: "\u0418\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441 \u0441\u0442\u043E\u043B\u043A\u043D\u0443\u043B\u0441\u044F \u0441 \u043E\u0448\u0438\u0431\u043A\u043E\u0439 \u0440\u0435\u043D\u0434\u0435\u0440\u0430. \u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043D\u0435 \u0434\u043E\u043B\u0436\u043D\u0430 \u043F\u0430\u0434\u0430\u0442\u044C \u0432 \u0431\u0435\u043B\u044B\u0439 \u044D\u043A\u0440\u0430\u043D." }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { type: "button", className: "btn btn-primary", onClick: this.handleReload, children: "\u041F\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443" })
+      ] }) });
+    }
+    return this.props.children;
+  }
+};
+
+// frontend/src/app/App.tsx
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
 function App() {
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ToastProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(HashRouter, { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AppShell, { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AppRouter, {}) }) }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ToastProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AppErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(HashRouter, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AppShell, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AppRouter, {}) }) }) }) }) });
 }
 
 // frontend/src/main.tsx
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 var rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Root element #root not found");
 }
-(0, import_client10.createRoot)(rootElement).render(/* @__PURE__ */ (0, import_jsx_runtime24.jsx)(App, {}));
+(0, import_client10.createRoot)(rootElement).render(/* @__PURE__ */ (0, import_jsx_runtime25.jsx)(App, {}));
 /*! Bundled license information:
 
 scheduler/cjs/scheduler.production.js:
