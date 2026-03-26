@@ -9,6 +9,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
+      - AUTH_PROVIDER=${AUTH_PROVIDER:-api_key}
       - DB_HOST=postgres
       - DB_PORT=5432
       - DB_NAME=parser_news
@@ -16,7 +17,12 @@ services:
       - DB_PASSWORD=${DB_PASSWORD:?Set DB_PASSWORD in .env}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - API_KEY=${API_KEY:?Set API_KEY in .env}
+      - API_KEY=${API_KEY:-}
+      - KEYCLOAK_URL=${KEYCLOAK_URL:-}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM:-}
+      - KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID:-}
+      - KEYCLOAK_ADMIN_CLIENT_ID=${KEYCLOAK_ADMIN_CLIENT_ID:-}
+      - KEYCLOAK_ADMIN_CLIENT_SECRET=${KEYCLOAK_ADMIN_CLIENT_SECRET:-}
       - LOG_LEVEL=${LOG_LEVEL:-info}
     volumes:
       - app_data:/app/data

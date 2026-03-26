@@ -7,6 +7,9 @@ import type { Knex } from 'knex';
 
 export interface ConfigInput {
   port?: number;
+  auth?: {
+    provider?: 'api_key' | 'keycloak';
+  };
   db?: {
     host?: string;
     port?: number;
@@ -23,6 +26,18 @@ export interface ConfigInput {
 
 export interface Config {
   port: number;
+  auth: {
+    provider: 'api_key' | 'keycloak';
+    apiKey: string;
+    keycloak: {
+      baseUrl: string;
+      realm: string;
+      clientId: string;
+      issuer: string;
+      adminClientId: string;
+      adminClientSecret: string;
+    };
+  };
   db: { host: string; port: number; name: string; user: string; password: string };
   redis: { host: string; port: number; password: string | undefined };
 }
@@ -67,9 +82,42 @@ function isWeakSecret(value: string, minLength: number): boolean {
   return WEAK_SECRETS.has(normalized.toLowerCase());
 }
 
+function resolveAuthProvider(raw: string | undefined): 'api_key' | 'keycloak' {
+  const normalized = normalizeSecret(raw).toLowerCase();
+  if (normalized === 'keycloak') return 'keycloak';
+  if (normalized === 'api_key') return 'api_key';
+
+  const hasKeycloakConfig =
+    Boolean(normalizeSecret(process.env.KEYCLOAK_URL)) &&
+    Boolean(normalizeSecret(process.env.KEYCLOAK_REALM)) &&
+    Boolean(normalizeSecret(process.env.KEYCLOAK_CLIENT_ID));
+
+  return hasKeycloakConfig ? 'keycloak' : 'api_key';
+}
+
 function buildConfig(overrides?: ConfigInput): Config {
+  const authProvider = overrides?.auth?.provider ?? resolveAuthProvider(process.env.AUTH_PROVIDER);
+  const keycloakBaseUrl = normalizeSecret(process.env.KEYCLOAK_URL).replace(/\/+$/, '');
+  const keycloakRealm = normalizeSecret(process.env.KEYCLOAK_REALM);
+  const keycloakClientId = normalizeSecret(process.env.KEYCLOAK_CLIENT_ID);
+
   return {
     port: overrides?.port ?? parseIntOr(process.env.PORT, DEFAULT_PORT),
+    auth: {
+      provider: authProvider,
+      apiKey: normalizeSecret(process.env.API_KEY),
+      keycloak: {
+        baseUrl: keycloakBaseUrl,
+        realm: keycloakRealm,
+        clientId: keycloakClientId,
+        issuer:
+          keycloakBaseUrl && keycloakRealm
+            ? `${keycloakBaseUrl}/realms/${keycloakRealm}`
+            : '',
+        adminClientId: normalizeSecret(process.env.KEYCLOAK_ADMIN_CLIENT_ID),
+        adminClientSecret: normalizeSecret(process.env.KEYCLOAK_ADMIN_CLIENT_SECRET),
+      },
+    },
     db: {
       host: overrides?.db?.host ?? process.env.DB_HOST ?? 'localhost',
       port: overrides?.db?.port ?? parseIntOr(process.env.DB_PORT, DEFAULT_DB_PORT),
@@ -102,9 +150,9 @@ export function getConfig(): Config {
  * остались с дефолтными небезопасными значениями.
  */
 export function validateConfig(): void {
-  const { port, db, redis } = _config;
+  const { port, auth, db, redis } = _config;
   const errors: string[] = [];
-  const apiKey = normalizeSecret(process.env.API_KEY);
+  const apiKey = normalizeSecret(auth.apiKey);
   const dbPassword = normalizeSecret(db.password);
 
   if (!isValidPort(port)) errors.push('PORT must be an integer between 1 and 65535');
@@ -116,9 +164,26 @@ export function validateConfig(): void {
   if (!redis.host) errors.push('REDIS_HOST is not set');
   if (!isValidPort(redis.port)) errors.push('REDIS_PORT must be an integer between 1 and 65535');
 
+  if (auth.provider === 'keycloak') {
+    if (!auth.keycloak.baseUrl) errors.push('KEYCLOAK_URL is not set');
+    if (!auth.keycloak.realm) errors.push('KEYCLOAK_REALM is not set');
+    if (!auth.keycloak.clientId) errors.push('KEYCLOAK_CLIENT_ID is not set');
+  }
+
   if (isProduction()) {
-    if (isWeakSecret(apiKey, 16)) {
-      errors.push('API_KEY must be set to a strong value in production (at least 16 chars, not a default secret)');
+    if (auth.provider === 'api_key' && isWeakSecret(apiKey, 16)) {
+      errors.push('API_KEY must be set to a strong value in production when AUTH_PROVIDER=api_key');
+    }
+    if (auth.provider === 'keycloak') {
+      if (!auth.keycloak.adminClientId) {
+        errors.push('KEYCLOAK_ADMIN_CLIENT_ID must be set in production for role management');
+      }
+      if (isWeakSecret(auth.keycloak.adminClientSecret, 16)) {
+        errors.push('KEYCLOAK_ADMIN_CLIENT_SECRET must be a strong secret in production');
+      }
+      if (!auth.keycloak.issuer) {
+        errors.push('KEYCLOAK issuer could not be derived from KEYCLOAK_URL and KEYCLOAK_REALM');
+      }
     }
     if (dbPassword.toLowerCase() === DEFAULT_DB_PASSWORD || isWeakSecret(dbPassword, 12)) {
       errors.push('DB_PASSWORD must be changed from the default and be at least 12 chars in production');

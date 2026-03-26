@@ -6,7 +6,11 @@
     "node": ">=20.18.1"
   },
   "scripts": {
-    "build": "node -e \"const fs=require('fs');if(fs.existsSync('dist'))fs.rmSync('dist',{recursive:true})\" && tsc",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:backend": "node -e \"const fs=require('fs');if(fs.existsSync('dist'))fs.rmSync('dist',{recursive:true})\" && tsc",
+    "build:frontend": "npm run typecheck:frontend && node ./scripts/build-frontend.mjs",
+    "dev:frontend": "node ./scripts/build-frontend.mjs --watch",
+    "typecheck:frontend": "tsc --noEmit -p tsconfig.frontend.json",
     "start": "node dist/index.js",
     "dev": "cross-env USE_RAW_CACHE=1 tsx watch src/index.ts",
     "migrate": "tsx ./node_modules/knex/bin/cli.js migrate:latest --knexfile knexfile.js",
@@ -24,12 +28,17 @@
     "express-rate-limit": "^8.3.1",
     "helmet": "^8.1.0",
     "ioredis": "^5.3.0",
+    "jose": "^6.2.2",
+    "keycloak-js": "^26.2.3",
     "knex": "^3.0.0",
     "multer": "^2.1.1",
     "p-limit": "^5.0.0",
     "pg": "^8.11.0",
     "pino": "^10.3.1",
     "puppeteer": "^24.40.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2",
     "tsx": "^4.0.0",
     "undici": "^7.24.0",
     "xlsx": "^0.18.5"
@@ -40,7 +49,10 @@
     "@types/helmet": "^0.0.48",
     "@types/multer": "^2.1.0",
     "@types/node": "^20.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "cross-env": "^7.0.3",
+    "esbuild": "^0.27.4",
     "typescript": "^5.0.0"
   }
 }

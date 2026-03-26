@@ -9,11 +9,14 @@ import { getParser } from '../parsers/index.js';
 import { getDb } from '../db/index.js';
 import { isSafeUrl } from '../lib/validateUrl.js';
 import { createChildLogger } from '../lib/logger.js';
-import { getRedisOptions } from '../config/index.js';
+import { getConfig, getRedisOptions } from '../config/index.js';
 import { asyncHandler } from './asyncHandler.js';
 import { getAllTags, addTag, updateTag, addManyTags, deleteTag, deleteAllTags, resetToDefaults, type TagMode } from '../services/tags.js';
 import { getRiaParserOptions, updateRiaParserOptions } from '../services/parserSettings.js';
 import { listVpoHistory, resolveVpoHistoryFilePath, deleteVpoHistoryEntry, deleteAllVpoHistory } from '../services/vpoHistory.js';
+import { listManagedUsers, replaceUserAppRoles } from '../auth/admin.js';
+import { getAllAppRoles, getPublicAuthConfig, requirePermissions } from './auth.js';
+import { isAppRole, type AppRole } from '../auth/rbac.js';
 
 const log = createChildLogger('routes');
 const router = Router();
@@ -65,6 +68,7 @@ function getHealthRedis(): IORedis {
 
 router.get('/health', asyncHandler(async (_req, res) => {
   const checks: Record<string, 'ok' | 'error'> = { db: 'error', redis: 'error' };
+  const authConfig = getPublicAuthConfig();
 
   try {
     await getDb().raw('SELECT 1');
@@ -87,12 +91,78 @@ router.get('/health', asyncHandler(async (_req, res) => {
   res.status(healthy ? 200 : 503).json({
     status: healthy ? 'ok' : 'degraded',
     timestamp: new Date().toISOString(),
-    authRequired: Boolean(process.env.API_KEY?.trim()),
+    authRequired: authConfig.authRequired,
+    authProvider: authConfig.provider,
     checks,
   });
 }));
 
 /* ───── parse triggers ───── */
+
+router.get('/auth/config', asyncHandler(async (_req, res) => {
+  res.json(getPublicAuthConfig());
+}));
+
+router.get('/auth/me', asyncHandler(async (req, res) => {
+  if (!req.auth) {
+    res.status(401).json({ error: 'Not authenticated' });
+    return;
+  }
+
+  res.json({
+    ok: true,
+    provider: req.auth.provider ?? getConfig().auth.provider,
+    user: req.auth.user,
+  });
+}));
+
+router.get('/auth/users', requirePermissions('access.users.view'), asyncHandler(async (req, res) => {
+  const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);
+  const result = await listManagedUsers(search, offset, limit);
+
+  res.json({
+    ok: true,
+    page,
+    limit,
+    total: result.total,
+    roles: getAllAppRoles(),
+    users: result.users,
+  });
+}));
+
+router.put('/auth/users/:id/roles', requirePermissions('access.roles.manage'), asyncHandler(async (req, res) => {
+  const userId = String(req.params.id ?? '').trim();
+  const rawRoles = req.body?.appRoles;
+
+  if (!userId) {
+    res.status(400).json({ error: 'User id is required' });
+    return;
+  }
+
+  if (!Array.isArray(rawRoles)) {
+    res.status(400).json({ error: 'appRoles must be an array' });
+    return;
+  }
+
+  const nextRoles = [...new Set(
+    rawRoles
+      .filter((value): value is string => typeof value === 'string')
+      .map((value) => value.trim())
+      .filter(Boolean),
+  )];
+  const invalidRoles = nextRoles.filter((role) => !isAppRole(role));
+
+  if (invalidRoles.length) {
+    res.status(400).json({
+      error: `Unknown roles: ${invalidRoles.join(', ')}`,
+      allowedRoles: getAllAppRoles(),
+    });
+    return;
+  }
+
+  const user = await replaceUserAppRoles(userId, nextRoles as AppRole[]);
+  res.json({ ok: true, user });
+}));
 
 const PARSER_DEFAULT_URLS: Record<string, string> = {
   tadviser: 'https://www.tadviser.ru/index.php/Аналитика_TAdviser',
@@ -111,7 +181,7 @@ async function validateParseRequest(parserName: unknown, url: unknown): Promise<
   return null;
 }
 
-router.post('/parse', asyncHandler(async (req, res) => {
+router.post('/parse', requirePermissions('parser.run'), asyncHandler(async (req, res) => {
   const { parserName, url } = req.body;
   const validationError = await validateParseRequest(parserName, url);
   if (validationError) { res.status(400).json({ error: validationError }); return; }
@@ -122,7 +192,7 @@ router.post('/parse', asyncHandler(async (req, res) => {
   res.json({ ok: true, parserName, url: targetUrl });
 }));
 
-router.post('/parse/:parserName', asyncHandler(async (req, res) => {
+router.post('/parse/:parserName', requirePermissions('parser.run'), asyncHandler(async (req, res) => {
   const parserName = req.params.parserName;
   const url = req.body?.url;
   const validationError = await validateParseRequest(parserName, url);
@@ -179,7 +249,7 @@ function vpoUploadMiddleware(req: Request, res: Response, next: NextFunction): v
   });
 }
 
-router.post('/upload/vpo-svod', vpoUploadMiddleware, asyncHandler(async (req, res) => {
+router.post('/upload/vpo-svod', requirePermissions('vpo.upload'), vpoUploadMiddleware, asyncHandler(async (req, res) => {
   const r = req as ReqWithVpoSession;
   const files = req.files as Express.Multer.File[] | undefined;
   if (!files?.length) {
@@ -200,7 +270,7 @@ router.post('/upload/vpo-svod', vpoUploadMiddleware, asyncHandler(async (req, re
   });
 }));
 
-router.get('/vpo/history', asyncHandler(async (_req, res) => {
+router.get('/vpo/history', requirePermissions('vpo.view'), asyncHandler(async (_req, res) => {
   const items = await listVpoHistory(50);
   res.json({
     ok: true,
@@ -214,7 +284,7 @@ router.get('/vpo/history', asyncHandler(async (_req, res) => {
   });
 }));
 
-router.get('/vpo/history/:id/file', asyncHandler(async (req, res) => {
+router.get('/vpo/history/:id/file', requirePermissions('vpo.view'), asyncHandler(async (req, res) => {
   const id = req.params.id;
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)) {
     res.status(400).json({ error: 'Invalid id' });
@@ -236,7 +306,7 @@ router.get('/vpo/history/:id/file', asyncHandler(async (req, res) => {
   });
 }));
 
-router.delete('/vpo/history/:id', asyncHandler(async (req, res) => {
+router.delete('/vpo/history/:id', requirePermissions('vpo.delete'), asyncHandler(async (req, res) => {
   const id = req.params.id;
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)) {
     res.status(400).json({ error: 'Invalid id' });
@@ -247,19 +317,19 @@ router.delete('/vpo/history/:id', asyncHandler(async (req, res) => {
   res.json({ ok: true, id });
 }));
 
-router.delete('/vpo/history', asyncHandler(async (_req, res) => {
+router.delete('/vpo/history', requirePermissions('vpo.delete'), asyncHandler(async (_req, res) => {
   const deleted = await deleteAllVpoHistory();
   res.json({ ok: true, deleted });
 }));
 
 /* ───── parser settings (РИА лента) ───── */
 
-router.get('/settings/ria', asyncHandler(async (_req, res) => {
+router.get('/settings/ria', requirePermissions('settings.view'), asyncHandler(async (_req, res) => {
   const settings = await getRiaParserOptions();
   res.json({ ok: true, settings });
 }));
 
-router.patch('/settings/ria', asyncHandler(async (req, res) => {
+router.patch('/settings/ria', requirePermissions('settings.manage'), asyncHandler(async (req, res) => {
   const { lentaPages, pageDelayMs, puppeteerSettleMs } = req.body ?? {};
   if (
     lentaPages === undefined &&
@@ -297,7 +367,7 @@ router.patch('/settings/ria', asyncHandler(async (req, res) => {
 
 /* ───── articles (paginated) ───── */
 
-router.get('/articles', asyncHandler(async (req, res) => {
+router.get('/articles', requirePermissions('articles.view'), asyncHandler(async (req, res) => {
   const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);
   const db = getDb();
 
@@ -323,7 +393,7 @@ router.get('/articles', asyncHandler(async (req, res) => {
 
 /* ───── companies: EdTech (edtechs.ru) ───── */
 
-router.get('/companies/edtech', asyncHandler(async (req, res) => {
+router.get('/companies/edtech', requirePermissions('companies.view'), asyncHandler(async (req, res) => {
   const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);
   const db = getDb();
 
@@ -351,7 +421,7 @@ router.get('/companies/edtech', asyncHandler(async (req, res) => {
 
 /* ───── companies: MedTech (Smart Ranking) ───── */
 
-router.get('/companies', asyncHandler(async (req, res) => {
+router.get('/companies', requirePermissions('companies.view'), asyncHandler(async (req, res) => {
   const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);
   const db = getDb();
 
@@ -378,14 +448,14 @@ router.get('/companies', asyncHandler(async (req, res) => {
 
 /* ───── tags management ───── */
 
-router.get('/tags', asyncHandler(async (_req, res) => {
+router.get('/tags', requirePermissions('tags.view'), asyncHandler(async (_req, res) => {
   const tags = await getAllTags();
   res.json({ total: tags.length, tags });
 }));
 
 const VALID_MODES: TagMode[] = ['phrase', 'words', 'prefix', 'regex'];
 
-router.post('/tags', asyncHandler(async (req, res) => {
+router.post('/tags', requirePermissions('tags.manage'), asyncHandler(async (req, res) => {
   const { tag, tags, mode = 'phrase', exclude = false } = req.body;
   if (!VALID_MODES.includes(mode)) {
     res.status(400).json({ error: `mode must be one of: ${VALID_MODES.join(', ')}` });
@@ -404,7 +474,7 @@ router.post('/tags', asyncHandler(async (req, res) => {
   res.json({ ok: true, tag: row });
 }));
 
-router.patch('/tags/:id', asyncHandler(async (req, res) => {
+router.patch('/tags/:id', requirePermissions('tags.manage'), asyncHandler(async (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) { res.status(400).json({ error: 'Invalid id' }); return; }
   const { tag, mode, exclude } = req.body;
@@ -422,12 +492,12 @@ router.patch('/tags/:id', asyncHandler(async (req, res) => {
   res.json({ ok: true, tag: row });
 }));
 
-router.delete('/tags', asyncHandler(async (_req, res) => {
+router.delete('/tags', requirePermissions('tags.manage'), asyncHandler(async (_req, res) => {
   const deleted = await deleteAllTags();
   res.json({ ok: true, deleted });
 }));
 
-router.delete('/tags/:id', asyncHandler(async (req, res) => {
+router.delete('/tags/:id', requirePermissions('tags.manage'), asyncHandler(async (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) { res.status(400).json({ error: 'Invalid id' }); return; }
   const ok = await deleteTag(id);
@@ -435,20 +505,20 @@ router.delete('/tags/:id', asyncHandler(async (req, res) => {
   res.json({ ok: true, id });
 }));
 
-router.post('/tags/reset', asyncHandler(async (_req, res) => {
+router.post('/tags/reset', requirePermissions('tags.manage'), asyncHandler(async (_req, res) => {
   const count = await resetToDefaults();
   res.json({ ok: true, count });
 }));
 
 /* ───── delete articles / companies ───── */
 
-router.delete('/articles', asyncHandler(async (_req, res) => {
+router.delete('/articles', requirePermissions('articles.delete'), asyncHandler(async (_req, res) => {
   const { rowCount } = await getDb()('news_articles').delete() as unknown as { rowCount: number };
   log.info({ deleted: rowCount }, 'All articles deleted');
   res.json({ ok: true, deleted: rowCount ?? 0 });
 }));
 
-router.delete('/articles/:id', asyncHandler(async (req, res) => {
+router.delete('/articles/:id', requirePermissions('articles.delete'), asyncHandler(async (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) { res.status(400).json({ error: 'Invalid id' }); return; }
   const deleted = await getDb()('news_articles').where({ id }).delete();
@@ -456,13 +526,13 @@ router.delete('/articles/:id', asyncHandler(async (req, res) => {
   res.json({ ok: true, id });
 }));
 
-router.delete('/companies/edtech', asyncHandler(async (_req, res) => {
+router.delete('/companies/edtech', requirePermissions('companies.delete'), asyncHandler(async (_req, res) => {
   const { rowCount } = await getDb()('edtech_companies').delete() as unknown as { rowCount: number };
   log.info({ deleted: rowCount }, 'All edtech companies deleted');
   res.json({ ok: true, deleted: rowCount ?? 0 });
 }));
 
-router.delete('/companies/edtech/:id', asyncHandler(async (req, res) => {
+router.delete('/companies/edtech/:id', requirePermissions('companies.delete'), asyncHandler(async (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) { res.status(400).json({ error: 'Invalid id' }); return; }
   const deleted = await getDb()('edtech_companies').where({ id }).delete();
@@ -470,13 +540,13 @@ router.delete('/companies/edtech/:id', asyncHandler(async (req, res) => {
   res.json({ ok: true, id });
 }));
 
-router.delete('/companies', asyncHandler(async (_req, res) => {
+router.delete('/companies', requirePermissions('companies.delete'), asyncHandler(async (_req, res) => {
   const { rowCount } = await getDb()('smart_ranking_companies').delete() as unknown as { rowCount: number };
   log.info({ deleted: rowCount }, 'All medtech companies deleted');
   res.json({ ok: true, deleted: rowCount ?? 0 });
 }));
 
-router.delete('/companies/:id', asyncHandler(async (req, res) => {
+router.delete('/companies/:id', requirePermissions('companies.delete'), asyncHandler(async (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) { res.status(400).json({ error: 'Invalid id' }); return; }
   const deleted = await getDb()('smart_ranking_companies').where({ id }).delete();
@@ -486,7 +556,7 @@ router.delete('/companies/:id', asyncHandler(async (req, res) => {
 
 /* ───── queues ───── */
 
-router.get('/queues', asyncHandler(async (_req, res) => {
+router.get('/queues', requirePermissions('queues.view'), asyncHandler(async (_req, res) => {
   const [parse, adapt, store] = await Promise.all([
     getParseQueue().getJobCounts(),
     getAdaptQueue().getJobCounts(),
@@ -499,7 +569,7 @@ router.get('/queues', asyncHandler(async (_req, res) => {
   });
 }));
 
-router.get('/queues/failed', asyncHandler(async (_req, res) => {
+router.get('/queues/failed', requirePermissions('queues.view'), asyncHandler(async (_req, res) => {
   const [parseFailed, adaptFailed, storeFailed] = await Promise.all([
     getParseQueue().getFailed(),
     getAdaptQueue().getFailed(),
