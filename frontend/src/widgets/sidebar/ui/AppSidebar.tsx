@@ -16,7 +16,6 @@ import {
   SettingsIcon,
   ShieldIcon,
   TagsIcon,
-  UserIcon,
 } from '../../../shared/ui/icons/AppIcons';
 import type { AppPermission } from '../../../entities/auth/model/types';
 
@@ -211,12 +210,6 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
                 </span>
               ))}
             </div>
-          ) : null}
-          {auth.hasPermission('profile.view') ? (
-            <NavLink to={routePaths.profile} className={({ isActive }) => `auth-profile-link${isActive ? ' active' : ''}`}>
-              <UserIcon />
-              <span>Личный кабинет</span>
-            </NavLink>
           ) : null}
           <div className="auth-actions">
             {auth.provider === 'keycloak' ? (

@@ -17730,12 +17730,6 @@ function FileIcon() {
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "M8 17h8" })
   ] });
 }
-function UserIcon() {
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(IconBase, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "M20 21a8 8 0 0 0-16 0" }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("circle", { cx: "12", cy: "8", r: "5" })
-  ] });
-}
 function ShieldIcon() {
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(IconBase, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "M12 2 5 5v6c0 5 3.5 9.5 7 11 3.5-1.5 7-6 7-11V5l-7-3Z" }),
@@ -20304,10 +20298,6 @@ function AppSidebar({ sidebarOpen, health }) {
         ] }),
         auth.error ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-error-text", children: auth.error }) : null,
         userAppRoles.length ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "role-badges", children: userAppRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "badge badge-info", children: role }, role)) }) : null,
-        auth.hasPermission("profile.view") ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(NavLink, { to: routePaths.profile, className: ({ isActive }) => `auth-profile-link${isActive ? " active" : ""}`, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(UserIcon, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442" })
-        ] }) : null,
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-actions", children: auth.provider === "keycloak" ? auth.isAuthenticated ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.logout(), children: "\u0412\u044B\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.login(), children: "\u0412\u043E\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.promptForApiKey(), children: "API key" }),
           /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(

@@ -143,52 +143,29 @@ a:hover { text-decoration: underline; }
 .auth-user-link {
   display: inline-flex;
   align-items: center;
+  padding: 9px 12px;
+  margin-bottom: 6px;
   color: #fff;
   text-decoration: none;
-  border-radius: 4px;
-  transition: color var(--transition), opacity var(--transition);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
 .auth-user-link:hover {
+  background: rgba(255,255,255,.12);
   color: #fff;
-  text-decoration: underline;
+  text-decoration: none;
 }
 .auth-user-link.active {
-  opacity: 1;
+  background: rgba(79,70,229,.24);
+  border-color: rgba(79,70,229,.45);
 }
 .auth-error-text {
   color: #fca5a5;
   font-size: .78rem;
   line-height: 1.4;
   margin-top: 8px;
-}
-.auth-profile-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 12px;
-  padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  color: var(--text-sidebar);
-  font-size: .88rem;
-  font-weight: 600;
-  text-decoration: none;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.06);
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
-}
-.auth-profile-link svg {
-  flex-shrink: 0;
-  opacity: .85;
-}
-.auth-profile-link:hover {
-  background: rgba(255,255,255,.1);
-  color: #fff;
-  text-decoration: none;
-}
-.auth-profile-link.active {
-  background: rgba(79,70,229,.24);
-  color: #fff;
-  border-color: rgba(79,70,229,.45);
 }
 .auth-actions {
   display: flex;
