@@ -18179,6 +18179,12 @@ function AccessPage() {
   ] });
 }
 
+// frontend/src/entities/article/model/constants.ts
+var PRESET_ARTICLE_CATEGORIES = ["EdTech", "MedTech", "BioTech", "\u0417\u0430\u043A\u043E\u043D\u043E\u0434\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"];
+function isPresetArticleCategory(value) {
+  return PRESET_ARTICLE_CATEGORIES.includes(value);
+}
+
 // frontend/src/shared/lib/date/format.ts
 function formatDate(value) {
   if (!value) return "\u2014";
@@ -18531,22 +18537,38 @@ function ArticlesPage() {
         /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("tbody", { children: data2.articles.map((article) => {
           const draftCategory = actions.getDraftCategory(article);
           const categoryChanged = actions.hasPendingCategoryChange(article);
+          const selectedPresetCategory = isPresetArticleCategory(draftCategory) ? draftCategory : "";
+          const customCategoryValue = selectedPresetCategory ? "" : draftCategory;
           return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("tr", { children: [
             /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("td", { className: "cell-title", children: [
               article.source_url ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: article.source_url, target: "_blank", rel: "noreferrer", children: article.title }) : article.title,
               article.summary ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cell-summary", children: article.summary }) : null
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "badge badge-info", children: article.source }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim", children: view.editMode && canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "article-category-editor", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-              "input",
-              {
-                type: "text",
-                className: "search-input article-category-input",
-                value: draftCategory,
-                onChange: (event) => actions.setArticleCategory(article.id, event.target.value),
-                placeholder: "\u0411\u0435\u0437 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438"
-              }
-            ) }) : article.category || "\u2014" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim", children: view.editMode && canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "article-category-editor", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+                "select",
+                {
+                  className: "search-input article-category-select",
+                  value: selectedPresetCategory,
+                  onChange: (event) => actions.setArticleCategory(article.id, event.target.value),
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: "", children: "\u0411\u0435\u0437 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438 / \u0441\u0432\u043E\u044F" }),
+                    PRESET_ARTICLE_CATEGORIES.map((category) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: category, children: category }, category))
+                  ]
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                "input",
+                {
+                  type: "text",
+                  className: "search-input article-category-input",
+                  value: customCategoryValue,
+                  onChange: (event) => actions.setArticleCategory(article.id, event.target.value),
+                  placeholder: "\u0418\u043B\u0438 \u0432\u0432\u0435\u0434\u0438\u0442\u0435 \u0441\u0432\u043E\u044E \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E"
+                }
+              )
+            ] }) : article.category || "\u2014" }),
             /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim article-published-cell", children: formatDate(article.published_at) }),
             view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "table-actions-cell", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "article-row-actions", children: [
               canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [

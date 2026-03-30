@@ -1,4 +1,5 @@
 import { useAuth } from '../../../features/auth/model/useAuth';
+import { PRESET_ARTICLE_CATEGORIES, isPresetArticleCategory } from '../../../entities/article/model/constants';
 import { formatDate } from '../../../shared/lib/date/format';
 import { EmptyState } from '../../../shared/ui/empty-state/EmptyState';
 import { ErrorCard } from '../../../shared/ui/error-card/ErrorCard';
@@ -112,6 +113,8 @@ export function ArticlesPage() {
               {data.articles.map((article) => {
                 const draftCategory = actions.getDraftCategory(article);
                 const categoryChanged = actions.hasPendingCategoryChange(article);
+                const selectedPresetCategory = isPresetArticleCategory(draftCategory) ? draftCategory : '';
+                const customCategoryValue = selectedPresetCategory ? '' : draftCategory;
 
                 return (
                   <tr key={article.id}>
@@ -131,12 +134,24 @@ export function ArticlesPage() {
                     <td className="cell-dim">
                       {view.editMode && canEditArticles ? (
                         <div className="article-category-editor">
+                          <select
+                            className="search-input article-category-select"
+                            value={selectedPresetCategory}
+                            onChange={(event) => actions.setArticleCategory(article.id, event.target.value)}
+                          >
+                            <option value="">Без категории / своя</option>
+                            {PRESET_ARTICLE_CATEGORIES.map((category) => (
+                              <option key={category} value={category}>
+                                {category}
+                              </option>
+                            ))}
+                          </select>
                           <input
                             type="text"
                             className="search-input article-category-input"
-                            value={draftCategory}
+                            value={customCategoryValue}
                             onChange={(event) => actions.setArticleCategory(article.id, event.target.value)}
-                            placeholder="Без категории"
+                            placeholder="Или введите свою категорию"
                           />
                         </div>
                       ) : (

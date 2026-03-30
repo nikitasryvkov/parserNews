@@ -276,11 +276,16 @@ tr:hover td { background: #fafbfd; }
   white-space: nowrap;
 }
 .article-category-editor {
-  min-width: 170px;
+  min-width: 220px;
+  display: grid;
+  gap: 8px;
+}
+.article-category-select {
+  min-width: 220px;
 }
 .article-category-input {
-  min-width: 170px;
-  max-width: 260px;
+  min-width: 220px;
+  max-width: 280px;
 }
 .article-row-actions {
   display: flex;
