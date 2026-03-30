@@ -55,6 +55,40 @@ a:hover { text-decoration: underline; }
 
 .sidebar-nav { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; }
 
+.sidebar-area {
+  padding: 12px 20px 18px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.sidebar-area-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: rgba(209,213,219,.85);
+}
+.sidebar-area-select {
+  width: 100%;
+  padding: 10px 12px;
+  min-height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: #fff;
+  font-size: .9rem;
+  font-family: var(--font);
+}
+.sidebar-area-select:focus {
+  outline: none;
+  border-color: rgba(255,255,255,.26);
+  box-shadow: 0 0 0 3px rgba(79,70,229,.18);
+}
+.sidebar-area-select option {
+  color: var(--text);
+  background: #fff;
+}
+
 .nav-link {
   display: flex; align-items: center; gap: 12px;
   padding: 10px 14px; border-radius: var(--radius-sm);
@@ -118,32 +152,6 @@ a:hover { text-decoration: underline; }
 .content {
   margin-left: var(--sidebar-w); min-height: 100vh;
   padding: 32px 36px;
-}
-.content-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-.content-toolbar-spacer {
-  flex: 1 1 auto;
-}
-.area-switcher {
-  margin-left: auto;
-  min-width: 220px;
-  display: grid;
-  gap: 6px;
-}
-.area-switcher-label {
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .03em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.area-switcher-select {
-  min-width: 220px;
 }
 
 /* ──────── mobile toggle ──────── */
@@ -695,20 +703,5 @@ tr:hover td { background: #fafbfd; }
   .sidebar.open { transform: translateX(0); }
   .mobile-toggle { display: block; }
   .content { margin-left: 0; padding: 24px 16px; padding-top: 60px; }
-  .content-toolbar {
-    justify-content: stretch;
-    margin-bottom: 16px;
-  }
-  .content-toolbar-spacer {
-    display: none;
-  }
-  .area-switcher {
-    width: 100%;
-    min-width: 0;
-  }
-  .area-switcher-select {
-    width: 100%;
-    min-width: 0;
-  }
   .cards { grid-template-columns: 1fr; }
 }

@@ -1,7 +1,8 @@
 import type { ComponentType } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../features/auth/model/useAuth';
 import type { HealthState } from '../../../features/health/model/useHealthStatus';
+import { AREA_OPTIONS, findAreaByPath } from '../../../shared/config/areas';
 import { routePaths } from '../../../shared/config/routes';
 import {
   ArticlesIcon,
@@ -59,8 +60,11 @@ function getProviderLabel(provider: string | null): string {
 }
 
 export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const auth = useAuth();
   const userAppRoles = auth.user?.appRoles ?? [];
+  const selectedArea = findAreaByPath(location.pathname);
   const healthDotClassName = !health.loading
     ? health.error || health.status !== 'ok'
       ? 'health-dot error'
@@ -104,6 +108,29 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
           </NavLink>
         ))}
       </nav>
+
+      <div className="sidebar-area">
+        <label className="sidebar-area-label" htmlFor="sidebar-area-switcher">
+          Область
+        </label>
+        <select
+          id="sidebar-area-switcher"
+          className="sidebar-area-select"
+          value={selectedArea?.id ?? ''}
+          onChange={(event) => {
+            const nextArea = AREA_OPTIONS.find((area) => area.id === event.target.value);
+            if (!nextArea) return;
+            void navigate(nextArea.path);
+          }}
+        >
+          <option value="">Выберите область</option>
+          {AREA_OPTIONS.map((area) => (
+            <option key={area.id} value={area.id}>
+              {area.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="sidebar-footer">
         <div className="health-indicator">

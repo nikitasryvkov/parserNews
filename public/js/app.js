@@ -20174,8 +20174,11 @@ function getProviderLabel2(provider) {
   return provider === "keycloak" ? "Keycloak" : "API key";
 }
 function AppSidebar({ sidebarOpen, health }) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const auth = useAuth();
   const userAppRoles = auth.user?.appRoles ?? [];
+  const selectedArea = findAreaByPath(location.pathname);
   const healthDotClassName = !health.loading ? health.error || health.status !== "ok" ? "health-dot error" : "health-dot ok" : "health-dot";
   const visibleNavItems = NAV_ITEMS.filter((item) => auth.hasPermission(item.permission));
   let authStatusText = "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u0438 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438\u2026";
@@ -20210,6 +20213,26 @@ function AppSidebar({ sidebarOpen, health }) {
       },
       path
     )) }),
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-area", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("label", { className: "sidebar-area-label", htmlFor: "sidebar-area-switcher", children: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C" }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+        "select",
+        {
+          id: "sidebar-area-switcher",
+          className: "sidebar-area-select",
+          value: selectedArea?.id ?? "",
+          onChange: (event) => {
+            const nextArea = AREA_OPTIONS.find((area) => area.id === event.target.value);
+            if (!nextArea) return;
+            void navigate(nextArea.path);
+          },
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("option", { value: "", children: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043E\u0431\u043B\u0430\u0441\u0442\u044C" }),
+            AREA_OPTIONS.map((area) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("option", { value: area.id, children: area.label }, area.id))
+          ]
+        }
+      )
+    ] }),
     /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-footer", children: [
       /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "health-indicator", children: [
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: healthDotClassName }),
@@ -20246,11 +20269,9 @@ function AppSidebar({ sidebarOpen, health }) {
 var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 function AppShell({ children }) {
   const location = useLocation();
-  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = (0, import_react15.useState)(false);
   const auth = useAuth();
   const health = useHealthStatus(auth.sessionVersion);
-  const selectedArea = findAreaByPath(location.pathname);
   (0, import_react15.useEffect)(() => {
     setSidebarOpen(false);
   }, [location.pathname]);
@@ -20278,32 +20299,7 @@ function AppShell({ children }) {
         children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MenuIcon, {})
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("main", { className: "content", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "content-toolbar", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "content-toolbar-spacer" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "area-switcher", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { className: "area-switcher-label", htmlFor: "app-area-switcher", children: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
-            "select",
-            {
-              id: "app-area-switcher",
-              className: "search-input area-switcher-select",
-              value: selectedArea?.id ?? "",
-              onChange: (event) => {
-                const nextArea = AREA_OPTIONS.find((area) => area.id === event.target.value);
-                if (!nextArea) return;
-                void navigate(nextArea.path);
-              },
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: "", children: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043E\u0431\u043B\u0430\u0441\u0442\u044C" }),
-                AREA_OPTIONS.map((area) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: area.id, children: area.label }, area.id))
-              ]
-            }
-          )
-        ] })
-      ] }),
-      children
-    ] })
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("main", { className: "content", children })
   ] });
 }
 
