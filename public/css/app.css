@@ -54,40 +54,8 @@ a:hover { text-decoration: underline; }
 .sidebar-header svg { flex-shrink: 0; opacity: .85; }
 
 .sidebar-nav { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; }
-
-.sidebar-area {
-  padding: 12px 20px 18px;
-  border-top: 1px solid rgba(255,255,255,.07);
-}
-.sidebar-area-label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: .76rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: rgba(209,213,219,.85);
-}
-.sidebar-area-select {
-  width: 100%;
-  padding: 10px 12px;
-  min-height: 40px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.06);
-  color: #fff;
-  font-size: .9rem;
-  font-family: var(--font);
-}
-.sidebar-area-select:focus {
-  outline: none;
-  border-color: rgba(255,255,255,.26);
-  box-shadow: 0 0 0 3px rgba(79,70,229,.18);
-}
-.sidebar-area-select option {
-  color: var(--text);
-  background: #fff;
-}
+.sidebar-nav-group { display: flex; flex-direction: column; gap: 2px; }
+.area-nav-group { margin-top: 2px; }
 
 .nav-link {
   display: flex; align-items: center; gap: 12px;
@@ -100,6 +68,50 @@ a:hover { text-decoration: underline; }
 .nav-link.active { background: var(--accent); color: #fff; }
 .nav-link svg { flex-shrink: 0; opacity: .75; }
 .nav-link.active svg { opacity: 1; }
+.nav-accordion-toggle {
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+.nav-accordion-toggle > svg:last-child {
+  margin-left: auto;
+  transition: transform var(--transition), opacity var(--transition);
+}
+.nav-accordion-toggle[aria-expanded="true"] > svg:last-child {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+.nav-submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 2px 0 4px 20px;
+  padding-left: 18px;
+  border-left: 1px solid rgba(255,255,255,.08);
+}
+.nav-sublink {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-sidebar);
+  font-size: .87rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+}
+.nav-sublink:hover {
+  background: rgba(255,255,255,.06);
+  color: #fff;
+  text-decoration: none;
+}
+.nav-sublink.active {
+  background: rgba(79,70,229,.24);
+  color: #fff;
+}
 
 .sidebar-footer {
   padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.07);

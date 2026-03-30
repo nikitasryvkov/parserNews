@@ -17673,6 +17673,14 @@ function DashboardIcon() {
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("rect", { x: "14", y: "14", width: "7", height: "7", rx: "1" })
   ] });
 }
+function AreaIcon() {
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(IconBase, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "M4 7h16" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "M4 12h16" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "M4 17h10" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("circle", { cx: "18", cy: "17", r: "2" })
+  ] });
+}
 function ArticlesIcon() {
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(IconBase, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" }),
@@ -17740,6 +17748,9 @@ function MenuIcon() {
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("line", { x1: "3", y1: "12", x2: "21", y2: "12" }),
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("line", { x1: "3", y1: "18", x2: "21", y2: "18" })
   ] });
+}
+function ChevronDownIcon() {
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(IconBase, { size: 18, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "m6 9 6 6 6-6" }) });
 }
 function EmptyStateIcon() {
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(IconBase, { size: 48, children: [
@@ -20075,7 +20086,7 @@ function AppRouter() {
 }
 
 // frontend/src/widgets/app-shell/ui/AppShell.tsx
-var import_react15 = __toESM(require_react(), 1);
+var import_react16 = __toESM(require_react(), 1);
 
 // frontend/src/features/health/model/useHealthStatus.ts
 var import_react14 = __toESM(require_react(), 1);
@@ -20151,6 +20162,7 @@ function useHealthStatus(reloadKey) {
 }
 
 // frontend/src/widgets/sidebar/ui/AppSidebar.tsx
+var import_react15 = __toESM(require_react(), 1);
 var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 var NAV_ITEMS = [
   { path: routePaths.dashboard, label: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F", Icon: DashboardIcon, permission: "dashboard.view", end: true },
@@ -20175,12 +20187,17 @@ function getProviderLabel2(provider) {
 }
 function AppSidebar({ sidebarOpen, health }) {
   const location = useLocation();
-  const navigate = useNavigate();
   const auth = useAuth();
   const userAppRoles = auth.user?.appRoles ?? [];
   const selectedArea = findAreaByPath(location.pathname);
+  const [areasExpanded, setAreasExpanded] = (0, import_react15.useState)(Boolean(selectedArea));
   const healthDotClassName = !health.loading ? health.error || health.status !== "ok" ? "health-dot error" : "health-dot ok" : "health-dot";
   const visibleNavItems = NAV_ITEMS.filter((item) => auth.hasPermission(item.permission));
+  (0, import_react15.useEffect)(() => {
+    if (selectedArea) {
+      setAreasExpanded(true);
+    }
+  }, [selectedArea]);
   let authStatusText = "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u0438 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438\u2026";
   if (auth.status === "ready") {
     if (auth.provider === "keycloak") {
@@ -20200,39 +20217,45 @@ function AppSidebar({ sidebarOpen, health }) {
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(LogoIcon, {}),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "ParserNews" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("nav", { className: "sidebar-nav", children: visibleNavItems.map(({ path, label, Icon, end }) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
-      NavLink,
-      {
-        to: path,
-        end,
-        className: ({ isActive }) => `nav-link${isActive ? " active" : ""}`,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Icon, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: label })
-        ]
-      },
-      path
-    )) }),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-area", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("label", { className: "sidebar-area-label", htmlFor: "sidebar-area-switcher", children: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C" }),
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("nav", { className: "sidebar-nav", children: visibleNavItems.map(({ path, label, Icon, end }) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-nav-group", children: [
       /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
-        "select",
+        NavLink,
         {
-          id: "sidebar-area-switcher",
-          className: "sidebar-area-select",
-          value: selectedArea?.id ?? "",
-          onChange: (event) => {
-            const nextArea = AREA_OPTIONS.find((area) => area.id === event.target.value);
-            if (!nextArea) return;
-            void navigate(nextArea.path);
-          },
+          to: path,
+          end,
+          className: ({ isActive }) => `nav-link${isActive ? " active" : ""}`,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("option", { value: "", children: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043E\u0431\u043B\u0430\u0441\u0442\u044C" }),
-            AREA_OPTIONS.map((area) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("option", { value: area.id, children: area.label }, area.id))
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Icon, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: label })
           ]
         }
-      )
-    ] }),
+      ),
+      path === routePaths.dashboard ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-nav-group area-nav-group", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: `nav-link nav-accordion-toggle${selectedArea ? " active" : ""}`,
+            "aria-expanded": areasExpanded,
+            onClick: () => setAreasExpanded((current) => !current),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(AreaIcon, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C" }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(ChevronDownIcon, {})
+            ]
+          }
+        ),
+        areasExpanded ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "nav-submenu", role: "menu", "aria-label": "\u0412\u044B\u0431\u043E\u0440 \u043E\u0431\u043B\u0430\u0441\u0442\u0438", children: AREA_OPTIONS.map((area) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+          NavLink,
+          {
+            to: area.path,
+            className: ({ isActive }) => `nav-sublink${isActive ? " active" : ""}`,
+            children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: area.label })
+          },
+          area.id
+        )) }) : null
+      ] }) : null
+    ] }, path)) }),
     /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-footer", children: [
       /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "health-indicator", children: [
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: healthDotClassName }),
@@ -20269,13 +20292,13 @@ function AppSidebar({ sidebarOpen, health }) {
 var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 function AppShell({ children }) {
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = (0, import_react15.useState)(false);
+  const [sidebarOpen, setSidebarOpen] = (0, import_react16.useState)(false);
   const auth = useAuth();
   const health = useHealthStatus(auth.sessionVersion);
-  (0, import_react15.useEffect)(() => {
+  (0, import_react16.useEffect)(() => {
     setSidebarOpen(false);
   }, [location.pathname]);
-  (0, import_react15.useEffect)(() => {
+  (0, import_react16.useEffect)(() => {
     function handleDocumentClick(event) {
       if (!sidebarOpen) return;
       if (!(event.target instanceof Element)) return;
@@ -20304,9 +20327,9 @@ function AppShell({ children }) {
 }
 
 // frontend/src/shared/ui/error-boundary/AppErrorBoundary.tsx
-var import_react16 = __toESM(require_react(), 1);
+var import_react17 = __toESM(require_react(), 1);
 var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-var AppErrorBoundary = class extends import_react16.Component {
+var AppErrorBoundary = class extends import_react17.Component {
   state = {
     hasError: false
   };

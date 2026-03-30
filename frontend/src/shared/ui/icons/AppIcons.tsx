@@ -46,6 +46,17 @@ export function DashboardIcon() {
   );
 }
 
+export function AreaIcon() {
+  return (
+    <IconBase>
+      <path d="M4 7h16" />
+      <path d="M4 12h16" />
+      <path d="M4 17h10" />
+      <circle cx="18" cy="17" r="2" />
+    </IconBase>
+  );
+}
+
 export function ArticlesIcon() {
   return (
     <IconBase>
@@ -139,6 +150,14 @@ export function MenuIcon() {
       <line x1="3" y1="6" x2="21" y2="6" />
       <line x1="3" y1="12" x2="21" y2="12" />
       <line x1="3" y1="18" x2="21" y2="18" />
+    </IconBase>
+  );
+}
+
+export function ChevronDownIcon() {
+  return (
+    <IconBase size={18}>
+      <path d="m6 9 6 6 6-6" />
     </IconBase>
   );
 }

@@ -1,11 +1,13 @@
-import type { ComponentType } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { type ComponentType, useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../features/auth/model/useAuth';
 import type { HealthState } from '../../../features/health/model/useHealthStatus';
 import { AREA_OPTIONS, findAreaByPath } from '../../../shared/config/areas';
 import { routePaths } from '../../../shared/config/routes';
 import {
+  AreaIcon,
   ArticlesIcon,
+  ChevronDownIcon,
   CompaniesIcon,
   DashboardIcon,
   FileIcon,
@@ -61,16 +63,22 @@ function getProviderLabel(provider: string | null): string {
 
 export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
   const location = useLocation();
-  const navigate = useNavigate();
   const auth = useAuth();
   const userAppRoles = auth.user?.appRoles ?? [];
   const selectedArea = findAreaByPath(location.pathname);
+  const [areasExpanded, setAreasExpanded] = useState(Boolean(selectedArea));
   const healthDotClassName = !health.loading
     ? health.error || health.status !== 'ok'
       ? 'health-dot error'
       : 'health-dot ok'
     : 'health-dot';
   const visibleNavItems = NAV_ITEMS.filter((item) => auth.hasPermission(item.permission));
+
+  useEffect(() => {
+    if (selectedArea) {
+      setAreasExpanded(true);
+    }
+  }, [selectedArea]);
 
   let authStatusText = 'Загрузка конфигурации авторизации…';
 
@@ -97,40 +105,46 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
 
       <nav className="sidebar-nav">
         {visibleNavItems.map(({ path, label, Icon, end }) => (
-          <NavLink
-            key={path}
-            to={path}
-            end={end}
-            className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
-          >
-            <Icon />
-            <span>{label}</span>
-          </NavLink>
+          <div key={path} className="sidebar-nav-group">
+            <NavLink
+              to={path}
+              end={end}
+              className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
+            >
+              <Icon />
+              <span>{label}</span>
+            </NavLink>
+
+            {path === routePaths.dashboard ? (
+              <div className="sidebar-nav-group area-nav-group">
+                <button
+                  type="button"
+                  className={`nav-link nav-accordion-toggle${selectedArea ? ' active' : ''}`}
+                  aria-expanded={areasExpanded}
+                  onClick={() => setAreasExpanded((current) => !current)}
+                >
+                  <AreaIcon />
+                  <span>Область</span>
+                  <ChevronDownIcon />
+                </button>
+                {areasExpanded ? (
+                  <div className="nav-submenu" role="menu" aria-label="Выбор области">
+                    {AREA_OPTIONS.map((area) => (
+                      <NavLink
+                        key={area.id}
+                        to={area.path}
+                        className={({ isActive }) => `nav-sublink${isActive ? ' active' : ''}`}
+                      >
+                        <span>{area.label}</span>
+                      </NavLink>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
         ))}
       </nav>
-
-      <div className="sidebar-area">
-        <label className="sidebar-area-label" htmlFor="sidebar-area-switcher">
-          Область
-        </label>
-        <select
-          id="sidebar-area-switcher"
-          className="sidebar-area-select"
-          value={selectedArea?.id ?? ''}
-          onChange={(event) => {
-            const nextArea = AREA_OPTIONS.find((area) => area.id === event.target.value);
-            if (!nextArea) return;
-            void navigate(nextArea.path);
-          }}
-        >
-          <option value="">Выберите область</option>
-          {AREA_OPTIONS.map((area) => (
-            <option key={area.id} value={area.id}>
-              {area.label}
-            </option>
-          ))}
-        </select>
-      </div>
 
       <div className="sidebar-footer">
         <div className="health-indicator">
