@@ -192,7 +192,13 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
         </div>
 
         <div className="auth-panel">
-          <div className="auth-user-name">{auth.user?.displayName || 'Гость'}</div>
+          {auth.hasPermission('profile.view') ? (
+            <NavLink to={routePaths.profile} className={({ isActive }) => `auth-user-name auth-user-link${isActive ? ' active' : ''}`}>
+              {auth.user?.displayName || 'Гость'}
+            </NavLink>
+          ) : (
+            <div className="auth-user-name">{auth.user?.displayName || 'Гость'}</div>
+          )}
           <div className="auth-status">
             {getProviderLabel(auth.provider)} · {authStatusText}
           </div>

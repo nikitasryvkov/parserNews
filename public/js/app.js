@@ -20296,7 +20296,7 @@ function AppSidebar({ sidebarOpen, health }) {
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "health-text", children: getHealthText(health) })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "auth-panel", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-user-name", children: auth.user?.displayName || "\u0413\u043E\u0441\u0442\u044C" }),
+        auth.hasPermission("profile.view") ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(NavLink, { to: routePaths.profile, className: ({ isActive }) => `auth-user-name auth-user-link${isActive ? " active" : ""}`, children: auth.user?.displayName || "\u0413\u043E\u0441\u0442\u044C" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-user-name", children: auth.user?.displayName || "\u0413\u043E\u0441\u0442\u044C" }),
         /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "auth-status", children: [
           getProviderLabel2(auth.provider),
           " \xB7 ",
