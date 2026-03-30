@@ -186,13 +186,6 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
       </nav>
 
       <div className="sidebar-footer">
-        {auth.hasPermission('profile.view') ? (
-          <NavLink to={routePaths.profile} className={({ isActive }) => `nav-link sidebar-footer-link${isActive ? ' active' : ''}`}>
-            <UserIcon />
-            <span>Личный кабинет</span>
-          </NavLink>
-        ) : null}
-
         <div className="health-indicator">
           <span className={healthDotClassName} />
           <span className="health-text">{getHealthText(health)}</span>
@@ -212,6 +205,12 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
                 </span>
               ))}
             </div>
+          ) : null}
+          {auth.hasPermission('profile.view') ? (
+            <NavLink to={routePaths.profile} className={({ isActive }) => `auth-profile-link${isActive ? ' active' : ''}`}>
+              <UserIcon />
+              <span>Личный кабинет</span>
+            </NavLink>
           ) : null}
           <div className="auth-actions">
             {auth.provider === 'keycloak' ? (

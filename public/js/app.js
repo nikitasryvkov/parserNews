@@ -20291,10 +20291,6 @@ function AppSidebar({ sidebarOpen, health }) {
       ] }) : null
     ] }, path)) }),
     /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-footer", children: [
-      auth.hasPermission("profile.view") ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(NavLink, { to: routePaths.profile, className: ({ isActive }) => `nav-link sidebar-footer-link${isActive ? " active" : ""}`, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(UserIcon, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442" })
-      ] }) : null,
       /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "health-indicator", children: [
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: healthDotClassName }),
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "health-text", children: getHealthText(health) })
@@ -20308,6 +20304,10 @@ function AppSidebar({ sidebarOpen, health }) {
         ] }),
         auth.error ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-error-text", children: auth.error }) : null,
         userAppRoles.length ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "role-badges", children: userAppRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "badge badge-info", children: role }, role)) }) : null,
+        auth.hasPermission("profile.view") ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(NavLink, { to: routePaths.profile, className: ({ isActive }) => `auth-profile-link${isActive ? " active" : ""}`, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(UserIcon, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442" })
+        ] }) : null,
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-actions", children: auth.provider === "keycloak" ? auth.isAuthenticated ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.logout(), children: "\u0412\u044B\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.login(), children: "\u0412\u043E\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.promptForApiKey(), children: "API key" }),
           /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(

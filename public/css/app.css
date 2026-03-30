@@ -118,10 +118,6 @@ a:hover { text-decoration: underline; }
   padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.07);
   font-size: .82rem;
 }
-.sidebar-footer-link {
-  width: 100%;
-  margin-bottom: 14px;
-}
 
 .health-indicator { display: flex; align-items: center; gap: 8px; color: var(--text-sidebar); }
 .health-dot {
@@ -149,6 +145,35 @@ a:hover { text-decoration: underline; }
   font-size: .78rem;
   line-height: 1.4;
   margin-top: 8px;
+}
+.auth-profile-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-sidebar);
+  font-size: .88rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.06);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.auth-profile-link svg {
+  flex-shrink: 0;
+  opacity: .85;
+}
+.auth-profile-link:hover {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  text-decoration: none;
+}
+.auth-profile-link.active {
+  background: rgba(79,70,229,.24);
+  color: #fff;
+  border-color: rgba(79,70,229,.45);
 }
 .auth-actions {
   display: flex;
