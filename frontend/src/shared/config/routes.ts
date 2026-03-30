@@ -1,5 +1,8 @@
 export const routePaths = {
   dashboard: '/',
+  areasEdtech: '/areas/edtech',
+  areasMedtech: '/areas/medtech',
+  areasBiotech: '/areas/biotech',
   articles: '/articles',
   companies: '/companies',
   tags: '/tags',

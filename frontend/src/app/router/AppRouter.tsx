@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from '../../features/auth/ui/ProtectedRoute';
 import { AccessPage } from '../../pages/access/ui/AccessPage';
+import { AreaDashboardPage } from '../../pages/areas/ui/AreaDashboardPage';
 import { ArticlesPage } from '../../pages/articles/ui/ArticlesPage';
 import { CompaniesPage } from '../../pages/companies/ui/CompaniesPage';
 import { DashboardPage } from '../../pages/dashboard/ui/DashboardPage';
@@ -9,6 +10,7 @@ import { QueuesPage } from '../../pages/queues/ui/QueuesPage';
 import { SettingsPage } from '../../pages/settings/ui/SettingsPage';
 import { TagsPage } from '../../pages/tags/ui/TagsPage';
 import { VpoPage } from '../../pages/vpo/ui/VpoPage';
+import { AREA_OPTIONS } from '../../shared/config/areas';
 import { routePaths } from '../../shared/config/routes';
 
 export function AppRouter() {
@@ -22,6 +24,17 @@ export function AppRouter() {
           </ProtectedRoute>
         )}
       />
+      {AREA_OPTIONS.map((area) => (
+        <Route
+          key={area.id}
+          path={area.path}
+          element={(
+            <ProtectedRoute permission="dashboard.view">
+              <AreaDashboardPage area={area} />
+            </ProtectedRoute>
+          )}
+        />
+      ))}
       <Route
         path={routePaths.articles}
         element={(

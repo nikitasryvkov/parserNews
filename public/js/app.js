@@ -18179,6 +18179,22 @@ function AccessPage() {
   ] });
 }
 
+// frontend/src/pages/areas/ui/AreaDashboardPage.tsx
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+function AreaDashboardPage({ area }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "page-header", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h1", { className: "page-title", children: area.title }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "page-subtitle", children: "\u041F\u0440\u043E\u043C\u0435\u0436\u0443\u0442\u043E\u0447\u043D\u044B\u0439 \u044D\u043A\u0440\u0430\u043D \u0434\u043B\u044F \u0431\u0443\u0434\u0443\u0449\u0435\u0433\u043E \u0434\u0430\u0448\u0431\u043E\u0440\u0434\u0430 \u043F\u043E \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u043C\u0443 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044E" })
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("article", { className: "card area-placeholder-card", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "badge badge-info area-placeholder-badge", children: "\u0411\u0443\u0434\u0443\u0449\u0438\u0439 \u0434\u0430\u0448\u0431\u043E\u0440\u0434" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "area-placeholder-lead", children: area.description }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "area-placeholder-text", children: "\u042D\u0442\u043E\u0442 \u044D\u043A\u0440\u0430\u043D \u0443\u0436\u0435 \u0437\u0430\u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u043E\u0432\u0430\u043D \u043F\u043E\u0434 \u043E\u0442\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0434\u0430\u0448\u0431\u043E\u0440\u0434 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F. \u041D\u0430 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u043C \u044D\u0442\u0430\u043F\u0435 \u0441\u044E\u0434\u0430 \u043C\u043E\u0436\u043D\u043E \u0431\u0443\u0434\u0435\u0442 \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C KPI-\u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438, \u0433\u0440\u0430\u0444\u0438\u043A\u0438, \u043E\u0442\u0440\u0430\u0441\u043B\u0435\u0432\u044B\u0435 \u0444\u0438\u043B\u044C\u0442\u0440\u044B, \u0441\u0432\u043E\u0434\u043A\u0438 \u043F\u043E \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0430\u043C \u0438 \u0430\u043D\u0430\u043B\u0438\u0442\u0438\u043A\u0443 \u043F\u043E \u0441\u0442\u0430\u0442\u044C\u044F\u043C." })
+    ] })
+  ] });
+}
+
 // frontend/src/entities/article/model/constants.ts
 var PRESET_ARTICLE_CATEGORIES = ["EdTech", "MedTech", "BioTech", "\u0417\u0430\u043A\u043E\u043D\u043E\u0434\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"];
 function isPresetArticleCategory(value) {
@@ -18449,7 +18465,7 @@ function useArticlesPage() {
 }
 
 // frontend/src/pages/articles/ui/ArticlesPage.tsx
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
 function ArticlesPage() {
   const auth = useAuth();
   const canEditArticles = auth.hasPermission("articles.manage");
@@ -18458,19 +18474,19 @@ function ArticlesPage() {
   const { view, data: data2, loading, error, deletingId, deletingAll, savingId, actions } = useArticlesPage();
   const sourceOptions = data2.filterOptions.sources;
   const categoryOptions = data2.filterOptions.categories;
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h1", { className: "page-title", children: "\u0421\u0442\u0430\u0442\u044C\u0438" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "page-subtitle", children: "\u0421\u043F\u0430\u0440\u0448\u0435\u043D\u043D\u044B\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u0438\u0437 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u043D\u044B\u0445 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u043E\u0432" }),
-        view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "auth-card-note article-editor-note", children: "\u0420\u0435\u0436\u0438\u043C \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0432\u043A\u043B\u044E\u0447\u0451\u043D: \u043C\u043E\u0436\u043D\u043E \u043C\u0435\u043D\u044F\u0442\u044C \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E \u0438 \u0443\u0434\u0430\u043B\u044F\u0442\u044C \u0441\u0442\u0430\u0442\u044C\u0438." }) : null
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h1", { className: "page-title", children: "\u0421\u0442\u0430\u0442\u044C\u0438" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "page-subtitle", children: "\u0421\u043F\u0430\u0440\u0448\u0435\u043D\u043D\u044B\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u0438\u0437 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u043D\u044B\u0445 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u043E\u0432" }),
+        view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "auth-card-note article-editor-note", children: "\u0420\u0435\u0436\u0438\u043C \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0432\u043A\u043B\u044E\u0447\u0451\u043D: \u043C\u043E\u0436\u043D\u043E \u043C\u0435\u043D\u044F\u0442\u044C \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E \u0438 \u0443\u0434\u0430\u043B\u044F\u0442\u044C \u0441\u0442\u0430\u0442\u044C\u0438." }) : null
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "btn-group", children: [
-        canUseEditMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: `btn ${view.editMode ? "btn-primary" : "btn-secondary"} btn-sm`, onClick: actions.toggleEditMode, children: view.editMode ? "\u0413\u043E\u0442\u043E\u0432\u043E" : "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C" }) : null,
-        canDeleteArticles && view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAllArticles, disabled: deletingAll, children: deletingAll ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u0435 \u0441\u0442\u0430\u0442\u044C\u0438" }) : null
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "btn-group", children: [
+        canUseEditMode ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", className: `btn ${view.editMode ? "btn-primary" : "btn-secondary"} btn-sm`, onClick: actions.toggleEditMode, children: view.editMode ? "\u0413\u043E\u0442\u043E\u0432\u043E" : "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C" }) : null,
+        canDeleteArticles && view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAllArticles, disabled: deletingAll, children: deletingAll ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u0435 \u0441\u0442\u0430\u0442\u044C\u0438" }) : null
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
       "form",
       {
         className: "search-bar",
@@ -18479,7 +18495,7 @@ function ArticlesPage() {
           actions.submitFilters();
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
             "input",
             {
               className: "search-input article-filter-input article-filter-input-wide",
@@ -18489,76 +18505,76 @@ function ArticlesPage() {
               onChange: (event) => actions.setDraftSearch(event.target.value)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
             "select",
             {
               className: "search-input article-filter-input",
               value: view.draftSource,
               onChange: (event) => actions.setDraftSource(event.target.value),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: "", children: "\u0412\u0441\u0435 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438" }),
-                sourceOptions.map((source) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: source, children: source }, source))
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("option", { value: "", children: "\u0412\u0441\u0435 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438" }),
+                sourceOptions.map((source) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("option", { value: source, children: source }, source))
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
             "select",
             {
               className: "search-input article-filter-input",
               value: view.draftCategory,
               onChange: (event) => actions.setDraftCategory(event.target.value),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: "", children: "\u0412\u0441\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438" }),
-                categoryOptions.map((category) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: category, children: category }, category))
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("option", { value: "", children: "\u0412\u0441\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438" }),
+                categoryOptions.map((category) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("option", { value: category, children: category }, category))
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", className: "btn btn-primary", children: "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: actions.resetFilters, children: "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(PageSizeSelect, { id: "articles-page-size", value: view.limit, onChange: actions.setLimit })
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "submit", className: "btn btn-primary", children: "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: actions.resetFilters, children: "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(PageSizeSelect, { id: "articles-page-size", value: view.limit, onChange: actions.setLimit })
         ]
       }
     ),
-    loading ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ErrorCard, { message: error }) : data2.articles.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    loading ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ErrorCard, { message: error }) : data2.articles.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       EmptyState,
       {
         title: "\u0421\u0442\u0430\u0442\u044C\u0438 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B",
         subtitle: view.search || view.source || view.category ? "\u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043E\u0441\u043B\u0430\u0431\u0438\u0442\u044C \u0444\u0438\u043B\u044C\u0442\u0440\u044B \u0438\u043B\u0438 \u0441\u0431\u0440\u043E\u0441\u0438\u0442\u044C \u043F\u043E\u0438\u0441\u043A" : "\u0417\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0435 \u0441\u0431\u043E\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441 \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B"
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "table-wrap", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("table", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u041E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E" }),
-          view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { className: "table-actions-head", children: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F" }) : null
+    ) : /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "table-wrap", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("table", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u041E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E" }),
+          view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { className: "table-actions-head", children: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F" }) : null
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("tbody", { children: data2.articles.map((article) => {
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("tbody", { children: data2.articles.map((article) => {
           const draftCategory = actions.getDraftCategory(article);
           const categoryChanged = actions.hasPendingCategoryChange(article);
           const selectedPresetCategory = isPresetArticleCategory(draftCategory) ? draftCategory : "";
           const customCategoryValue = selectedPresetCategory ? "" : draftCategory;
-          return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("tr", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("td", { className: "cell-title", children: [
-              article.source_url ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: article.source_url, target: "_blank", rel: "noreferrer", children: article.title }) : article.title,
-              article.summary ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cell-summary", children: article.summary }) : null
+          return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("tr", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("td", { className: "cell-title", children: [
+              article.source_url ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("a", { href: article.source_url, target: "_blank", rel: "noreferrer", children: article.title }) : article.title,
+              article.summary ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "cell-summary", children: article.summary }) : null
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "badge badge-info", children: article.source }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim", children: view.editMode && canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "article-category-editor", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "badge badge-info", children: article.source }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { className: "cell-dim", children: view.editMode && canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "article-category-editor", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
                 "select",
                 {
                   className: "search-input article-category-select",
                   value: selectedPresetCategory,
                   onChange: (event) => actions.setArticleCategory(article.id, event.target.value),
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: "", children: "\u0411\u0435\u0437 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438 / \u0441\u0432\u043E\u044F" }),
-                    PRESET_ARTICLE_CATEGORIES.map((category) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: category, children: category }, category))
+                    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("option", { value: "", children: "\u0411\u0435\u0437 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438 / \u0441\u0432\u043E\u044F" }),
+                    PRESET_ARTICLE_CATEGORIES.map((category) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("option", { value: category, children: category }, category))
                   ]
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
                 "input",
                 {
                   type: "text",
@@ -18569,10 +18585,10 @@ function ArticlesPage() {
                 }
               )
             ] }) : article.category || "\u2014" }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim article-published-cell", children: formatDate(article.published_at) }),
-            view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "table-actions-cell", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "article-row-actions", children: [
-              canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { className: "cell-dim article-published-cell", children: formatDate(article.published_at) }),
+            view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { className: "table-actions-cell", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "article-row-actions", children: [
+              canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
                   "button",
                   {
                     type: "button",
@@ -18582,7 +18598,7 @@ function ArticlesPage() {
                     children: savingId === article.id ? "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435\u2026" : "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
                   "button",
                   {
                     type: "button",
@@ -18593,7 +18609,7 @@ function ArticlesPage() {
                   }
                 )
               ] }) : null,
-              canDeleteArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              canDeleteArticles ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
                 "button",
                 {
                   type: "button",
@@ -18607,7 +18623,7 @@ function ArticlesPage() {
           ] }, article.id);
         }) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Pagination, { page: data2.page, limit: data2.limit, total: data2.total, onPageChange: actions.setPage })
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Pagination, { page: data2.page, limit: data2.limit, total: data2.total, onPageChange: actions.setPage })
     ] })
   ] });
 }
@@ -18761,7 +18777,7 @@ function useCompaniesPage() {
 }
 
 // frontend/src/pages/companies/ui/CompaniesPage.tsx
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
 function getCompaniesSubtitle(pool) {
   return pool === "edtech" ? "\u0420\u0435\u0439\u0442\u0438\u043D\u0433 EdTech \u2014 edtechs.ru (\u043E\u043D\u043B\u0430\u0439\u043D-\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u0435)" : "\u0420\u0435\u0439\u0442\u0438\u043D\u0433 Smart Ranking \u2014 \u043C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u0435 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u0438 (MedTech)";
 }
@@ -18777,13 +18793,13 @@ function CompaniesPage() {
   const canDeleteCompanies = auth.hasPermission("companies.delete");
   const { view, data: data2, loading, error, deletingId, deletingAll, actions } = useCompaniesPage();
   const emptySubtitle = view.query ? "\u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u043E\u0438\u0441\u043A\u043E\u0432\u044B\u0439 \u0437\u0430\u043F\u0440\u043E\u0441" : view.pool === "edtech" ? "\u0417\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0435 \u0441\u0431\u043E\u0440 \u0441 \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043A\u043D\u043E\u043F\u043A\u043E\u0439 EdTech" : "\u0417\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0435 \u0441\u0431\u043E\u0440 \u0441 \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043A\u043D\u043E\u043F\u043A\u043E\u0439 MedTech";
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h1", { className: "page-title", children: "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u0438" }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "page-subtitle", children: getCompaniesSubtitle(view.pool) }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "btn-group companies-pool-tabs", role: "tablist", "aria-label": "\u0422\u0430\u0431\u043B\u0438\u0446\u0430 \u0440\u0435\u0439\u0442\u0438\u043D\u0433\u0430", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h1", { className: "page-title", children: "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u0438" }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "page-subtitle", children: getCompaniesSubtitle(view.pool) }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "btn-group companies-pool-tabs", role: "tablist", "aria-label": "\u0422\u0430\u0431\u043B\u0438\u0446\u0430 \u0440\u0435\u0439\u0442\u0438\u043D\u0433\u0430", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             "button",
             {
               type: "button",
@@ -18794,7 +18810,7 @@ function CompaniesPage() {
               children: "MedTech"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             "button",
             {
               type: "button",
@@ -18807,9 +18823,9 @@ function CompaniesPage() {
           )
         ] })
       ] }),
-      canDeleteCompanies ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAllCompanies, disabled: deletingAll, children: deletingAll ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u0435 \u0432 \u044D\u0442\u043E\u0439 \u0442\u0430\u0431\u043B\u0438\u0446\u0435" }) : null
+      canDeleteCompanies ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAllCompanies, disabled: deletingAll, children: deletingAll ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u0435 \u0432 \u044D\u0442\u043E\u0439 \u0442\u0430\u0431\u043B\u0438\u0446\u0435" }) : null
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
       "form",
       {
         className: "search-bar",
@@ -18818,7 +18834,7 @@ function CompaniesPage() {
           actions.submitSearch();
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             "input",
             {
               className: "search-input search-bar-grow",
@@ -18828,32 +18844,32 @@ function CompaniesPage() {
               onChange: (event) => actions.setDraft(event.target.value)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "submit", className: "btn btn-primary", children: "\u041D\u0430\u0439\u0442\u0438" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(PageSizeSelect, { id: "companies-page-size", value: view.limit, onChange: actions.setLimit })
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { type: "submit", className: "btn btn-primary", children: "\u041D\u0430\u0439\u0442\u0438" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(PageSizeSelect, { id: "companies-page-size", value: view.limit, onChange: actions.setLimit })
         ]
       }
     ),
-    loading ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ErrorCard, { message: error }) : data2.companies.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(EmptyState, { title: "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B", subtitle: emptySubtitle }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "table-wrap", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("table", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u041F\u043E\u0437." }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u044F" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "CEO" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u0421\u0435\u0433\u043C\u0435\u043D\u0442" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430 2024 Q2" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430 2025 Q3" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { children: "\u0414\u0438\u043D\u0430\u043C\u0438\u043A\u0430" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("th", { style: { width: "50px" } })
+    loading ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(ErrorCard, { message: error }) : data2.companies.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(EmptyState, { title: "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B", subtitle: emptySubtitle }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "table-wrap", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("table", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { children: "\u041F\u043E\u0437." }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { children: "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u044F" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { children: "CEO" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { children: "\u0421\u0435\u0433\u043C\u0435\u043D\u0442" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { children: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430 2024 Q2" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { children: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430 2025 Q3" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { children: "\u0414\u0438\u043D\u0430\u043C\u0438\u043A\u0430" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { style: { width: "50px" } })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("tbody", { children: data2.companies.map((company) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { className: "cell-mono", style: { fontWeight: 700, textAlign: "center" }, children: company.position }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { className: "cell-title", children: company.company_url ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("a", { href: company.company_url, target: "_blank", rel: "noreferrer", children: company.company_name }) : company.company_name }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { children: company.ceo || /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "cell-dim", children: "\u2014" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { children: company.segment ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "badge badge-muted", children: company.segment }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "cell-dim", children: "\u2014" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { className: "cell-mono", children: company.revenue_2024_q2 || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { className: "cell-mono", children: company.revenue_2025_q3 || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { className: getDynamicsClass(company.dynamics), children: company.dynamics || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("td", { children: canDeleteCompanies ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("tbody", { children: data2.companies.map((company) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("td", { className: "cell-mono", style: { fontWeight: 700, textAlign: "center" }, children: company.position }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("td", { className: "cell-title", children: company.company_url ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("a", { href: company.company_url, target: "_blank", rel: "noreferrer", children: company.company_name }) : company.company_name }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("td", { children: company.ceo || /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "cell-dim", children: "\u2014" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("td", { children: company.segment ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "badge badge-muted", children: company.segment }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "cell-dim", children: "\u2014" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("td", { className: "cell-mono", children: company.revenue_2024_q2 || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("td", { className: "cell-mono", children: company.revenue_2025_q3 || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("td", { className: getDynamicsClass(company.dynamics), children: company.dynamics || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("td", { children: canDeleteCompanies ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             "button",
             {
               type: "button",
@@ -18866,7 +18882,7 @@ function CompaniesPage() {
           ) : null })
         ] }, company.id)) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Pagination, { page: data2.page, limit: data2.limit, total: data2.total, onPageChange: actions.setPage })
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Pagination, { page: data2.page, limit: data2.limit, total: data2.total, onPageChange: actions.setPage })
     ] })
   ] });
 }
@@ -18905,6 +18921,9 @@ function useParserActions() {
 // frontend/src/shared/config/routes.ts
 var routePaths = {
   dashboard: "/",
+  areasEdtech: "/areas/edtech",
+  areasMedtech: "/areas/medtech",
+  areasBiotech: "/areas/biotech",
   articles: "/articles",
   companies: "/companies",
   tags: "/tags",
@@ -18916,18 +18935,18 @@ var routePaths = {
 };
 
 // frontend/src/pages/dashboard/ui/DashboardPage.tsx
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 function DashboardPage() {
   const auth = useAuth();
   const { pendingParser, runParser } = useParserActions();
   const canRunParser = auth.hasPermission("parser.run");
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h1", { className: "page-title", children: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F" }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "page-subtitle", children: "\u0421\u0432\u043E\u0434\u043D\u044B\u0439 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u044C \u0441\u0431\u043E\u0440\u0430 \u043D\u043E\u0432\u043E\u0441\u0442\u0435\u0439 \u0438 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u043E\u0432" })
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h1", { className: "page-title", children: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "page-subtitle", children: "\u0421\u0432\u043E\u0434\u043D\u044B\u0439 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u044C \u0441\u0431\u043E\u0440\u0430 \u043D\u043E\u0432\u043E\u0441\u0442\u0435\u0439 \u0438 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u043E\u0432" })
       ] }),
-      canRunParser ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "btn-group", children: PARSER_ACTIONS.map((parser) => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+      canRunParser ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "btn-group", children: PARSER_ACTIONS.map((parser) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
         "button",
         {
           type: "button",
@@ -18939,55 +18958,55 @@ function DashboardPage() {
         parser.name
       )) }) : null
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("article", { className: "card home-about", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("p", { className: "home-about-lead", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "ParserNews" }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("article", { className: "card home-about", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("p", { className: "home-about-lead", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "ParserNews" }),
         " \u0441\u043E\u0431\u0438\u0440\u0430\u0435\u0442 \u043D\u043E\u0432\u043E\u0441\u0442\u0438 \u0438 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0438 \u0438\u0437 \u0432\u043D\u0435\u0448\u043D\u0438\u0445 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u043E\u0432, \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0430\u0435\u0442 \u0438\u0445 \u0447\u0435\u0440\u0435\u0437 \u043E\u0447\u0435\u0440\u0435\u0434\u0438 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0435\u0442 \u0432 PostgreSQL. \u0418\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441 \u043D\u0443\u0436\u0435\u043D \u0434\u043B\u044F \u0440\u0443\u0447\u043D\u043E\u0433\u043E \u0437\u0430\u043F\u0443\u0441\u043A\u0430 \u043F\u0430\u0440\u0441\u0435\u0440\u043E\u0432, \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u044F \u0441\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u044F \u0441\u0438\u0441\u0442\u0435\u043C\u044B \u0438 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043A\u043E\u043D\u0442\u0435\u043D\u0442\u043E\u043C."
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h2", { className: "home-about-h", children: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438" }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("ul", { className: "home-about-list", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "TAdviser" }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h2", { className: "home-about-h", children: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438" }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("ul", { className: "home-about-list", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "TAdviser" }),
           " \u2014 \u0430\u043D\u0430\u043B\u0438\u0442\u0438\u043A\u0430 \u0438 \u043D\u043E\u0432\u043E\u0441\u0442\u0438 \u043F\u043E IT \u0438 \u0441\u043C\u0435\u0436\u043D\u044B\u043C \u0440\u044B\u043D\u043A\u0430\u043C."
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "\u0420\u0418\u0410 \u041D\u043E\u0432\u043E\u0441\u0442\u0438" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "\u0420\u0418\u0410 \u041D\u043E\u0432\u043E\u0441\u0442\u0438" }),
           " \u2014 \u043B\u0435\u043D\u0442\u0430 ",
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("code", { children: "ria.ru/lenta/" }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("code", { children: "ria.ru/lenta/" }),
           ", \u0433\u043B\u0443\u0431\u0438\u043D\u0430 \u0438 \u0442\u0430\u0439\u043C\u0438\u043D\u0433\u0438 \u043D\u0430\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u043D\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435",
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Link, { to: routePaths.settings, children: "\xAB\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438\xBB" }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Link, { to: routePaths.settings, children: "\xAB\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438\xBB" }),
           "."
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "MedTech" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "MedTech" }),
           " \u2014 \u0440\u0435\u0439\u0442\u0438\u043D\u0433 Smart Ranking \u043F\u043E \u043C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u043C \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u044F\u043C."
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "EdTech" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "EdTech" }),
           " \u2014 \u0440\u0435\u0439\u0442\u0438\u043D\u0433 \u043A\u0440\u0443\u043F\u043D\u0435\u0439\u0448\u0438\u0445 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0439 \u043E\u043D\u043B\u0430\u0439\u043D-\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u043D\u0430",
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("a", { href: "https://edtechs.ru/", target: "_blank", rel: "noreferrer", children: "edtechs.ru" }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("a", { href: "https://edtechs.ru/", target: "_blank", rel: "noreferrer", children: "edtechs.ru" }),
           "."
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "\u0421\u0432\u043E\u0434 \u0412\u041F\u041E" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "\u0421\u0432\u043E\u0434 \u0412\u041F\u041E" }),
           " \u2014 \u043E\u0442\u0434\u0435\u043B\u044C\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 ",
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Link, { to: routePaths.vpo, children: "\xAB\u0421\u0432\u043E\u0434 \u0412\u041F\u041E\xBB" }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Link, { to: routePaths.vpo, children: "\xAB\u0421\u0432\u043E\u0434 \u0412\u041F\u041E\xBB" }),
           " \u0434\u043B\u044F \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u044F \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u0438\u0445 Excel-\u0444\u0430\u0439\u043B\u043E\u0432 \u0432 \u043E\u0434\u0438\u043D \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442."
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h2", { className: "home-about-h", children: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430" }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("p", { className: "home-about-p", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h2", { className: "home-about-h", children: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430" }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("p", { className: "home-about-p", children: [
         "\u041E\u0447\u0435\u0440\u0435\u0434\u0438 \u043F\u043E\u0441\u0442\u0440\u043E\u0435\u043D\u044B \u043D\u0430 ",
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "Redis" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "Redis" }),
         " \u0438 ",
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "BullMQ" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "BullMQ" }),
         ", \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u2014 ",
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "PostgreSQL" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "PostgreSQL" }),
         ". \u0421\u0442\u0430\u0442\u0443\u0441 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0439 \u0432\u0438\u0434\u0435\u043D \u0432\u043D\u0438\u0437\u0443 \u0431\u043E\u043A\u043E\u0432\u043E\u0439 \u043F\u0430\u043D\u0435\u043B\u0438, \u0430 \u0434\u0435\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433 \u0437\u0430\u0434\u0430\u0447 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0432 \u0440\u0430\u0437\u0434\u0435\u043B\u0435",
         " ",
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Link, { to: routePaths.queues, children: "\xAB\u041E\u0447\u0435\u0440\u0435\u0434\u0438\xBB" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Link, { to: routePaths.queues, children: "\xAB\u041E\u0447\u0435\u0440\u0435\u0434\u0438\xBB" }),
         "."
       ] })
     ] })
@@ -18995,7 +19014,7 @@ function DashboardPage() {
 }
 
 // frontend/src/pages/profile/ui/ProfilePage.tsx
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 function renderValue(value) {
   return value?.trim() || "\u2014";
 }
@@ -19005,64 +19024,64 @@ function ProfilePage() {
   if (!user) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h1", { className: "page-title", children: "\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442" }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "page-subtitle", children: "\u041F\u0440\u043E\u0444\u0438\u043B\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u0440\u043E\u043B\u0438 \u0438 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0435\u0441\u0441\u0438\u0438" })
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h1", { className: "page-title", children: "\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "page-subtitle", children: "\u041F\u0440\u043E\u0444\u0438\u043B\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u0440\u043E\u043B\u0438 \u0438 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0435\u0441\u0441\u0438\u0438" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "btn-group", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm", onClick: () => void auth.refreshProfile(), children: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u043F\u0440\u043E\u0444\u0438\u043B\u044C" }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { type: "button", className: "btn btn-primary btn-sm", onClick: () => void auth.logout(), children: "\u0412\u044B\u0439\u0442\u0438" })
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "btn-group", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm", onClick: () => void auth.refreshProfile(), children: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u043F\u0440\u043E\u0444\u0438\u043B\u044C" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", className: "btn btn-primary btn-sm", onClick: () => void auth.logout(), children: "\u0412\u044B\u0439\u0442\u0438" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "profile-grid", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("section", { className: "card profile-section", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "card-label", children: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C" }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "profile-identity", children: user.displayName }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "profile-meta-grid", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "profile-meta-label", children: "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "badge badge-info", children: auth.provider === "keycloak" ? "Keycloak" : "API key" })
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "profile-grid", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("section", { className: "card profile-section", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "card-label", children: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "profile-identity", children: user.displayName }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "profile-meta-grid", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "profile-meta-label", children: "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "badge badge-info", children: auth.provider === "keycloak" ? "Keycloak" : "API key" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "profile-meta-label", children: "\u041B\u043E\u0433\u0438\u043D" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { children: user.username })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "profile-meta-label", children: "\u041B\u043E\u0433\u0438\u043D" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { children: user.username })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "profile-meta-label", children: "Email" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { children: renderValue(user.email) })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "profile-meta-label", children: "Email" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { children: renderValue(user.email) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "profile-meta-label", children: "\u0418\u043C\u044F" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { children: renderValue(user.firstName) })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "profile-meta-label", children: "\u0418\u043C\u044F" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { children: renderValue(user.firstName) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "profile-meta-label", children: "\u0424\u0430\u043C\u0438\u043B\u0438\u044F" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { children: renderValue(user.lastName) })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "profile-meta-label", children: "\u0424\u0430\u043C\u0438\u043B\u0438\u044F" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { children: renderValue(user.lastName) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "profile-meta-label", children: "ID" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "cell-mono", children: user.id })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "profile-meta-label", children: "ID" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "cell-mono", children: user.id })
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("section", { className: "card profile-section", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "card-label", children: "\u0420\u043E\u043B\u0438 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u044F" }),
-        user.appRoles.length ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "role-badges", children: user.appRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "badge badge-info", children: role }, role)) }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "auth-card-note", children: "\u041F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0447\u0435\u0441\u043A\u0438\u0435 \u0440\u043E\u043B\u0438 \u043D\u0435 \u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D\u044B." }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "profile-subsection", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "profile-meta-label", children: "Realm roles" }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "role-badges", children: user.realmRoles.length ? user.realmRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "badge badge-muted", children: role }, role)) : "\u2014" })
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("section", { className: "card profile-section", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "card-label", children: "\u0420\u043E\u043B\u0438 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u044F" }),
+        user.appRoles.length ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "role-badges", children: user.appRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "badge badge-info", children: role }, role)) }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "auth-card-note", children: "\u041F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0447\u0435\u0441\u043A\u0438\u0435 \u0440\u043E\u043B\u0438 \u043D\u0435 \u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D\u044B." }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "profile-subsection", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "profile-meta-label", children: "Realm roles" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "role-badges", children: user.realmRoles.length ? user.realmRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "badge badge-muted", children: role }, role)) : "\u2014" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "profile-subsection", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "profile-meta-label", children: "Client roles" }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "role-badges", children: user.clientRoles.length ? user.clientRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "badge badge-muted", children: role }, role)) : "\u2014" })
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "profile-subsection", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "profile-meta-label", children: "Client roles" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "role-badges", children: user.clientRoles.length ? user.clientRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "badge badge-muted", children: role }, role)) : "\u2014" })
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("section", { className: "card profile-section", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "card-label", children: "\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F" }),
-      user.permissions.length ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "permission-grid", children: user.permissions.map((permission) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("code", { className: "permission-chip", children: permission }, permission)) }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "auth-card-note", children: "\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B." })
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("section", { className: "card profile-section", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "card-label", children: "\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F" }),
+      user.permissions.length ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "permission-grid", children: user.permissions.map((permission) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { className: "permission-chip", children: permission }, permission)) }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "auth-card-note", children: "\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B." })
     ] })
   ] });
 }
@@ -19138,28 +19157,28 @@ function useQueuesPage() {
 }
 
 // frontend/src/pages/queues/ui/QueuesPage.tsx
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 function QueueCard({ label, queue }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "card card-accent", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "card-label", children: label }),
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "stat-row", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "stat-pill", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "dot dot-waiting" }),
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "card card-accent", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "card-label", children: label }),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "stat-row", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("span", { className: "stat-pill", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "dot dot-waiting" }),
         queue.waiting,
         " \u043E\u0436\u0438\u0434\u0430\u0435\u0442"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "stat-pill", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "dot dot-active" }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("span", { className: "stat-pill", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "dot dot-active" }),
         queue.active,
         " \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u0445"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "stat-pill", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "dot dot-completed" }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("span", { className: "stat-pill", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "dot dot-completed" }),
         queue.completed,
         " \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u043E"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "stat-pill", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "dot dot-failed" }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("span", { className: "stat-pill", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "dot dot-failed" }),
         queue.failed,
         " \u043E\u0448\u0438\u0431\u043E\u043A"
       ] })
@@ -19168,31 +19187,31 @@ function QueueCard({ label, queue }) {
 }
 function QueuesPage() {
   const { loading, error, queues, jobs, reload } = useQueuesPage();
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h1", { className: "page-title", children: "\u041E\u0447\u0435\u0440\u0435\u0434\u0438" }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "page-subtitle", children: "\u0421\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u0437\u0430\u0434\u0430\u0447 BullMQ" })
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_jsx_runtime17.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h1", { className: "page-title", children: "\u041E\u0447\u0435\u0440\u0435\u0434\u0438" }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "page-subtitle", children: "\u0421\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u0437\u0430\u0434\u0430\u0447 BullMQ" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: reload, children: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C" })
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: reload, children: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C" })
     ] }),
-    loading ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ErrorCard, { message: error }) : queues ? /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "cards", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(QueueCard, { label: "Parse \u2014 \u0441\u0431\u043E\u0440 \u0434\u0430\u043D\u043D\u044B\u0445", queue: queues.parse }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(QueueCard, { label: "Adapt \u2014 \u0430\u0434\u0430\u043F\u0442\u0430\u0446\u0438\u044F", queue: queues.adapt }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(QueueCard, { label: "Store \u2014 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435", queue: queues.store })
+    loading ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ErrorCard, { message: error }) : queues ? /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_jsx_runtime17.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "cards", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(QueueCard, { label: "Parse \u2014 \u0441\u0431\u043E\u0440 \u0434\u0430\u043D\u043D\u044B\u0445", queue: queues.parse }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(QueueCard, { label: "Adapt \u2014 \u0430\u0434\u0430\u043F\u0442\u0430\u0446\u0438\u044F", queue: queues.adapt }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(QueueCard, { label: "Store \u2014 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435", queue: queues.store })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h2", { className: "section-title", children: "\u0423\u043F\u0430\u0432\u0448\u0438\u0435 \u0437\u0430\u0434\u0430\u0447\u0438" }),
-      jobs.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(EmptyState, { title: "\u0423\u043F\u0430\u0432\u0448\u0438\u0445 \u0437\u0430\u0434\u0430\u0447 \u043D\u0435\u0442", subtitle: "\u0412\u0441\u0451 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442 \u0448\u0442\u0430\u0442\u043D\u043E" }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { children: jobs.map((job, index) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "failed-job", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "failed-job-header", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "badge badge-danger", children: job.queue }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "badge badge-muted", children: job.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "failed-job-meta", children: formatDateTime(job.timestamp) })
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h2", { className: "section-title", children: "\u0423\u043F\u0430\u0432\u0448\u0438\u0435 \u0437\u0430\u0434\u0430\u0447\u0438" }),
+      jobs.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(EmptyState, { title: "\u0423\u043F\u0430\u0432\u0448\u0438\u0445 \u0437\u0430\u0434\u0430\u0447 \u043D\u0435\u0442", subtitle: "\u0412\u0441\u0451 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442 \u0448\u0442\u0430\u0442\u043D\u043E" }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { children: jobs.map((job, index) => /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "failed-job", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "failed-job-header", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "badge badge-danger", children: job.queue }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "badge badge-muted", children: job.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "failed-job-meta", children: formatDateTime(job.timestamp) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "failed-job-reason", children: job.failedReason }),
-        job.stacktrace?.length ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("pre", { className: "failed-job-stack", children: job.stacktrace.join("\n") }) : null
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "failed-job-reason", children: job.failedReason }),
+        job.stacktrace?.length ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("pre", { className: "failed-job-stack", children: job.stacktrace.join("\n") }) : null
       ] }, `${job.queue}-${job.name}-${job.timestamp}-${index}`)) })
-    ] }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(EmptyState, { title: "\u0414\u0430\u043D\u043D\u044B\u0435 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u044F\u043C \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B" })
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(EmptyState, { title: "\u0414\u0430\u043D\u043D\u044B\u0435 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u044F\u043C \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B" })
   ] });
 }
 
@@ -19305,23 +19324,23 @@ function useRiaSettingsPage() {
 }
 
 // frontend/src/pages/settings/ui/SettingsPage.tsx
-var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
 function SettingsPage() {
   const { form, statusText, statusIsError, saving, actions } = useRiaSettingsPage();
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_jsx_runtime17.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "page-header", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h1", { className: "page-title", children: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438" }),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("p", { className: "page-subtitle", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "page-header", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h1", { className: "page-title", children: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438" }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "page-subtitle", children: [
         "\u041B\u0435\u043D\u0442\u0430 \u0420\u0418\u0410 \u041D\u043E\u0432\u043E\u0441\u0442\u0438 (",
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("code", { children: "ria.ru/lenta/" }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("code", { children: "ria.ru/lenta/" }),
         ")"
       ] })
     ] }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "card ria-settings-card", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "card-label", children: "\u0413\u043B\u0443\u0431\u0438\u043D\u0430 \u043B\u0435\u043D\u0442\u044B \u0438 \u0442\u0430\u0439\u043C\u0438\u043D\u0433\u0438" }),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "ria-settings-hint", children: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u0440\u0446\u0438\u044F \u0431\u0435\u0440\u0451\u0442\u0441\u044F \u0441 \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u043B\u0435\u043D\u0442\u044B, \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u0447\u0435\u0440\u0435\u0437 \u0431\u043B\u043E\u043A \xAB\u0435\u0449\u0451 20 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u043E\u0432\xBB. \u0417\u0430\u043F\u0440\u043E\u0441\u044B \u043A \u0420\u0418\u0410 \u0432\u0441\u0435\u0433\u0434\u0430 \u0438\u0434\u0443\u0442 \u043D\u0430 \u0441\u0430\u0439\u0442 \u0437\u0430\u043D\u043E\u0432\u043E, \u0430 \u0432 \u0431\u0430\u0437\u0443 \u043F\u043E\u043F\u0430\u0434\u0430\u044E\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u043D\u043E\u0432\u043E\u0441\u0442\u0438, \u043F\u0440\u043E\u0445\u043E\u0434\u044F\u0449\u0438\u0435 \u0444\u0438\u043B\u044C\u0442\u0440 \u0442\u0435\u0433\u043E\u0432." }),
-      statusText ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: `settings-page-status${statusIsError ? " settings-page-status-error" : ""}`, children: statusText }) : null,
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "card ria-settings-card", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "card-label", children: "\u0413\u043B\u0443\u0431\u0438\u043D\u0430 \u043B\u0435\u043D\u0442\u044B \u0438 \u0442\u0430\u0439\u043C\u0438\u043D\u0433\u0438" }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className: "ria-settings-hint", children: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u0440\u0446\u0438\u044F \u0431\u0435\u0440\u0451\u0442\u0441\u044F \u0441 \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u043B\u0435\u043D\u0442\u044B, \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u0447\u0435\u0440\u0435\u0437 \u0431\u043B\u043E\u043A \xAB\u0435\u0449\u0451 20 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u043E\u0432\xBB. \u0417\u0430\u043F\u0440\u043E\u0441\u044B \u043A \u0420\u0418\u0410 \u0432\u0441\u0435\u0433\u0434\u0430 \u0438\u0434\u0443\u0442 \u043D\u0430 \u0441\u0430\u0439\u0442 \u0437\u0430\u043D\u043E\u0432\u043E, \u0430 \u0432 \u0431\u0430\u0437\u0443 \u043F\u043E\u043F\u0430\u0434\u0430\u044E\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u043D\u043E\u0432\u043E\u0441\u0442\u0438, \u043F\u0440\u043E\u0445\u043E\u0434\u044F\u0449\u0438\u0435 \u0444\u0438\u043B\u044C\u0442\u0440 \u0442\u0435\u0433\u043E\u0432." }),
+      statusText ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className: `settings-page-status${statusIsError ? " settings-page-status-error" : ""}`, children: statusText }) : null,
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
         "form",
         {
           className: "ria-settings-form",
@@ -19330,9 +19349,9 @@ function SettingsPage() {
             void actions.saveSettings();
           },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("label", { className: "ria-setting", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "ria-setting-label", children: "\u041F\u043E\u0440\u0446\u0438\u0439 (\u0431\u043B\u043E\u043A\u043E\u0432)" }),
-              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("label", { className: "ria-setting", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "ria-setting-label", children: "\u041F\u043E\u0440\u0446\u0438\u0439 (\u0431\u043B\u043E\u043A\u043E\u0432)" }),
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
                 "input",
                 {
                   type: "number",
@@ -19345,9 +19364,9 @@ function SettingsPage() {
                 }
               )
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("label", { className: "ria-setting", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "ria-setting-label", children: "\u041F\u0430\u0443\u0437\u0430 \u043C\u0435\u0436\u0434\u0443 \u043F\u043E\u0440\u0446\u0438\u044F\u043C\u0438 (\u043C\u0441)" }),
-              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("label", { className: "ria-setting", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "ria-setting-label", children: "\u041F\u0430\u0443\u0437\u0430 \u043C\u0435\u0436\u0434\u0443 \u043F\u043E\u0440\u0446\u0438\u044F\u043C\u0438 (\u043C\u0441)" }),
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
                 "input",
                 {
                   type: "number",
@@ -19360,9 +19379,9 @@ function SettingsPage() {
                 }
               )
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("label", { className: "ria-setting", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "ria-setting-label", children: "\u041E\u0436\u0438\u0434\u0430\u043D\u0438\u0435 \u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 Puppeteer (\u043C\u0441)" }),
-              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("label", { className: "ria-setting", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "ria-setting-label", children: "\u041E\u0436\u0438\u0434\u0430\u043D\u0438\u0435 \u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 Puppeteer (\u043C\u0441)" }),
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
                 "input",
                 {
                   type: "number",
@@ -19375,7 +19394,7 @@ function SettingsPage() {
                 }
               )
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "submit", className: "btn btn-primary btn-sm", disabled: saving, children: saving ? "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435\u2026" : "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C" })
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "submit", className: "btn btn-primary btn-sm", disabled: saving, children: saving ? "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435\u2026" : "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C" })
           ]
         }
       )
@@ -19561,21 +19580,21 @@ function useTagsPage() {
 }
 
 // frontend/src/pages/tags/ui/TagsPage.tsx
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
 function TagChip({ tag, onToggleExclude, onDelete, onModeChange }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("span", { className: `tag-chip${tag.exclude ? " tag-chip-exclude" : ""}`, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("span", { className: `tag-chip${tag.exclude ? " tag-chip-exclude" : ""}`, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
       "select",
       {
         className: "tag-chip-mode-select",
         value: tag.mode,
         title: TAG_MODE_HINTS[tag.mode],
         onChange: (event) => onModeChange(tag, event.target.value),
-        children: Object.entries(TAG_MODE_LABELS).map(([value, label]) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("option", { value, children: label }, value))
+        children: Object.entries(TAG_MODE_LABELS).map(([value, label]) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("option", { value, children: label }, value))
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "tag-chip-text", children: tag.tag }),
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { className: "tag-chip-text", children: tag.tag }),
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
       "button",
       {
         type: "button",
@@ -19585,27 +19604,27 @@ function TagChip({ tag, onToggleExclude, onDelete, onModeChange }) {
         children: tag.exclude ? "\u21A9" : "\u26D4"
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "button", className: "tag-chip-remove", title: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C", onClick: () => onDelete(tag), children: "\xD7" })
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", className: "tag-chip-remove", title: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C", onClick: () => onDelete(tag), children: "\xD7" })
   ] });
 }
 function TagsPage() {
   const { loading, error, tags, form, actions } = useTagsPage();
   const includeTags = tags.filter((tag) => !tag.exclude);
   const excludeTags = tags.filter((tag) => tag.exclude);
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h1", { className: "page-title", children: "\u0422\u0435\u0433\u0438 \u0444\u0438\u043B\u044C\u0442\u0440\u0430 TAdviser" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className: "page-subtitle", children: "\u0421\u0442\u0430\u0442\u044C\u044F \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442, \u0435\u0441\u043B\u0438 \u0441\u043E\u0432\u043F\u0430\u043B \u0445\u043E\u0442\u044F \u0431\u044B \u043E\u0434\u0438\u043D \u0432\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0439 \u0442\u0435\u0433 \u0438 \u043D\u0438 \u043E\u0434\u0438\u043D \u0438\u0441\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0439" })
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h1", { className: "page-title", children: "\u0422\u0435\u0433\u0438 \u0444\u0438\u043B\u044C\u0442\u0440\u0430 TAdviser" }),
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "page-subtitle", children: "\u0421\u0442\u0430\u0442\u044C\u044F \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442, \u0435\u0441\u043B\u0438 \u0441\u043E\u0432\u043F\u0430\u043B \u0445\u043E\u0442\u044F \u0431\u044B \u043E\u0434\u0438\u043D \u0432\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0439 \u0442\u0435\u0433 \u0438 \u043D\u0438 \u043E\u0434\u0438\u043D \u0438\u0441\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0439" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "btn-group", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm", onClick: actions.restoreDefaultTags, children: "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAllTags, children: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u0435" })
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "btn-group", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm", onClick: actions.restoreDefaultTags, children: "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E" }),
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAllTags, children: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u0435" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "card", style: { marginBottom: "20px" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "card-label", children: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u0433" }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "card", style: { marginBottom: "20px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-label", children: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u0433" }),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
         "form",
         {
           className: "tag-add-form",
@@ -19614,7 +19633,7 @@ function TagsPage() {
             void actions.submitTag();
           },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
               "input",
               {
                 className: "search-input",
@@ -19624,35 +19643,35 @@ function TagsPage() {
                 onChange: (event) => actions.setTagValue(event.target.value)
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("select", { className: "tag-mode-select", value: form.mode, onChange: (event) => actions.setMode(event.target.value), children: Object.entries(TAG_MODE_LABELS).map(([value, label]) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("option", { value, children: label }, value)) }),
-            /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("label", { className: "tag-exclude-label", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("input", { type: "checkbox", checked: form.exclude, onChange: (event) => actions.setExclude(event.target.checked) }),
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("select", { className: "tag-mode-select", value: form.mode, onChange: (event) => actions.setMode(event.target.value), children: Object.entries(TAG_MODE_LABELS).map(([value, label]) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("option", { value, children: label }, value)) }),
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("label", { className: "tag-exclude-label", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("input", { type: "checkbox", checked: form.exclude, onChange: (event) => actions.setExclude(event.target.checked) }),
               " \u0418\u0441\u043A\u043B\u044E\u0447\u0438\u0442\u044C"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "submit", className: "btn btn-primary btn-sm", disabled: form.submitting, children: form.submitting ? "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C" })
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "submit", className: "btn btn-primary btn-sm", disabled: form.submitting, children: form.submitting ? "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C" })
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "tag-mode-hint", children: TAG_MODE_HINTS[form.mode] })
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "tag-mode-hint", children: TAG_MODE_HINTS[form.mode] })
     ] }),
-    loading ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(ErrorCard, { message: error }) : /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "cards", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "card card-success", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "card-label", children: "\u0412\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0435 \u0442\u0435\u0433\u0438" }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "card-value", children: includeTags.length })
+    loading ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(ErrorCard, { message: error }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "cards", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "card card-success", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-label", children: "\u0412\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0435 \u0442\u0435\u0433\u0438" }),
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-value", children: includeTags.length })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "card card-danger", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "card-label", children: "\u0418\u0441\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0435 \u0442\u0435\u0433\u0438" }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "card-value", children: excludeTags.length })
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "card card-danger", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-label", children: "\u0418\u0441\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0435 \u0442\u0435\u0433\u0438" }),
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-value", children: excludeTags.length })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "card", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "card-label", children: "\u0412\u0441\u0435\u0433\u043E" }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "card-value", children: tags.length })
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "card", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-label", children: "\u0412\u0441\u0435\u0433\u043E" }),
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-value", children: tags.length })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h2", { className: "section-title", children: "\u0412\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0435 \u0442\u0435\u0433\u0438" }),
-        includeTags.length ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "tags-grid", children: includeTags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h2", { className: "section-title", children: "\u0412\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0435 \u0442\u0435\u0433\u0438" }),
+        includeTags.length ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "tags-grid", children: includeTags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           TagChip,
           {
             tag,
@@ -19661,14 +19680,14 @@ function TagsPage() {
             onDelete: actions.removeTag
           },
           tag.id
-        )) }) : /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(EmptyState, { title: "\u041D\u0435\u0442 \u0432\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0445 \u0442\u0435\u0433\u043E\u0432", subtitle: "\u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0442\u0435\u0433\u0438 \u0438\u043B\u0438 \u0441\u0431\u0440\u043E\u0441\u044C\u0442\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E" })
+        )) }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(EmptyState, { title: "\u041D\u0435\u0442 \u0432\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0445 \u0442\u0435\u0433\u043E\u0432", subtitle: "\u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0442\u0435\u0433\u0438 \u0438\u043B\u0438 \u0441\u0431\u0440\u043E\u0441\u044C\u0442\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E" })
       ] }),
-      excludeTags.length ? /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { style: { marginTop: "20px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("h2", { className: "section-title", children: [
+      excludeTags.length ? /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { style: { marginTop: "20px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("h2", { className: "section-title", children: [
           "\u0418\u0441\u043A\u043B\u044E\u0447\u0430\u044E\u0449\u0438\u0435 \u0442\u0435\u0433\u0438 ",
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "badge badge-danger", children: "\u043E\u0442\u043A\u043B\u043E\u043D\u044F\u044E\u0442 \u0441\u0442\u0430\u0442\u044C\u0438" })
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { className: "badge badge-danger", children: "\u043E\u0442\u043A\u043B\u043E\u043D\u044F\u044E\u0442 \u0441\u0442\u0430\u0442\u044C\u0438" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "tags-grid", children: excludeTags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "tags-grid", children: excludeTags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           TagChip,
           {
             tag,
@@ -19852,7 +19871,7 @@ function useVpoPage() {
 }
 
 // frontend/src/pages/vpo/ui/VpoPage.tsx
-var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
 function VpoPage() {
   const auth = useAuth();
   const canUpload = auth.hasPermission("vpo.upload");
@@ -19876,23 +19895,23 @@ function VpoPage() {
       fileInputRef.current.value = "";
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h1", { className: "page-title", children: "\u0421\u0432\u043E\u0434 \u0412\u041F\u041E" }),
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "page-subtitle", children: "\u041E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u0435 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u0438\u0445 .xlsx \u0432 \u043E\u0434\u0438\u043D \u0438\u0442\u043E\u0433\u043E\u0432\u044B\u0439 \u0444\u0430\u0439\u043B \u0438 \u0438\u0441\u0442\u043E\u0440\u0438\u044F \u0432\u044B\u0433\u0440\u0443\u0437\u043E\u043A" })
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("h1", { className: "page-title", children: "\u0421\u0432\u043E\u0434 \u0412\u041F\u041E" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { className: "page-subtitle", children: "\u041E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u0435 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u0438\u0445 .xlsx \u0432 \u043E\u0434\u0438\u043D \u0438\u0442\u043E\u0433\u043E\u0432\u044B\u0439 \u0444\u0430\u0439\u043B \u0438 \u0438\u0441\u0442\u043E\u0440\u0438\u044F \u0432\u044B\u0433\u0440\u0443\u0437\u043E\u043A" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "btn-group", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm", onClick: actions.refresh, children: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0438\u0441\u0442\u043E\u0440\u0438\u044E" }),
-        canDelete ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAll, disabled: deletingAll, children: deletingAll ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u044E \u0438\u0441\u0442\u043E\u0440\u0438\u044E" }) : null
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "btn-group", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm", onClick: actions.refresh, children: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0438\u0441\u0442\u043E\u0440\u0438\u044E" }),
+        canDelete ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAll, disabled: deletingAll, children: deletingAll ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u044E \u0438\u0441\u0442\u043E\u0440\u0438\u044E" }) : null
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "vpo-page-layout", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "vpo-page-main", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "card ria-settings-card", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-label", children: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u0444\u0430\u0439\u043B\u043E\u0432" }),
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "ria-settings-hint", children: "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E .xlsx. \u0414\u043B\u044F \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u043D\u0430\u0431\u043E\u0440\u0430 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441\u0435\u0440\u0432\u0438\u0441 \u0444\u043E\u0440\u043C\u0438\u0440\u0443\u0435\u0442 \u043E\u0434\u0438\u043D \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0439 \u0438\u0442\u043E\u0433\u043E\u0432\u044B\u0439 \u0444\u0430\u0439\u043B \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0435\u0442 \u0435\u0433\u043E \u0432 \u0438\u0441\u0442\u043E\u0440\u0438\u044E." }),
-        canUpload ? /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "vpo-upload-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "vpo-page-layout", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "vpo-page-main", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "card ria-settings-card", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "card-label", children: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u0444\u0430\u0439\u043B\u043E\u0432" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { className: "ria-settings-hint", children: "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E .xlsx. \u0414\u043B\u044F \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u043D\u0430\u0431\u043E\u0440\u0430 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441\u0435\u0440\u0432\u0438\u0441 \u0444\u043E\u0440\u043C\u0438\u0440\u0443\u0435\u0442 \u043E\u0434\u0438\u043D \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0439 \u0438\u0442\u043E\u0433\u043E\u0432\u044B\u0439 \u0444\u0430\u0439\u043B \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0435\u0442 \u0435\u0433\u043E \u0432 \u0438\u0441\u0442\u043E\u0440\u0438\u044E." }),
+        canUpload ? /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "vpo-upload-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
             "input",
             {
               ref: fileInputRef,
@@ -19902,25 +19921,25 @@ function VpoPage() {
               className: "search-input vpo-file-input"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", className: "btn btn-primary btn-sm", onClick: () => void handleUpload(), disabled: uploading, children: uploading ? "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430\u2026" : "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0438 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C" })
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "auth-card-note", children: "\u0423 \u0432\u0430\u0448\u0435\u0439 \u0440\u043E\u043B\u0438 \u0435\u0441\u0442\u044C \u0434\u043E\u0441\u0442\u0443\u043F \u043A \u0438\u0441\u0442\u043E\u0440\u0438\u0438, \u043D\u043E \u043D\u0435\u0442 \u043F\u0440\u0430\u0432\u0430 \u043D\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0443 \u043D\u043E\u0432\u044B\u0445 \u0444\u0430\u0439\u043B\u043E\u0432." }),
-        uploadStatus ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: `settings-page-status${uploadStatusIsError ? " settings-page-status-error" : ""}`, children: uploadStatus }) : null
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { type: "button", className: "btn btn-primary btn-sm", onClick: () => void handleUpload(), disabled: uploading, children: uploading ? "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430\u2026" : "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0438 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C" })
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { className: "auth-card-note", children: "\u0423 \u0432\u0430\u0448\u0435\u0439 \u0440\u043E\u043B\u0438 \u0435\u0441\u0442\u044C \u0434\u043E\u0441\u0442\u0443\u043F \u043A \u0438\u0441\u0442\u043E\u0440\u0438\u0438, \u043D\u043E \u043D\u0435\u0442 \u043F\u0440\u0430\u0432\u0430 \u043D\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0443 \u043D\u043E\u0432\u044B\u0445 \u0444\u0430\u0439\u043B\u043E\u0432." }),
+        uploadStatus ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { className: `settings-page-status${uploadStatusIsError ? " settings-page-status-error" : ""}`, children: uploadStatus }) : null
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("aside", { className: "vpo-page-aside card", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "card-label", children: "\u0418\u0441\u0442\u043E\u0440\u0438\u044F \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0445 \u0444\u0430\u0439\u043B\u043E\u0432" }),
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "vpo-aside-hint", children: "\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u043A\u0430\u0436\u0434\u044B\u0435 8 \u0441\u0435\u043A\u0443\u043D\u0434." }),
-        loading ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "settings-page-status settings-page-status-error", children: error }) : items.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "vpo-history-empty", children: "\u041F\u043E\u043A\u0430 \u043D\u0435\u0442 \u0432\u044B\u0433\u0440\u0443\u0437\u043E\u043A. \u041F\u043E\u0441\u043B\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043D\u043D\u044B\u0445 \u0444\u0430\u0439\u043B\u043E\u0432 \u0437\u0434\u0435\u0441\u044C \u043F\u043E\u044F\u0432\u0438\u0442\u0441\u044F \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0439 .xlsx." }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "vpo-history-item", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "vpo-history-item-title", children: item.title }),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "vpo-history-item-meta", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("aside", { className: "vpo-page-aside card", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "card-label", children: "\u0418\u0441\u0442\u043E\u0440\u0438\u044F \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0445 \u0444\u0430\u0439\u043B\u043E\u0432" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { className: "vpo-aside-hint", children: "\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u043A\u0430\u0436\u0434\u044B\u0435 8 \u0441\u0435\u043A\u0443\u043D\u0434." }),
+        loading ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { className: "settings-page-status settings-page-status-error", children: error }) : items.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { className: "vpo-history-empty", children: "\u041F\u043E\u043A\u0430 \u043D\u0435\u0442 \u0432\u044B\u0433\u0440\u0443\u0437\u043E\u043A. \u041F\u043E\u0441\u043B\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043D\u043D\u044B\u0445 \u0444\u0430\u0439\u043B\u043E\u0432 \u0437\u0434\u0435\u0441\u044C \u043F\u043E\u044F\u0432\u0438\u0442\u0441\u044F \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0439 .xlsx." }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "vpo-history-item", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "vpo-history-item-title", children: item.title }),
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "vpo-history-item-meta", children: [
             formatDateTime(item.createdAt),
             " \xB7 \u0441\u0442\u0440\u043E\u043A \u0434\u0430\u043D\u043D\u044B\u0445: ",
             item.rowCount,
             " \xB7 \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u0445 \u0444\u0430\u0439\u043B\u043E\u0432: ",
             item.sourceFiles.length
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "vpo-history-item-files", children: item.sourceFiles.join(", ") }),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "vpo-history-item-actions", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "vpo-history-item-files", children: item.sourceFiles.join(", ") }),
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "vpo-history-item-actions", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
               "button",
               {
                 type: "button",
@@ -19930,7 +19949,7 @@ function VpoPage() {
                 children: downloadingId === item.id ? "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u0435\u2026" : "\u0421\u043A\u0430\u0447\u0430\u0442\u044C .xlsx"
               }
             ),
-            canDelete ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+            canDelete ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
               "button",
               {
                 type: "button",
@@ -19948,74 +19967,110 @@ function VpoPage() {
   ] });
 }
 
+// frontend/src/shared/config/areas.ts
+var AREA_OPTIONS = [
+  {
+    id: "edtech",
+    label: "EdTech",
+    title: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C EdTech",
+    description: "\u0417\u0434\u0435\u0441\u044C \u0431\u0443\u0434\u0435\u0442 \u0440\u0430\u0437\u043C\u0435\u0449\u0451\u043D \u0434\u0430\u0448\u0431\u043E\u0440\u0434 \u043F\u043E \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044E EdTech: \u043A\u043B\u044E\u0447\u0435\u0432\u044B\u0435 \u043C\u0435\u0442\u0440\u0438\u043A\u0438, \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438 \u0438 \u0434\u0438\u043D\u0430\u043C\u0438\u043A\u0430 \u043A\u043E\u043D\u0442\u0435\u043D\u0442\u0430.",
+    path: "/areas/edtech"
+  },
+  {
+    id: "medtech",
+    label: "MedTech",
+    title: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C MedTech",
+    description: "\u0417\u0434\u0435\u0441\u044C \u0431\u0443\u0434\u0435\u0442 \u0440\u0430\u0437\u043C\u0435\u0449\u0451\u043D \u0434\u0430\u0448\u0431\u043E\u0440\u0434 \u043F\u043E \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044E MedTech: \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433 \u043E\u0442\u0440\u0430\u0441\u043B\u0438, \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 \u0438 \u0430\u043D\u0430\u043B\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0441\u0432\u043E\u0434\u043A\u0438.",
+    path: "/areas/medtech"
+  },
+  {
+    id: "biotech",
+    label: "BioTech",
+    title: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C BioTech",
+    description: "\u0417\u0434\u0435\u0441\u044C \u0431\u0443\u0434\u0435\u0442 \u0440\u0430\u0437\u043C\u0435\u0449\u0451\u043D \u0434\u0430\u0448\u0431\u043E\u0440\u0434 \u043F\u043E \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044E BioTech: \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u044F, \u043D\u043E\u0432\u043E\u0441\u0442\u0438 \u0438 \u043E\u0442\u0440\u0430\u0441\u043B\u0435\u0432\u044B\u0435 \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u0438.",
+    path: "/areas/biotech"
+  }
+];
+function findAreaByPath(pathname) {
+  return AREA_OPTIONS.find((area) => area.path === pathname) ?? null;
+}
+
 // frontend/src/app/router/AppRouter.tsx
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
 function AppRouter() {
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(Routes, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(Routes, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.dashboard,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "dashboard.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(DashboardPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "dashboard.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(DashboardPage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    AREA_OPTIONS.map((area) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+      Route,
+      {
+        path: area.path,
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "dashboard.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(AreaDashboardPage, { area }) })
+      },
+      area.id
+    )),
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.articles,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "articles.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ArticlesPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "articles.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ArticlesPage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.companies,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "companies.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(CompaniesPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "companies.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(CompaniesPage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.tags,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "tags.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(TagsPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "tags.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(TagsPage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.queues,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "queues.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(QueuesPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "queues.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(QueuesPage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.settings,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "settings.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(SettingsPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "settings.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SettingsPage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.vpo,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "vpo.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(VpoPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "vpo.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(VpoPage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.profile,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "profile.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProfilePage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "profile.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProfilePage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.access,
-        element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ProtectedRoute, { permission: "access.users.view", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(AccessPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "access.users.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(AccessPage, {}) })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Route, { path: "*", element: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Navigate, { to: routePaths.dashboard, replace: true }) })
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Route, { path: "*", element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Navigate, { to: routePaths.dashboard, replace: true }) })
   ] });
 }
 
@@ -20096,7 +20151,7 @@ function useHealthStatus(reloadKey) {
 }
 
 // frontend/src/widgets/sidebar/ui/AppSidebar.tsx
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 var NAV_ITEMS = [
   { path: routePaths.dashboard, label: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F", Icon: DashboardIcon, permission: "dashboard.view", end: true },
   { path: routePaths.articles, label: "\u0421\u0442\u0430\u0442\u044C\u0438", Icon: ArticlesIcon, permission: "articles.view" },
@@ -20137,41 +20192,41 @@ function AppSidebar({ sidebarOpen, health }) {
       authStatusText = "\u0421\u0435\u0440\u0432\u0435\u0440 \u043E\u0436\u0438\u0434\u0430\u0435\u0442 API key";
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("aside", { className: `sidebar${sidebarOpen ? " open" : ""}`, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "sidebar-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(LogoIcon, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ParserNews" })
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("aside", { className: `sidebar${sidebarOpen ? " open" : ""}`, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(LogoIcon, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "ParserNews" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("nav", { className: "sidebar-nav", children: visibleNavItems.map(({ path, label, Icon, end }) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("nav", { className: "sidebar-nav", children: visibleNavItems.map(({ path, label, Icon, end }) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
       NavLink,
       {
         to: path,
         end,
         className: ({ isActive }) => `nav-link${isActive ? " active" : ""}`,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Icon, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: label })
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Icon, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: label })
         ]
       },
       path
     )) }),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "sidebar-footer", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "health-indicator", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: healthDotClassName }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "health-text", children: getHealthText(health) })
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-footer", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "health-indicator", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: healthDotClassName }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "health-text", children: getHealthText(health) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "auth-panel", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "auth-user-name", children: auth.user?.displayName || "\u0413\u043E\u0441\u0442\u044C" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "auth-status", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "auth-panel", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-user-name", children: auth.user?.displayName || "\u0413\u043E\u0441\u0442\u044C" }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "auth-status", children: [
           getProviderLabel2(auth.provider),
           " \xB7 ",
           authStatusText
         ] }),
-        auth.error ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "auth-error-text", children: auth.error }) : null,
-        userAppRoles.length ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "role-badges", children: userAppRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "badge badge-info", children: role }, role)) }) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "auth-actions", children: auth.provider === "keycloak" ? auth.isAuthenticated ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.logout(), children: "\u0412\u044B\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.login(), children: "\u0412\u043E\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.promptForApiKey(), children: "API key" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+        auth.error ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-error-text", children: auth.error }) : null,
+        userAppRoles.length ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "role-badges", children: userAppRoles.map((role) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "badge badge-info", children: role }, role)) }) : null,
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "auth-actions", children: auth.provider === "keycloak" ? auth.isAuthenticated ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.logout(), children: "\u0412\u044B\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.login(), children: "\u0412\u043E\u0439\u0442\u0438" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary btn-sm auth-btn", onClick: () => void auth.promptForApiKey(), children: "API key" }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
             "button",
             {
               type: "button",
@@ -20188,12 +20243,14 @@ function AppSidebar({ sidebarOpen, health }) {
 }
 
 // frontend/src/widgets/app-shell/ui/AppShell.tsx
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 function AppShell({ children }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = (0, import_react15.useState)(false);
   const auth = useAuth();
   const health = useHealthStatus(auth.sessionVersion);
+  const selectedArea = findAreaByPath(location.pathname);
   (0, import_react15.useEffect)(() => {
     setSidebarOpen(false);
   }, [location.pathname]);
@@ -20209,25 +20266,50 @@ function AppShell({ children }) {
       document.removeEventListener("click", handleDocumentClick);
     };
   }, [sidebarOpen]);
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(AppSidebar, { sidebarOpen, health }),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AppSidebar, { sidebarOpen, health }),
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       "button",
       {
         type: "button",
         className: "mobile-toggle",
         "aria-label": "Menu",
         onClick: () => setSidebarOpen((current) => !current),
-        children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(MenuIcon, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MenuIcon, {})
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("main", { className: "content", children })
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("main", { className: "content", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "content-toolbar", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "content-toolbar-spacer" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "area-switcher", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { className: "area-switcher-label", htmlFor: "app-area-switcher", children: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C" }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
+            "select",
+            {
+              id: "app-area-switcher",
+              className: "search-input area-switcher-select",
+              value: selectedArea?.id ?? "",
+              onChange: (event) => {
+                const nextArea = AREA_OPTIONS.find((area) => area.id === event.target.value);
+                if (!nextArea) return;
+                void navigate(nextArea.path);
+              },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: "", children: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043E\u0431\u043B\u0430\u0441\u0442\u044C" }),
+                AREA_OPTIONS.map((area) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: area.id, children: area.label }, area.id))
+              ]
+            }
+          )
+        ] })
+      ] }),
+      children
+    ] })
   ] });
 }
 
 // frontend/src/shared/ui/error-boundary/AppErrorBoundary.tsx
 var import_react16 = __toESM(require_react(), 1);
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
 var AppErrorBoundary = class extends import_react16.Component {
   state = {
     hasError: false
@@ -20243,9 +20325,9 @@ var AppErrorBoundary = class extends import_react16.Component {
   };
   render() {
     if (this.state.hasError) {
-      return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("main", { className: "content", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "auth-card", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ErrorCard, { message: "\u0418\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441 \u0441\u0442\u043E\u043B\u043A\u043D\u0443\u043B\u0441\u044F \u0441 \u043E\u0448\u0438\u0431\u043A\u043E\u0439 \u0440\u0435\u043D\u0434\u0435\u0440\u0430. \u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043D\u0435 \u0434\u043E\u043B\u0436\u043D\u0430 \u043F\u0430\u0434\u0430\u0442\u044C \u0432 \u0431\u0435\u043B\u044B\u0439 \u044D\u043A\u0440\u0430\u043D." }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { type: "button", className: "btn btn-primary", onClick: this.handleReload, children: "\u041F\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443" })
+      return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("main", { className: "content", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "auth-card", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ErrorCard, { message: "\u0418\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441 \u0441\u0442\u043E\u043B\u043A\u043D\u0443\u043B\u0441\u044F \u0441 \u043E\u0448\u0438\u0431\u043A\u043E\u0439 \u0440\u0435\u043D\u0434\u0435\u0440\u0430. \u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043D\u0435 \u0434\u043E\u043B\u0436\u043D\u0430 \u043F\u0430\u0434\u0430\u0442\u044C \u0432 \u0431\u0435\u043B\u044B\u0439 \u044D\u043A\u0440\u0430\u043D." }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { type: "button", className: "btn btn-primary", onClick: this.handleReload, children: "\u041F\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443" })
       ] }) });
     }
     return this.props.children;
@@ -20253,18 +20335,18 @@ var AppErrorBoundary = class extends import_react16.Component {
 };
 
 // frontend/src/app/App.tsx
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 function App() {
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ToastProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AppErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(HashRouter, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AppShell, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AppRouter, {}) }) }) }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ToastProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(AppErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(HashRouter, { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(AppShell, { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(AppRouter, {}) }) }) }) }) });
 }
 
 // frontend/src/main.tsx
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
 var rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Root element #root not found");
 }
-(0, import_client10.createRoot)(rootElement).render(/* @__PURE__ */ (0, import_jsx_runtime25.jsx)(App, {}));
+(0, import_client10.createRoot)(rootElement).render(/* @__PURE__ */ (0, import_jsx_runtime26.jsx)(App, {}));
 /*! Bundled license information:
 
 scheduler/cjs/scheduler.production.js:

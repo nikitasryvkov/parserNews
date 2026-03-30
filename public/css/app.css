@@ -119,6 +119,32 @@ a:hover { text-decoration: underline; }
   margin-left: var(--sidebar-w); min-height: 100vh;
   padding: 32px 36px;
 }
+.content-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.content-toolbar-spacer {
+  flex: 1 1 auto;
+}
+.area-switcher {
+  margin-left: auto;
+  min-width: 220px;
+  display: grid;
+  gap: 6px;
+}
+.area-switcher-label {
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.area-switcher-select {
+  min-width: 220px;
+}
 
 /* ──────── mobile toggle ──────── */
 .mobile-toggle {
@@ -135,6 +161,22 @@ a:hover { text-decoration: underline; }
 .page-title { font-size: 1.55rem; font-weight: 700; }
 .page-subtitle { color: var(--text-secondary); font-size: .9rem; margin-top: 2px; }
 .companies-pool-tabs { margin-top: 12px; flex-wrap: wrap; }
+.area-placeholder-card {
+  max-width: 860px;
+}
+.area-placeholder-badge {
+  margin-bottom: 16px;
+}
+.area-placeholder-lead {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.area-placeholder-text {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
 
 /* ──────── cards grid ──────── */
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin-bottom: 28px; }
@@ -653,5 +695,20 @@ tr:hover td { background: #fafbfd; }
   .sidebar.open { transform: translateX(0); }
   .mobile-toggle { display: block; }
   .content { margin-left: 0; padding: 24px 16px; padding-top: 60px; }
+  .content-toolbar {
+    justify-content: stretch;
+    margin-bottom: 16px;
+  }
+  .content-toolbar-spacer {
+    display: none;
+  }
+  .area-switcher {
+    width: 100%;
+    min-width: 0;
+  }
+  .area-switcher-select {
+    width: 100%;
+    min-width: 0;
+  }
   .cards { grid-template-columns: 1fr; }
 }
