@@ -38,10 +38,12 @@ const NAV_ITEMS: NavigationItem[] = [
   { path: routePaths.articles, label: 'Статьи', Icon: ArticlesIcon, permission: 'articles.view' },
   { path: routePaths.companies, label: 'Компании', Icon: CompaniesIcon, permission: 'companies.view' },
   { path: routePaths.tags, label: 'Теги фильтра', Icon: TagsIcon, permission: 'tags.view' },
-  { path: routePaths.queues, label: 'Очереди', Icon: QueueIcon, permission: 'queues.view' },
-  { path: routePaths.settings, label: 'Настройки', Icon: SettingsIcon, permission: 'settings.view' },
   { path: routePaths.vpo, label: 'Свод ВПО', Icon: FileIcon, permission: 'vpo.view' },
-  { path: routePaths.profile, label: 'Личный кабинет', Icon: UserIcon, permission: 'profile.view' },
+];
+
+const SETTINGS_ITEMS: NavigationItem[] = [
+  { path: routePaths.settings, label: 'Настройки РИА', Icon: SettingsIcon, permission: 'settings.view' },
+  { path: routePaths.queues, label: 'Очереди', Icon: QueueIcon, permission: 'queues.view' },
   { path: routePaths.access, label: 'Доступ и роли', Icon: ShieldIcon, permission: 'access.users.view' },
 ];
 
@@ -67,6 +69,9 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
   const userAppRoles = auth.user?.appRoles ?? [];
   const selectedArea = findAreaByPath(location.pathname);
   const [areasExpanded, setAreasExpanded] = useState(Boolean(selectedArea));
+  const visibleSettingsItems = SETTINGS_ITEMS.filter((item) => auth.hasPermission(item.permission));
+  const selectedSettingsItem = visibleSettingsItems.find((item) => item.path === location.pathname) ?? null;
+  const [settingsExpanded, setSettingsExpanded] = useState(Boolean(selectedSettingsItem));
   const healthDotClassName = !health.loading
     ? health.error || health.status !== 'ok'
       ? 'health-dot error'
@@ -79,6 +84,12 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
       setAreasExpanded(true);
     }
   }, [selectedArea]);
+
+  useEffect(() => {
+    if (selectedSettingsItem) {
+      setSettingsExpanded(true);
+    }
+  }, [selectedSettingsItem]);
 
   let authStatusText = 'Загрузка конфигурации авторизации…';
 
@@ -142,11 +153,46 @@ export function AppSidebar({ sidebarOpen, health }: AppSidebarProps) {
                 ) : null}
               </div>
             ) : null}
+
+            {path === routePaths.tags && visibleSettingsItems.length ? (
+              <div className="sidebar-nav-group settings-nav-group">
+                <button
+                  type="button"
+                  className={`nav-link nav-accordion-toggle${selectedSettingsItem ? ' active' : ''}`}
+                  aria-expanded={settingsExpanded}
+                  onClick={() => setSettingsExpanded((current) => !current)}
+                >
+                  <SettingsIcon />
+                  <span>Настройки</span>
+                  <ChevronDownIcon />
+                </button>
+                {settingsExpanded ? (
+                  <div className="nav-submenu" role="menu" aria-label="Разделы настроек">
+                    {visibleSettingsItems.map((item) => (
+                      <NavLink
+                        key={item.path}
+                        to={item.path}
+                        className={({ isActive }) => `nav-sublink${isActive ? ' active' : ''}`}
+                      >
+                        <span>{item.label}</span>
+                      </NavLink>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         ))}
       </nav>
 
       <div className="sidebar-footer">
+        {auth.hasPermission('profile.view') ? (
+          <NavLink to={routePaths.profile} className={({ isActive }) => `nav-link sidebar-footer-link${isActive ? ' active' : ''}`}>
+            <UserIcon />
+            <span>Личный кабинет</span>
+          </NavLink>
+        ) : null}
+
         <div className="health-indicator">
           <span className={healthDotClassName} />
           <span className="health-text">{getHealthText(health)}</span>

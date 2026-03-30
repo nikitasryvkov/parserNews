@@ -56,6 +56,7 @@ a:hover { text-decoration: underline; }
 .sidebar-nav { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; }
 .sidebar-nav-group { display: flex; flex-direction: column; gap: 2px; }
 .area-nav-group { margin-top: 2px; }
+.settings-nav-group { margin-top: 2px; }
 
 .nav-link {
   display: flex; align-items: center; gap: 12px;
@@ -116,6 +117,10 @@ a:hover { text-decoration: underline; }
 .sidebar-footer {
   padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.07);
   font-size: .82rem;
+}
+.sidebar-footer-link {
+  width: 100%;
+  margin-bottom: 14px;
 }
 
 .health-indicator { display: flex; align-items: center; gap: 8px; color: var(--text-sidebar); }

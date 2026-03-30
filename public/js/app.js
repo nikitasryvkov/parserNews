@@ -20169,10 +20169,11 @@ var NAV_ITEMS = [
   { path: routePaths.articles, label: "\u0421\u0442\u0430\u0442\u044C\u0438", Icon: ArticlesIcon, permission: "articles.view" },
   { path: routePaths.companies, label: "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u0438", Icon: CompaniesIcon, permission: "companies.view" },
   { path: routePaths.tags, label: "\u0422\u0435\u0433\u0438 \u0444\u0438\u043B\u044C\u0442\u0440\u0430", Icon: TagsIcon, permission: "tags.view" },
+  { path: routePaths.vpo, label: "\u0421\u0432\u043E\u0434 \u0412\u041F\u041E", Icon: FileIcon, permission: "vpo.view" }
+];
+var SETTINGS_ITEMS = [
+  { path: routePaths.settings, label: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0420\u0418\u0410", Icon: SettingsIcon, permission: "settings.view" },
   { path: routePaths.queues, label: "\u041E\u0447\u0435\u0440\u0435\u0434\u0438", Icon: QueueIcon, permission: "queues.view" },
-  { path: routePaths.settings, label: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438", Icon: SettingsIcon, permission: "settings.view" },
-  { path: routePaths.vpo, label: "\u0421\u0432\u043E\u0434 \u0412\u041F\u041E", Icon: FileIcon, permission: "vpo.view" },
-  { path: routePaths.profile, label: "\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442", Icon: UserIcon, permission: "profile.view" },
   { path: routePaths.access, label: "\u0414\u043E\u0441\u0442\u0443\u043F \u0438 \u0440\u043E\u043B\u0438", Icon: ShieldIcon, permission: "access.users.view" }
 ];
 function getHealthText(health) {
@@ -20191,6 +20192,9 @@ function AppSidebar({ sidebarOpen, health }) {
   const userAppRoles = auth.user?.appRoles ?? [];
   const selectedArea = findAreaByPath(location.pathname);
   const [areasExpanded, setAreasExpanded] = (0, import_react15.useState)(Boolean(selectedArea));
+  const visibleSettingsItems = SETTINGS_ITEMS.filter((item) => auth.hasPermission(item.permission));
+  const selectedSettingsItem = visibleSettingsItems.find((item) => item.path === location.pathname) ?? null;
+  const [settingsExpanded, setSettingsExpanded] = (0, import_react15.useState)(Boolean(selectedSettingsItem));
   const healthDotClassName = !health.loading ? health.error || health.status !== "ok" ? "health-dot error" : "health-dot ok" : "health-dot";
   const visibleNavItems = NAV_ITEMS.filter((item) => auth.hasPermission(item.permission));
   (0, import_react15.useEffect)(() => {
@@ -20198,6 +20202,11 @@ function AppSidebar({ sidebarOpen, health }) {
       setAreasExpanded(true);
     }
   }, [selectedArea]);
+  (0, import_react15.useEffect)(() => {
+    if (selectedSettingsItem) {
+      setSettingsExpanded(true);
+    }
+  }, [selectedSettingsItem]);
   let authStatusText = "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u0438 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438\u2026";
   if (auth.status === "ready") {
     if (auth.provider === "keycloak") {
@@ -20254,9 +20263,38 @@ function AppSidebar({ sidebarOpen, health }) {
           },
           area.id
         )) }) : null
+      ] }) : null,
+      path === routePaths.tags && visibleSettingsItems.length ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-nav-group settings-nav-group", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: `nav-link nav-accordion-toggle${selectedSettingsItem ? " active" : ""}`,
+            "aria-expanded": settingsExpanded,
+            onClick: () => setSettingsExpanded((current) => !current),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SettingsIcon, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438" }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(ChevronDownIcon, {})
+            ]
+          }
+        ),
+        settingsExpanded ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "nav-submenu", role: "menu", "aria-label": "\u0420\u0430\u0437\u0434\u0435\u043B\u044B \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043A", children: visibleSettingsItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+          NavLink,
+          {
+            to: item.path,
+            className: ({ isActive }) => `nav-sublink${isActive ? " active" : ""}`,
+            children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: item.label })
+          },
+          item.path
+        )) }) : null
       ] }) : null
     ] }, path)) }),
     /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "sidebar-footer", children: [
+      auth.hasPermission("profile.view") ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(NavLink, { to: routePaths.profile, className: ({ isActive }) => `nav-link sidebar-footer-link${isActive ? " active" : ""}`, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(UserIcon, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442" })
+      ] }) : null,
       /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "health-indicator", children: [
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: healthDotClassName }),
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "health-text", children: getHealthText(health) })
