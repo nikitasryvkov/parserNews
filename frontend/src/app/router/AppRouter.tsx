@@ -1,17 +1,24 @@
+import { Suspense, lazy, type ReactNode } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from '../../features/auth/ui/ProtectedRoute';
-import { AccessPage } from '../../pages/access/ui/AccessPage';
-import { AreaDashboardPage } from '../../pages/areas/ui/AreaDashboardPage';
-import { ArticlesPage } from '../../pages/articles/ui/ArticlesPage';
-import { CompaniesPage } from '../../pages/companies/ui/CompaniesPage';
-import { DashboardPage } from '../../pages/dashboard/ui/DashboardPage';
-import { ProfilePage } from '../../pages/profile/ui/ProfilePage';
-import { QueuesPage } from '../../pages/queues/ui/QueuesPage';
-import { SettingsPage } from '../../pages/settings/ui/SettingsPage';
-import { TagsPage } from '../../pages/tags/ui/TagsPage';
-import { VpoPage } from '../../pages/vpo/ui/VpoPage';
 import { AREA_OPTIONS } from '../../shared/config/areas';
 import { routePaths } from '../../shared/config/routes';
+import { LoadingState } from '../../shared/ui/loading-state/LoadingState';
+
+const AccessPage = lazy(() => import('../../pages/access/ui/AccessPage').then((module) => ({ default: module.AccessPage })));
+const AreaDashboardPage = lazy(() => import('../../pages/areas/ui/AreaDashboardPage').then((module) => ({ default: module.AreaDashboardPage })));
+const ArticlesPage = lazy(() => import('../../pages/articles/ui/ArticlesPage').then((module) => ({ default: module.ArticlesPage })));
+const CompaniesPage = lazy(() => import('../../pages/companies/ui/CompaniesPage').then((module) => ({ default: module.CompaniesPage })));
+const DashboardPage = lazy(() => import('../../pages/dashboard/ui/DashboardPage').then((module) => ({ default: module.DashboardPage })));
+const ProfilePage = lazy(() => import('../../pages/profile/ui/ProfilePage').then((module) => ({ default: module.ProfilePage })));
+const QueuesPage = lazy(() => import('../../pages/queues/ui/QueuesPage').then((module) => ({ default: module.QueuesPage })));
+const SettingsPage = lazy(() => import('../../pages/settings/ui/SettingsPage').then((module) => ({ default: module.SettingsPage })));
+const TagsPage = lazy(() => import('../../pages/tags/ui/TagsPage').then((module) => ({ default: module.TagsPage })));
+const VpoPage = lazy(() => import('../../pages/vpo/ui/VpoPage').then((module) => ({ default: module.VpoPage })));
+
+function withSuspense(element: ReactNode): ReactNode {
+  return <Suspense fallback={<LoadingState />}>{element}</Suspense>;
+}
 
 export function AppRouter() {
   return (
@@ -20,7 +27,7 @@ export function AppRouter() {
         path={routePaths.dashboard}
         element={(
           <ProtectedRoute permission="dashboard.view">
-            <DashboardPage />
+            {withSuspense(<DashboardPage />)}
           </ProtectedRoute>
         )}
       />
@@ -30,7 +37,7 @@ export function AppRouter() {
           path={area.path}
           element={(
             <ProtectedRoute permission="dashboard.view">
-              <AreaDashboardPage area={area} />
+              {withSuspense(<AreaDashboardPage area={area} />)}
             </ProtectedRoute>
           )}
         />
@@ -39,7 +46,7 @@ export function AppRouter() {
         path={routePaths.articles}
         element={(
           <ProtectedRoute permission="articles.view">
-            <ArticlesPage />
+            {withSuspense(<ArticlesPage />)}
           </ProtectedRoute>
         )}
       />
@@ -47,7 +54,7 @@ export function AppRouter() {
         path={routePaths.companies}
         element={(
           <ProtectedRoute permission="companies.view">
-            <CompaniesPage />
+            {withSuspense(<CompaniesPage />)}
           </ProtectedRoute>
         )}
       />
@@ -55,7 +62,7 @@ export function AppRouter() {
         path={routePaths.tags}
         element={(
           <ProtectedRoute permission="tags.view">
-            <TagsPage />
+            {withSuspense(<TagsPage />)}
           </ProtectedRoute>
         )}
       />
@@ -63,7 +70,7 @@ export function AppRouter() {
         path={routePaths.queues}
         element={(
           <ProtectedRoute permission="queues.view">
-            <QueuesPage />
+            {withSuspense(<QueuesPage />)}
           </ProtectedRoute>
         )}
       />
@@ -71,7 +78,7 @@ export function AppRouter() {
         path={routePaths.settings}
         element={(
           <ProtectedRoute permission="settings.view">
-            <SettingsPage />
+            {withSuspense(<SettingsPage />)}
           </ProtectedRoute>
         )}
       />
@@ -79,7 +86,7 @@ export function AppRouter() {
         path={routePaths.vpo}
         element={(
           <ProtectedRoute permission="vpo.view">
-            <VpoPage />
+            {withSuspense(<VpoPage />)}
           </ProtectedRoute>
         )}
       />
@@ -87,7 +94,7 @@ export function AppRouter() {
         path={routePaths.profile}
         element={(
           <ProtectedRoute permission="profile.view">
-            <ProfilePage />
+            {withSuspense(<ProfilePage />)}
           </ProtectedRoute>
         )}
       />
@@ -95,7 +102,7 @@ export function AppRouter() {
         path={routePaths.access}
         element={(
           <ProtectedRoute permission="access.users.view">
-            <AccessPage />
+            {withSuspense(<AccessPage />)}
           </ProtectedRoute>
         )}
       />

@@ -2,10 +2,12 @@ import { getAccessToken } from '../../lib/auth/accessTokenStore';
 import { ApiError } from './errors';
 
 const API_BASE_URL = '/api';
+const DEFAULT_REQUEST_TIMEOUT_MS = 15_000;
 
 export interface RequestOptions extends Omit<RequestInit, 'body'> {
   body?: BodyInit | object;
   throwOnHttpError?: boolean;
+  timeoutMs?: number;
 }
 
 interface ErrorPayload {
@@ -85,13 +87,74 @@ function createApiError(response: Response, payload: unknown): ApiError {
   });
 }
 
+interface AbortTools {
+  cleanup: () => void;
+  didTimeout: () => boolean;
+  signal: AbortSignal;
+}
+
+function createAbortTools(signal: AbortSignal | null | undefined, timeoutMs: number): AbortTools {
+  const controller = new AbortController();
+  const cleanupFns: Array<() => void> = [];
+  let timedOut = false;
+
+  if (signal) {
+    if (signal.aborted) {
+      controller.abort(signal.reason);
+    } else {
+      const handleAbort = () => controller.abort(signal.reason);
+      signal.addEventListener('abort', handleAbort, { once: true });
+      cleanupFns.push(() => signal.removeEventListener('abort', handleAbort));
+    }
+  }
+
+  // Centralized request timeouts prevent screens from hanging on stalled API calls.
+  const timeoutId = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeoutMs);
+
+  cleanupFns.push(() => clearTimeout(timeoutId));
+
+  return {
+    signal: controller.signal,
+    didTimeout: () => timedOut,
+    cleanup: () => {
+      cleanupFns.forEach((cleanup) => cleanup());
+    },
+  };
+}
+
+function normalizeAbortError(error: unknown, didTimeout: boolean, timeoutMs: number): Error {
+  if (didTimeout && error instanceof Error && error.name === 'AbortError') {
+    return new ApiError(`Request timed out after ${timeoutMs} ms`, {
+      status: 408,
+      code: 'HTTP_TIMEOUT',
+    });
+  }
+
+  return error instanceof Error ? error : new Error('Unknown network error');
+}
+
 async function executeRequest<T>(path: string, options: RequestOptions = {}): Promise<{ response: Response; data: T }> {
   const { body, includeJsonHeader } = normalizeBody(options.body);
-  const response = await fetch(buildUrl(path), {
-    ...options,
-    body,
-    headers: buildHeaders(options.headers, includeJsonHeader),
-  });
+  const timeoutMs = options.timeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
+  const abortTools = createAbortTools(options.signal, timeoutMs);
+  let response: Response;
+
+  try {
+    response = await fetch(buildUrl(path), {
+      ...options,
+      body,
+      signal: abortTools.signal,
+      headers: buildHeaders(options.headers, includeJsonHeader),
+    });
+  } catch (error) {
+    throw normalizeAbortError(error, abortTools.didTimeout(), timeoutMs);
+  } finally {
+    abortTools.cleanup();
+  }
+
   const data = await readResponsePayload<T>(response);
 
   if (!response.ok && options.throwOnHttpError !== false) {
@@ -108,11 +171,22 @@ export async function requestJson<T>(path: string, options: RequestOptions = {})
 
 export async function requestBlob(path: string, options: RequestOptions = {}): Promise<{ response: Response; blob: Blob }> {
   const { body, includeJsonHeader } = normalizeBody(options.body);
-  const response = await fetch(buildUrl(path), {
-    ...options,
-    body,
-    headers: buildHeaders(options.headers, includeJsonHeader),
-  });
+  const timeoutMs = options.timeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
+  const abortTools = createAbortTools(options.signal, timeoutMs);
+  let response: Response;
+
+  try {
+    response = await fetch(buildUrl(path), {
+      ...options,
+      body,
+      signal: abortTools.signal,
+      headers: buildHeaders(options.headers, includeJsonHeader),
+    });
+  } catch (error) {
+    throw normalizeAbortError(error, abortTools.didTimeout(), timeoutMs);
+  } finally {
+    abortTools.cleanup();
+  }
 
   if (!response.ok) {
     const payload = await readResponsePayload<unknown>(response);

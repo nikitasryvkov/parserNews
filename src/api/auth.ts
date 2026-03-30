@@ -17,7 +17,7 @@ import type { AuthConfigResponse, AuthContext } from '../auth/types.js';
 
 const log = createChildLogger('auth');
 
-const PUBLIC_AUTH_PATHS = new Set(['/health', '/auth/config']);
+const PUBLIC_AUTH_PATHS = new Set(['/health', '/auth/config', '/openapi.json']);
 
 function isPublicApiRoute(req: Request): boolean {
   return req.method === 'GET' && PUBLIC_AUTH_PATHS.has(req.path);

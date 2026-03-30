@@ -4,8 +4,15 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __esm = (fn, res) => function __init() {
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+};
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
@@ -12704,64 +12711,7 @@ var require_client = __commonJS({
   }
 });
 
-// node_modules/react/cjs/react-jsx-runtime.production.js
-var require_react_jsx_runtime_production = __commonJS({
-  "node_modules/react/cjs/react-jsx-runtime.production.js"(exports) {
-    "use strict";
-    var REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element");
-    var REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment");
-    function jsxProd(type, config, maybeKey) {
-      var key = null;
-      void 0 !== maybeKey && (key = "" + maybeKey);
-      void 0 !== config.key && (key = "" + config.key);
-      if ("key" in config) {
-        maybeKey = {};
-        for (var propName in config)
-          "key" !== propName && (maybeKey[propName] = config[propName]);
-      } else maybeKey = config;
-      config = maybeKey.ref;
-      return {
-        $$typeof: REACT_ELEMENT_TYPE,
-        type,
-        key,
-        ref: void 0 !== config ? config : null,
-        props: maybeKey
-      };
-    }
-    exports.Fragment = REACT_FRAGMENT_TYPE;
-    exports.jsx = jsxProd;
-    exports.jsxs = jsxProd;
-  }
-});
-
-// node_modules/react/jsx-runtime.js
-var require_jsx_runtime = __commonJS({
-  "node_modules/react/jsx-runtime.js"(exports, module) {
-    "use strict";
-    if (true) {
-      module.exports = require_react_jsx_runtime_production();
-    } else {
-      module.exports = null;
-    }
-  }
-});
-
-// frontend/src/main.tsx
-var import_client10 = __toESM(require_client(), 1);
-
 // node_modules/react-router/dist/development/chunk-UVKPFVEO.mjs
-var React = __toESM(require_react(), 1);
-var React2 = __toESM(require_react(), 1);
-var React3 = __toESM(require_react(), 1);
-var React4 = __toESM(require_react(), 1);
-var React9 = __toESM(require_react(), 1);
-var React8 = __toESM(require_react(), 1);
-var React7 = __toESM(require_react(), 1);
-var React6 = __toESM(require_react(), 1);
-var React5 = __toESM(require_react(), 1);
-var React10 = __toESM(require_react(), 1);
-var React11 = __toESM(require_react(), 1);
-var PopStateEventType = "popstate";
 function isLocation(obj) {
   return typeof obj === "object" && obj != null && "pathname" in obj && "search" in obj && "hash" in obj && "state" in obj && "key" in obj;
 }
@@ -12991,8 +12941,6 @@ function createBrowserURLImpl(to, isAbsolute = false) {
   }
   return new URL(href, base);
 }
-var _map;
-_map = /* @__PURE__ */ new WeakMap();
 function matchRoutes(routes, locationArg, basename = "/") {
   return matchRoutesImpl(routes, locationArg, basename, false);
 }
@@ -13112,13 +13060,6 @@ function rankRouteBranches(branches) {
     )
   );
 }
-var paramRe = /^:[\w-]+$/;
-var dynamicSegmentValue = 3;
-var indexRouteValue = 2;
-var emptySegmentValue = 1;
-var staticSegmentValue = 10;
-var splatPenalty = -2;
-var isSplat = (s) => s === "*";
 function computeScore(path, index) {
   let segments = path.split("/");
   let initialScore = segments.length;
@@ -13282,7 +13223,6 @@ function stripBasename(pathname, basename) {
   }
   return pathname.slice(startIndex) || "/";
 }
-var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
 function resolvePath(to, fromPathname = "/") {
   let {
     pathname: toPathname,
@@ -13378,30 +13318,12 @@ function resolveTo(toArg, routePathnames, locationPathname, isPathRelative = fal
   }
   return path;
 }
-var joinPaths = (paths) => paths.join("/").replace(/\/\/+/g, "/");
-var normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
-var normalizeSearch = (search) => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
-var normalizeHash = (hash) => !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
-var ErrorResponseImpl = class {
-  constructor(status, statusText, data2, internal = false) {
-    this.status = status;
-    this.statusText = statusText || "";
-    this.internal = internal;
-    if (data2 instanceof Error) {
-      this.data = data2.toString();
-      this.error = data2;
-    } else {
-      this.data = data2;
-    }
-  }
-};
 function isRouteErrorResponse(error) {
   return error != null && typeof error.status === "number" && typeof error.statusText === "string" && typeof error.internal === "boolean" && "data" in error;
 }
 function getRoutePattern(matches) {
   return matches.map((m) => m.route.path).filter(Boolean).join("/").replace(/\/\/*/g, "/") || "/";
 }
-var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
 function parseToInfo(_to, basename) {
   let to = _to;
   if (typeof to !== "string" || !ABSOLUTE_URL_REGEX.test(to)) {
@@ -13436,56 +13358,6 @@ function parseToInfo(_to, basename) {
     to
   };
 }
-var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
-var validMutationMethodsArr = [
-  "POST",
-  "PUT",
-  "PATCH",
-  "DELETE"
-];
-var validMutationMethods = new Set(
-  validMutationMethodsArr
-);
-var validRequestMethodsArr = [
-  "GET",
-  ...validMutationMethodsArr
-];
-var validRequestMethods = new Set(validRequestMethodsArr);
-var DataRouterContext = React.createContext(null);
-DataRouterContext.displayName = "DataRouter";
-var DataRouterStateContext = React.createContext(null);
-DataRouterStateContext.displayName = "DataRouterState";
-var RSCRouterContext = React.createContext(false);
-var ViewTransitionContext = React.createContext({
-  isTransitioning: false
-});
-ViewTransitionContext.displayName = "ViewTransition";
-var FetchersContext = React.createContext(
-  /* @__PURE__ */ new Map()
-);
-FetchersContext.displayName = "Fetchers";
-var AwaitContext = React.createContext(null);
-AwaitContext.displayName = "Await";
-var NavigationContext = React.createContext(
-  null
-);
-NavigationContext.displayName = "Navigation";
-var LocationContext = React.createContext(
-  null
-);
-LocationContext.displayName = "Location";
-var RouteContext = React.createContext({
-  outlet: null,
-  matches: [],
-  isDataRoute: false
-});
-RouteContext.displayName = "Route";
-var RouteErrorContext = React.createContext(null);
-RouteErrorContext.displayName = "RouteError";
-var ENABLE_DEV_WARNINGS = true;
-var ERROR_DIGEST_BASE = "REACT_ROUTER_ERROR";
-var ERROR_DIGEST_REDIRECT = "REDIRECT";
-var ERROR_DIGEST_ROUTE_ERROR_RESPONSE = "ROUTE_ERROR_RESPONSE";
 function decodeRedirectErrorDigest(digest) {
   if (digest.startsWith(`${ERROR_DIGEST_BASE}:${ERROR_DIGEST_REDIRECT}:{`)) {
     try {
@@ -13541,7 +13413,6 @@ function useLocation() {
   );
   return React2.useContext(LocationContext).location;
 }
-var navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
 function useIsomorphicLayoutEffect(cb) {
   let isStatic = React2.useContext(NavigationContext).static;
   if (!isStatic) {
@@ -13601,7 +13472,6 @@ function useNavigateUnstable() {
   );
   return navigate;
 }
-var OutletContext = React2.createContext(null);
 function useResolvedPath(to, { relative } = {}) {
   let { matches } = React2.useContext(RouteContext);
   let { pathname: locationPathname } = useLocation();
@@ -13742,64 +13612,6 @@ function DefaultErrorComponent() {
   }
   return /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ React2.createElement("h3", { style: { fontStyle: "italic" } }, message), stack ? /* @__PURE__ */ React2.createElement("pre", { style: preStyles }, stack) : null, devInfo);
 }
-var defaultErrorElement = /* @__PURE__ */ React2.createElement(DefaultErrorComponent, null);
-var RenderErrorBoundary = class extends React2.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      location: props.location,
-      revalidation: props.revalidation,
-      error: props.error
-    };
-  }
-  static getDerivedStateFromError(error) {
-    return { error };
-  }
-  static getDerivedStateFromProps(props, state) {
-    if (state.location !== props.location || state.revalidation !== "idle" && props.revalidation === "idle") {
-      return {
-        error: props.error,
-        location: props.location,
-        revalidation: props.revalidation
-      };
-    }
-    return {
-      error: props.error !== void 0 ? props.error : state.error,
-      location: state.location,
-      revalidation: props.revalidation || state.revalidation
-    };
-  }
-  componentDidCatch(error, errorInfo) {
-    if (this.props.onError) {
-      this.props.onError(error, errorInfo);
-    } else {
-      console.error(
-        "React Router caught the following error during render",
-        error
-      );
-    }
-  }
-  render() {
-    let error = this.state.error;
-    if (this.context && typeof error === "object" && error && "digest" in error && typeof error.digest === "string") {
-      const decoded = decodeRouteErrorResponseDigest(error.digest);
-      if (decoded) error = decoded;
-    }
-    let result = error !== void 0 ? /* @__PURE__ */ React2.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ React2.createElement(
-      RouteErrorContext.Provider,
-      {
-        value: error,
-        children: this.props.component
-      }
-    )) : this.props.children;
-    if (this.context) {
-      return /* @__PURE__ */ React2.createElement(RSCErrorHandler, { error }, result);
-    }
-    return result;
-  }
-};
-RenderErrorBoundary.contextType = RSCRouterContext;
-var errorRedirectHandledMap = /* @__PURE__ */ new WeakMap();
 function RSCErrorHandler({
   children,
   error
@@ -14067,16 +13879,12 @@ function useNavigateStable() {
   );
   return navigate;
 }
-var alreadyWarned = {};
 function warningOnce(key, cond, message) {
   if (!cond && !alreadyWarned[key]) {
     alreadyWarned[key] = true;
     warning(false, message);
   }
 }
-var USE_OPTIMISTIC = "useOptimistic";
-var useOptimisticImpl = React3[USE_OPTIMISTIC];
-var MemoizedDataRoutes = React3.memo(DataRoutes);
 function DataRoutes({
   routes,
   future,
@@ -14251,8 +14059,6 @@ function createRoutesFromChildren(children, parentPath = []) {
   });
   return routes;
 }
-var defaultMethod = "get";
-var defaultEncType = "application/x-www-form-urlencoded";
 function isHtmlElement(object) {
   return typeof HTMLElement !== "undefined" && object instanceof HTMLElement;
 }
@@ -14273,7 +14079,6 @@ function shouldProcessLinkClick(event, target) {
   (!target || target === "_self") && // Let browser handle "target=_blank" etc.
   !isModifiedEvent(event);
 }
-var _formDataSupportsSubmitter = null;
 function isFormDataSubmitterSupported() {
   if (_formDataSupportsSubmitter === null) {
     try {
@@ -14289,11 +14094,6 @@ function isFormDataSubmitterSupported() {
   }
   return _formDataSupportsSubmitter;
 }
-var supportedFormEncTypes = /* @__PURE__ */ new Set([
-  "application/x-www-form-urlencoded",
-  "multipart/form-data",
-  "text/plain"
-]);
 function getFormEncType(encType) {
   if (encType != null && !supportedFormEncTypes.has(encType)) {
     warning(
@@ -14354,15 +14154,6 @@ function getFormSubmissionInfo(target, basename) {
   }
   return { action, method: method.toLowerCase(), encType, formData, body };
 }
-var objectProtoNames2 = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
-var ESCAPE_LOOKUP = {
-  "&": "\\u0026",
-  ">": "\\u003e",
-  "<": "\\u003c",
-  "\u2028": "\\u2028",
-  "\u2029": "\\u2029"
-};
-var ESCAPE_REGEX = /[&><\u2028\u2029]/g;
 function escapeHtml(html) {
   return html.replace(ESCAPE_REGEX, (match) => ESCAPE_LOOKUP[match]);
 }
@@ -14562,8 +14353,6 @@ function useDataRouterStateContext() {
   );
   return context;
 }
-var FrameworkContext = React8.createContext(void 0);
-FrameworkContext.displayName = "FrameworkContext";
 function useFrameworkContext() {
   let context = React8.useContext(FrameworkContext);
   invariant2(
@@ -14774,14 +14563,6 @@ function mergeRefs(...refs) {
     });
   };
 }
-var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
-try {
-  if (isBrowser2) {
-    window.__reactRouterVersion = // @ts-expect-error
-    "7.13.2";
-  }
-} catch (e) {
-}
 function HashRouter({
   basename,
   children,
@@ -14853,211 +14634,6 @@ function HistoryRouter({
     }
   );
 }
-HistoryRouter.displayName = "unstable_HistoryRouter";
-var ABSOLUTE_URL_REGEX2 = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-var Link = React10.forwardRef(
-  function LinkWithRef({
-    onClick,
-    discover = "render",
-    prefetch = "none",
-    relative,
-    reloadDocument,
-    replace: replace2,
-    unstable_mask,
-    state,
-    target,
-    to,
-    preventScrollReset,
-    viewTransition,
-    unstable_defaultShouldRevalidate,
-    ...rest
-  }, forwardedRef) {
-    let { basename, navigator: navigator2, unstable_useTransitions } = React10.useContext(NavigationContext);
-    let isAbsolute = typeof to === "string" && ABSOLUTE_URL_REGEX2.test(to);
-    let parsed = parseToInfo(to, basename);
-    to = parsed.to;
-    let href = useHref(to, { relative });
-    let location = useLocation();
-    let maskedHref = null;
-    if (unstable_mask) {
-      let resolved = resolveTo(
-        unstable_mask,
-        [],
-        location.unstable_mask ? location.unstable_mask.pathname : "/",
-        true
-      );
-      if (basename !== "/") {
-        resolved.pathname = resolved.pathname === "/" ? basename : joinPaths([basename, resolved.pathname]);
-      }
-      maskedHref = navigator2.createHref(resolved);
-    }
-    let [shouldPrefetch, prefetchRef, prefetchHandlers] = usePrefetchBehavior(
-      prefetch,
-      rest
-    );
-    let internalOnClick = useLinkClickHandler(to, {
-      replace: replace2,
-      unstable_mask,
-      state,
-      target,
-      preventScrollReset,
-      relative,
-      viewTransition,
-      unstable_defaultShouldRevalidate,
-      unstable_useTransitions
-    });
-    function handleClick(event) {
-      if (onClick) onClick(event);
-      if (!event.defaultPrevented) {
-        internalOnClick(event);
-      }
-    }
-    let isSpaLink = !(parsed.isExternal || reloadDocument);
-    let link = (
-      // eslint-disable-next-line jsx-a11y/anchor-has-content
-      /* @__PURE__ */ React10.createElement(
-        "a",
-        {
-          ...rest,
-          ...prefetchHandlers,
-          href: (isSpaLink ? maskedHref : void 0) || parsed.absoluteURL || href,
-          onClick: isSpaLink ? handleClick : onClick,
-          ref: mergeRefs(forwardedRef, prefetchRef),
-          target,
-          "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
-        }
-      )
-    );
-    return shouldPrefetch && !isAbsolute ? /* @__PURE__ */ React10.createElement(React10.Fragment, null, link, /* @__PURE__ */ React10.createElement(PrefetchPageLinks, { page: href })) : link;
-  }
-);
-Link.displayName = "Link";
-var NavLink = React10.forwardRef(
-  function NavLinkWithRef({
-    "aria-current": ariaCurrentProp = "page",
-    caseSensitive = false,
-    className: classNameProp = "",
-    end = false,
-    style: styleProp,
-    to,
-    viewTransition,
-    children,
-    ...rest
-  }, ref) {
-    let path = useResolvedPath(to, { relative: rest.relative });
-    let location = useLocation();
-    let routerState = React10.useContext(DataRouterStateContext);
-    let { navigator: navigator2, basename } = React10.useContext(NavigationContext);
-    let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useViewTransitionState(path) && viewTransition === true;
-    let toPathname = navigator2.encodeLocation ? navigator2.encodeLocation(path).pathname : path.pathname;
-    let locationPathname = location.pathname;
-    let nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
-    if (!caseSensitive) {
-      locationPathname = locationPathname.toLowerCase();
-      nextLocationPathname = nextLocationPathname ? nextLocationPathname.toLowerCase() : null;
-      toPathname = toPathname.toLowerCase();
-    }
-    if (nextLocationPathname && basename) {
-      nextLocationPathname = stripBasename(nextLocationPathname, basename) || nextLocationPathname;
-    }
-    const endSlashPosition = toPathname !== "/" && toPathname.endsWith("/") ? toPathname.length - 1 : toPathname.length;
-    let isActive = locationPathname === toPathname || !end && locationPathname.startsWith(toPathname) && locationPathname.charAt(endSlashPosition) === "/";
-    let isPending = nextLocationPathname != null && (nextLocationPathname === toPathname || !end && nextLocationPathname.startsWith(toPathname) && nextLocationPathname.charAt(toPathname.length) === "/");
-    let renderProps = {
-      isActive,
-      isPending,
-      isTransitioning
-    };
-    let ariaCurrent = isActive ? ariaCurrentProp : void 0;
-    let className;
-    if (typeof classNameProp === "function") {
-      className = classNameProp(renderProps);
-    } else {
-      className = [
-        classNameProp,
-        isActive ? "active" : null,
-        isPending ? "pending" : null,
-        isTransitioning ? "transitioning" : null
-      ].filter(Boolean).join(" ");
-    }
-    let style = typeof styleProp === "function" ? styleProp(renderProps) : styleProp;
-    return /* @__PURE__ */ React10.createElement(
-      Link,
-      {
-        ...rest,
-        "aria-current": ariaCurrent,
-        className,
-        ref,
-        style,
-        to,
-        viewTransition
-      },
-      typeof children === "function" ? children(renderProps) : children
-    );
-  }
-);
-NavLink.displayName = "NavLink";
-var Form = React10.forwardRef(
-  ({
-    discover = "render",
-    fetcherKey,
-    navigate,
-    reloadDocument,
-    replace: replace2,
-    state,
-    method = defaultMethod,
-    action,
-    onSubmit,
-    relative,
-    preventScrollReset,
-    viewTransition,
-    unstable_defaultShouldRevalidate,
-    ...props
-  }, forwardedRef) => {
-    let { unstable_useTransitions } = React10.useContext(NavigationContext);
-    let submit = useSubmit();
-    let formAction = useFormAction(action, { relative });
-    let formMethod = method.toLowerCase() === "get" ? "get" : "post";
-    let isAbsolute = typeof action === "string" && ABSOLUTE_URL_REGEX2.test(action);
-    let submitHandler = (event) => {
-      onSubmit && onSubmit(event);
-      if (event.defaultPrevented) return;
-      event.preventDefault();
-      let submitter = event.nativeEvent.submitter;
-      let submitMethod = submitter?.getAttribute("formmethod") || method;
-      let doSubmit = () => submit(submitter || event.currentTarget, {
-        fetcherKey,
-        method: submitMethod,
-        navigate,
-        replace: replace2,
-        state,
-        relative,
-        preventScrollReset,
-        viewTransition,
-        unstable_defaultShouldRevalidate
-      });
-      if (unstable_useTransitions && navigate !== false) {
-        React10.startTransition(() => doSubmit());
-      } else {
-        doSubmit();
-      }
-    };
-    return /* @__PURE__ */ React10.createElement(
-      "form",
-      {
-        ref: forwardedRef,
-        method: formMethod,
-        action: formAction,
-        onSubmit: reloadDocument ? onSubmit : submitHandler,
-        ...props,
-        "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
-      }
-    );
-  }
-);
-Form.displayName = "Form";
 function ScrollRestoration({
   getKey,
   storageKey,
@@ -15115,7 +14691,6 @@ function ScrollRestoration({
     }
   );
 }
-ScrollRestoration.displayName = "ScrollRestoration";
 function getDataRouterConsoleError2(hookName) {
   return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
 }
@@ -15181,8 +14756,6 @@ function useLinkClickHandler(to, {
     ]
   );
 }
-var fetcherId = 0;
-var getUniqueFetcherId = () => `__${String(++fetcherId)}__`;
 function useSubmit() {
   let { router } = useDataRouterContext3(
     "useSubmit"
@@ -15255,8 +14828,6 @@ function useFormAction(action, { relative } = {}) {
   }
   return createPath(path);
 }
-var SCROLL_RESTORATION_STORAGE_KEY = "react-router-scroll-positions";
-var savedScrollPositions = {};
 function getScrollRestorationKey(location, matches, basename, getKey) {
   let key = null;
   if (getKey) {
@@ -15400,19 +14971,472 @@ function useViewTransitionState(to, { relative } = {}) {
   let nextPath = stripBasename(vtContext.nextLocation.pathname, basename) || vtContext.nextLocation.pathname;
   return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
 }
+var React, React2, React3, React4, React9, React8, React7, React6, React5, React10, React11, PopStateEventType, _map, paramRe, dynamicSegmentValue, indexRouteValue, emptySegmentValue, staticSegmentValue, splatPenalty, isSplat, ABSOLUTE_URL_REGEX, joinPaths, normalizePathname, normalizeSearch, normalizeHash, ErrorResponseImpl, isBrowser, objectProtoNames, validMutationMethodsArr, validMutationMethods, validRequestMethodsArr, validRequestMethods, DataRouterContext, DataRouterStateContext, RSCRouterContext, ViewTransitionContext, FetchersContext, AwaitContext, NavigationContext, LocationContext, RouteContext, RouteErrorContext, ENABLE_DEV_WARNINGS, ERROR_DIGEST_BASE, ERROR_DIGEST_REDIRECT, ERROR_DIGEST_ROUTE_ERROR_RESPONSE, navigateEffectWarning, OutletContext, defaultErrorElement, RenderErrorBoundary, errorRedirectHandledMap, alreadyWarned, USE_OPTIMISTIC, useOptimisticImpl, MemoizedDataRoutes, defaultMethod, defaultEncType, _formDataSupportsSubmitter, supportedFormEncTypes, objectProtoNames2, ESCAPE_LOOKUP, ESCAPE_REGEX, FrameworkContext, isBrowser2, ABSOLUTE_URL_REGEX2, Link, NavLink, Form, fetcherId, getUniqueFetcherId, SCROLL_RESTORATION_STORAGE_KEY, savedScrollPositions;
+var init_chunk_UVKPFVEO = __esm({
+  "node_modules/react-router/dist/development/chunk-UVKPFVEO.mjs"() {
+    React = __toESM(require_react(), 1);
+    React2 = __toESM(require_react(), 1);
+    React3 = __toESM(require_react(), 1);
+    React4 = __toESM(require_react(), 1);
+    React9 = __toESM(require_react(), 1);
+    React8 = __toESM(require_react(), 1);
+    React7 = __toESM(require_react(), 1);
+    React6 = __toESM(require_react(), 1);
+    React5 = __toESM(require_react(), 1);
+    React10 = __toESM(require_react(), 1);
+    React11 = __toESM(require_react(), 1);
+    PopStateEventType = "popstate";
+    _map = /* @__PURE__ */ new WeakMap();
+    paramRe = /^:[\w-]+$/;
+    dynamicSegmentValue = 3;
+    indexRouteValue = 2;
+    emptySegmentValue = 1;
+    staticSegmentValue = 10;
+    splatPenalty = -2;
+    isSplat = (s) => s === "*";
+    ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+    joinPaths = (paths) => paths.join("/").replace(/\/\/+/g, "/");
+    normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
+    normalizeSearch = (search) => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
+    normalizeHash = (hash) => !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
+    ErrorResponseImpl = class {
+      constructor(status, statusText, data2, internal = false) {
+        this.status = status;
+        this.statusText = statusText || "";
+        this.internal = internal;
+        if (data2 instanceof Error) {
+          this.data = data2.toString();
+          this.error = data2;
+        } else {
+          this.data = data2;
+        }
+      }
+    };
+    isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
+    objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
+    validMutationMethodsArr = [
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ];
+    validMutationMethods = new Set(
+      validMutationMethodsArr
+    );
+    validRequestMethodsArr = [
+      "GET",
+      ...validMutationMethodsArr
+    ];
+    validRequestMethods = new Set(validRequestMethodsArr);
+    DataRouterContext = React.createContext(null);
+    DataRouterContext.displayName = "DataRouter";
+    DataRouterStateContext = React.createContext(null);
+    DataRouterStateContext.displayName = "DataRouterState";
+    RSCRouterContext = React.createContext(false);
+    ViewTransitionContext = React.createContext({
+      isTransitioning: false
+    });
+    ViewTransitionContext.displayName = "ViewTransition";
+    FetchersContext = React.createContext(
+      /* @__PURE__ */ new Map()
+    );
+    FetchersContext.displayName = "Fetchers";
+    AwaitContext = React.createContext(null);
+    AwaitContext.displayName = "Await";
+    NavigationContext = React.createContext(
+      null
+    );
+    NavigationContext.displayName = "Navigation";
+    LocationContext = React.createContext(
+      null
+    );
+    LocationContext.displayName = "Location";
+    RouteContext = React.createContext({
+      outlet: null,
+      matches: [],
+      isDataRoute: false
+    });
+    RouteContext.displayName = "Route";
+    RouteErrorContext = React.createContext(null);
+    RouteErrorContext.displayName = "RouteError";
+    ENABLE_DEV_WARNINGS = true;
+    ERROR_DIGEST_BASE = "REACT_ROUTER_ERROR";
+    ERROR_DIGEST_REDIRECT = "REDIRECT";
+    ERROR_DIGEST_ROUTE_ERROR_RESPONSE = "ROUTE_ERROR_RESPONSE";
+    navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
+    OutletContext = React2.createContext(null);
+    defaultErrorElement = /* @__PURE__ */ React2.createElement(DefaultErrorComponent, null);
+    RenderErrorBoundary = class extends React2.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          location: props.location,
+          revalidation: props.revalidation,
+          error: props.error
+        };
+      }
+      static getDerivedStateFromError(error) {
+        return { error };
+      }
+      static getDerivedStateFromProps(props, state) {
+        if (state.location !== props.location || state.revalidation !== "idle" && props.revalidation === "idle") {
+          return {
+            error: props.error,
+            location: props.location,
+            revalidation: props.revalidation
+          };
+        }
+        return {
+          error: props.error !== void 0 ? props.error : state.error,
+          location: state.location,
+          revalidation: props.revalidation || state.revalidation
+        };
+      }
+      componentDidCatch(error, errorInfo) {
+        if (this.props.onError) {
+          this.props.onError(error, errorInfo);
+        } else {
+          console.error(
+            "React Router caught the following error during render",
+            error
+          );
+        }
+      }
+      render() {
+        let error = this.state.error;
+        if (this.context && typeof error === "object" && error && "digest" in error && typeof error.digest === "string") {
+          const decoded = decodeRouteErrorResponseDigest(error.digest);
+          if (decoded) error = decoded;
+        }
+        let result = error !== void 0 ? /* @__PURE__ */ React2.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ React2.createElement(
+          RouteErrorContext.Provider,
+          {
+            value: error,
+            children: this.props.component
+          }
+        )) : this.props.children;
+        if (this.context) {
+          return /* @__PURE__ */ React2.createElement(RSCErrorHandler, { error }, result);
+        }
+        return result;
+      }
+    };
+    RenderErrorBoundary.contextType = RSCRouterContext;
+    errorRedirectHandledMap = /* @__PURE__ */ new WeakMap();
+    alreadyWarned = {};
+    USE_OPTIMISTIC = "useOptimistic";
+    useOptimisticImpl = React3[USE_OPTIMISTIC];
+    MemoizedDataRoutes = React3.memo(DataRoutes);
+    defaultMethod = "get";
+    defaultEncType = "application/x-www-form-urlencoded";
+    _formDataSupportsSubmitter = null;
+    supportedFormEncTypes = /* @__PURE__ */ new Set([
+      "application/x-www-form-urlencoded",
+      "multipart/form-data",
+      "text/plain"
+    ]);
+    objectProtoNames2 = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
+    ESCAPE_LOOKUP = {
+      "&": "\\u0026",
+      ">": "\\u003e",
+      "<": "\\u003c",
+      "\u2028": "\\u2028",
+      "\u2029": "\\u2029"
+    };
+    ESCAPE_REGEX = /[&><\u2028\u2029]/g;
+    FrameworkContext = React8.createContext(void 0);
+    FrameworkContext.displayName = "FrameworkContext";
+    isBrowser2 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
+    try {
+      if (isBrowser2) {
+        window.__reactRouterVersion = // @ts-expect-error
+        "7.13.2";
+      }
+    } catch (e) {
+    }
+    HistoryRouter.displayName = "unstable_HistoryRouter";
+    ABSOLUTE_URL_REGEX2 = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+    Link = React10.forwardRef(
+      function LinkWithRef({
+        onClick,
+        discover = "render",
+        prefetch = "none",
+        relative,
+        reloadDocument,
+        replace: replace2,
+        unstable_mask,
+        state,
+        target,
+        to,
+        preventScrollReset,
+        viewTransition,
+        unstable_defaultShouldRevalidate,
+        ...rest
+      }, forwardedRef) {
+        let { basename, navigator: navigator2, unstable_useTransitions } = React10.useContext(NavigationContext);
+        let isAbsolute = typeof to === "string" && ABSOLUTE_URL_REGEX2.test(to);
+        let parsed = parseToInfo(to, basename);
+        to = parsed.to;
+        let href = useHref(to, { relative });
+        let location = useLocation();
+        let maskedHref = null;
+        if (unstable_mask) {
+          let resolved = resolveTo(
+            unstable_mask,
+            [],
+            location.unstable_mask ? location.unstable_mask.pathname : "/",
+            true
+          );
+          if (basename !== "/") {
+            resolved.pathname = resolved.pathname === "/" ? basename : joinPaths([basename, resolved.pathname]);
+          }
+          maskedHref = navigator2.createHref(resolved);
+        }
+        let [shouldPrefetch, prefetchRef, prefetchHandlers] = usePrefetchBehavior(
+          prefetch,
+          rest
+        );
+        let internalOnClick = useLinkClickHandler(to, {
+          replace: replace2,
+          unstable_mask,
+          state,
+          target,
+          preventScrollReset,
+          relative,
+          viewTransition,
+          unstable_defaultShouldRevalidate,
+          unstable_useTransitions
+        });
+        function handleClick(event) {
+          if (onClick) onClick(event);
+          if (!event.defaultPrevented) {
+            internalOnClick(event);
+          }
+        }
+        let isSpaLink = !(parsed.isExternal || reloadDocument);
+        let link = (
+          // eslint-disable-next-line jsx-a11y/anchor-has-content
+          /* @__PURE__ */ React10.createElement(
+            "a",
+            {
+              ...rest,
+              ...prefetchHandlers,
+              href: (isSpaLink ? maskedHref : void 0) || parsed.absoluteURL || href,
+              onClick: isSpaLink ? handleClick : onClick,
+              ref: mergeRefs(forwardedRef, prefetchRef),
+              target,
+              "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
+            }
+          )
+        );
+        return shouldPrefetch && !isAbsolute ? /* @__PURE__ */ React10.createElement(React10.Fragment, null, link, /* @__PURE__ */ React10.createElement(PrefetchPageLinks, { page: href })) : link;
+      }
+    );
+    Link.displayName = "Link";
+    NavLink = React10.forwardRef(
+      function NavLinkWithRef({
+        "aria-current": ariaCurrentProp = "page",
+        caseSensitive = false,
+        className: classNameProp = "",
+        end = false,
+        style: styleProp,
+        to,
+        viewTransition,
+        children,
+        ...rest
+      }, ref) {
+        let path = useResolvedPath(to, { relative: rest.relative });
+        let location = useLocation();
+        let routerState = React10.useContext(DataRouterStateContext);
+        let { navigator: navigator2, basename } = React10.useContext(NavigationContext);
+        let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useViewTransitionState(path) && viewTransition === true;
+        let toPathname = navigator2.encodeLocation ? navigator2.encodeLocation(path).pathname : path.pathname;
+        let locationPathname = location.pathname;
+        let nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
+        if (!caseSensitive) {
+          locationPathname = locationPathname.toLowerCase();
+          nextLocationPathname = nextLocationPathname ? nextLocationPathname.toLowerCase() : null;
+          toPathname = toPathname.toLowerCase();
+        }
+        if (nextLocationPathname && basename) {
+          nextLocationPathname = stripBasename(nextLocationPathname, basename) || nextLocationPathname;
+        }
+        const endSlashPosition = toPathname !== "/" && toPathname.endsWith("/") ? toPathname.length - 1 : toPathname.length;
+        let isActive = locationPathname === toPathname || !end && locationPathname.startsWith(toPathname) && locationPathname.charAt(endSlashPosition) === "/";
+        let isPending = nextLocationPathname != null && (nextLocationPathname === toPathname || !end && nextLocationPathname.startsWith(toPathname) && nextLocationPathname.charAt(toPathname.length) === "/");
+        let renderProps = {
+          isActive,
+          isPending,
+          isTransitioning
+        };
+        let ariaCurrent = isActive ? ariaCurrentProp : void 0;
+        let className;
+        if (typeof classNameProp === "function") {
+          className = classNameProp(renderProps);
+        } else {
+          className = [
+            classNameProp,
+            isActive ? "active" : null,
+            isPending ? "pending" : null,
+            isTransitioning ? "transitioning" : null
+          ].filter(Boolean).join(" ");
+        }
+        let style = typeof styleProp === "function" ? styleProp(renderProps) : styleProp;
+        return /* @__PURE__ */ React10.createElement(
+          Link,
+          {
+            ...rest,
+            "aria-current": ariaCurrent,
+            className,
+            ref,
+            style,
+            to,
+            viewTransition
+          },
+          typeof children === "function" ? children(renderProps) : children
+        );
+      }
+    );
+    NavLink.displayName = "NavLink";
+    Form = React10.forwardRef(
+      ({
+        discover = "render",
+        fetcherKey,
+        navigate,
+        reloadDocument,
+        replace: replace2,
+        state,
+        method = defaultMethod,
+        action,
+        onSubmit,
+        relative,
+        preventScrollReset,
+        viewTransition,
+        unstable_defaultShouldRevalidate,
+        ...props
+      }, forwardedRef) => {
+        let { unstable_useTransitions } = React10.useContext(NavigationContext);
+        let submit = useSubmit();
+        let formAction = useFormAction(action, { relative });
+        let formMethod = method.toLowerCase() === "get" ? "get" : "post";
+        let isAbsolute = typeof action === "string" && ABSOLUTE_URL_REGEX2.test(action);
+        let submitHandler = (event) => {
+          onSubmit && onSubmit(event);
+          if (event.defaultPrevented) return;
+          event.preventDefault();
+          let submitter = event.nativeEvent.submitter;
+          let submitMethod = submitter?.getAttribute("formmethod") || method;
+          let doSubmit = () => submit(submitter || event.currentTarget, {
+            fetcherKey,
+            method: submitMethod,
+            navigate,
+            replace: replace2,
+            state,
+            relative,
+            preventScrollReset,
+            viewTransition,
+            unstable_defaultShouldRevalidate
+          });
+          if (unstable_useTransitions && navigate !== false) {
+            React10.startTransition(() => doSubmit());
+          } else {
+            doSubmit();
+          }
+        };
+        return /* @__PURE__ */ React10.createElement(
+          "form",
+          {
+            ref: forwardedRef,
+            method: formMethod,
+            action: formAction,
+            onSubmit: reloadDocument ? onSubmit : submitHandler,
+            ...props,
+            "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
+          }
+        );
+      }
+    );
+    Form.displayName = "Form";
+    ScrollRestoration.displayName = "ScrollRestoration";
+    fetcherId = 0;
+    getUniqueFetcherId = () => `__${String(++fetcherId)}__`;
+    SCROLL_RESTORATION_STORAGE_KEY = "react-router-scroll-positions";
+    savedScrollPositions = {};
+  }
+});
 
-// frontend/src/app/providers/ToastProvider.tsx
-var import_react = __toESM(require_react(), 1);
+// node_modules/react-router/dist/development/index.mjs
+var init_development = __esm({
+  "node_modules/react-router/dist/development/index.mjs"() {
+    "use client";
+    init_chunk_UVKPFVEO();
+  }
+});
+
+// node_modules/react-router-dom/dist/index.mjs
+var init_dist = __esm({
+  "node_modules/react-router-dom/dist/index.mjs"() {
+    init_development();
+  }
+});
+
+// node_modules/react/cjs/react-jsx-runtime.production.js
+var require_react_jsx_runtime_production = __commonJS({
+  "node_modules/react/cjs/react-jsx-runtime.production.js"(exports) {
+    "use strict";
+    var REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element");
+    var REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment");
+    function jsxProd(type, config, maybeKey) {
+      var key = null;
+      void 0 !== maybeKey && (key = "" + maybeKey);
+      void 0 !== config.key && (key = "" + config.key);
+      if ("key" in config) {
+        maybeKey = {};
+        for (var propName in config)
+          "key" !== propName && (maybeKey[propName] = config[propName]);
+      } else maybeKey = config;
+      config = maybeKey.ref;
+      return {
+        $$typeof: REACT_ELEMENT_TYPE,
+        type,
+        key,
+        ref: void 0 !== config ? config : null,
+        props: maybeKey
+      };
+    }
+    exports.Fragment = REACT_FRAGMENT_TYPE;
+    exports.jsx = jsxProd;
+    exports.jsxs = jsxProd;
+  }
+});
+
+// node_modules/react/jsx-runtime.js
+var require_jsx_runtime = __commonJS({
+  "node_modules/react/jsx-runtime.js"(exports, module) {
+    "use strict";
+    if (true) {
+      module.exports = require_react_jsx_runtime_production();
+    } else {
+      module.exports = null;
+    }
+  }
+});
 
 // frontend/src/shared/ui/toast/ToastViewport.tsx
-var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
 function ToastViewport({ toasts }) {
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "toast-container", children: toasts.map((toast) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `toast toast-${toast.type}`, children: toast.message }, toast.id)) });
 }
+var import_jsx_runtime;
+var init_ToastViewport = __esm({
+  "frontend/src/shared/ui/toast/ToastViewport.tsx"() {
+    "use strict";
+    import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/app/providers/ToastProvider.tsx
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var ToastContext = (0, import_react.createContext)(null);
 function ToastProvider({ children }) {
   const [toasts, setToasts] = (0, import_react.useState)([]);
   const nextToastIdRef = (0, import_react.useRef)(1);
@@ -15437,1344 +15461,18 @@ function useToast() {
   }
   return context;
 }
+var import_react, import_jsx_runtime2, ToastContext;
+var init_ToastProvider = __esm({
+  "frontend/src/app/providers/ToastProvider.tsx"() {
+    "use strict";
+    import_react = __toESM(require_react(), 1);
+    init_ToastViewport();
+    import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+    ToastContext = (0, import_react.createContext)(null);
+  }
+});
 
 // node_modules/keycloak-js/lib/keycloak.js
-var CONTENT_TYPE_JSON = "application/json";
-var Keycloak = class {
-  /** @type {Pick<PromiseWithResolvers<boolean>, 'resolve' | 'reject'>[]} */
-  #refreshQueue = [];
-  /** @type {KeycloakAdapter} */
-  #adapter;
-  /** @type {boolean} */
-  #useNonce = true;
-  /** @type {CallbackStorage} */
-  #callbackStorage;
-  #logInfo = this.#createLogger(console.info);
-  #logWarn = this.#createLogger(console.warn);
-  /** @type {LoginIframe} */
-  #loginIframe = {
-    enable: true,
-    callbackList: [],
-    interval: 5
-  };
-  /** @type {KeycloakConfig} config */
-  #config;
-  didInitialize = false;
-  authenticated = false;
-  loginRequired = false;
-  /** @type {KeycloakResponseMode} */
-  responseMode = "fragment";
-  /** @type {KeycloakResponseType} */
-  responseType = "code";
-  /** @type {KeycloakFlow} */
-  flow = "standard";
-  /** @type {number?} */
-  timeSkew = null;
-  /** @type {string=} */
-  redirectUri;
-  /** @type {string=} */
-  silentCheckSsoRedirectUri;
-  /** @type {boolean} */
-  silentCheckSsoFallback = true;
-  /** @type {KeycloakPkceMethod} */
-  pkceMethod = "S256";
-  enableLogging = false;
-  /** @type {'GET' | 'POST'} */
-  logoutMethod = "GET";
-  /** @type {string=} */
-  scope;
-  messageReceiveTimeout = 1e4;
-  /** @type {string=} */
-  idToken;
-  /** @type {KeycloakTokenParsed=} */
-  idTokenParsed;
-  /** @type {string=} */
-  token;
-  /** @type {KeycloakTokenParsed=} */
-  tokenParsed;
-  /** @type {string=} */
-  refreshToken;
-  /** @type {KeycloakTokenParsed=} */
-  refreshTokenParsed;
-  /** @type {string=} */
-  clientId;
-  /** @type {string=} */
-  sessionId;
-  /** @type {string=} */
-  subject;
-  /** @type {string=} */
-  authServerUrl;
-  /** @type {string=} */
-  realm;
-  /** @type {KeycloakRoles=} */
-  realmAccess;
-  /** @type {KeycloakResourceAccess=} */
-  resourceAccess;
-  /** @type {KeycloakProfile=} */
-  profile;
-  /** @type {{}=} */
-  userInfo;
-  /** @type {Endpoints} */
-  endpoints;
-  /** @type {number=} */
-  tokenTimeoutHandle;
-  /** @type {() => void=} */
-  onAuthSuccess;
-  /** @type {(errorData?: KeycloakError) => void=} */
-  onAuthError;
-  /** @type {() => void=} */
-  onAuthRefreshSuccess;
-  /** @type {() => void=} */
-  onAuthRefreshError;
-  /** @type {() => void=} */
-  onTokenExpired;
-  /** @type {() => void=} */
-  onAuthLogout;
-  /** @type {(authenticated: boolean) => void=} */
-  onReady;
-  /** @type {(status: 'success' | 'cancelled' | 'error', action: string) => void=} */
-  onActionUpdate;
-  /**
-   * @param {KeycloakConfig} config
-   */
-  constructor(config) {
-    if (typeof config !== "string" && !isObject(config)) {
-      throw new Error("The 'Keycloak' constructor must be provided with a configuration object, or a URL to a JSON configuration file.");
-    }
-    if (isObject(config)) {
-      const requiredProperties = "oidcProvider" in config ? ["clientId"] : ["url", "realm", "clientId"];
-      for (const property of requiredProperties) {
-        if (!(property in config)) {
-          throw new Error(`The configuration object is missing the required '${property}' property.`);
-        }
-      }
-    }
-    if (!globalThis.isSecureContext) {
-      this.#logWarn(
-        "[KEYCLOAK] Keycloak JS must be used in a 'secure context' to function properly as it relies on browser APIs that are otherwise not available.\nContinuing to run your application insecurely will lead to unexpected behavior and breakage.\n\nFor more information see: https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts"
-      );
-    }
-    this.#config = config;
-  }
-  /**
-   * @param {KeycloakInitOptions} initOptions
-   * @returns {Promise<boolean>}
-   */
-  init = async (initOptions = {}) => {
-    if (this.didInitialize) {
-      throw new Error("A 'Keycloak' instance can only be initialized once.");
-    }
-    this.didInitialize = true;
-    this.#callbackStorage = createCallbackStorage();
-    const adapters = ["default", "cordova", "cordova-native"];
-    if (typeof initOptions.adapter === "string" && adapters.includes(initOptions.adapter)) {
-      this.#adapter = this.#loadAdapter(initOptions.adapter);
-    } else if (typeof initOptions.adapter === "object") {
-      this.#adapter = initOptions.adapter;
-    } else if ("Cordova" in window || "cordova" in window) {
-      this.#adapter = this.#loadAdapter("cordova");
-    } else {
-      this.#adapter = this.#loadAdapter("default");
-    }
-    if (typeof initOptions.useNonce !== "undefined") {
-      this.#useNonce = initOptions.useNonce;
-    }
-    if (typeof initOptions.checkLoginIframe !== "undefined") {
-      this.#loginIframe.enable = initOptions.checkLoginIframe;
-    }
-    if (initOptions.checkLoginIframeInterval) {
-      this.#loginIframe.interval = initOptions.checkLoginIframeInterval;
-    }
-    if (initOptions.onLoad === "login-required") {
-      this.loginRequired = true;
-    }
-    if (initOptions.responseMode) {
-      if (initOptions.responseMode === "query" || initOptions.responseMode === "fragment") {
-        this.responseMode = initOptions.responseMode;
-      } else {
-        throw new Error("Invalid value for responseMode");
-      }
-    }
-    if (initOptions.flow) {
-      switch (initOptions.flow) {
-        case "standard":
-          this.responseType = "code";
-          break;
-        case "implicit":
-          this.responseType = "id_token token";
-          break;
-        case "hybrid":
-          this.responseType = "code id_token token";
-          break;
-        default:
-          throw new Error("Invalid value for flow");
-      }
-      this.flow = initOptions.flow;
-    }
-    if (typeof initOptions.timeSkew === "number") {
-      this.timeSkew = initOptions.timeSkew;
-    }
-    if (initOptions.redirectUri) {
-      this.redirectUri = initOptions.redirectUri;
-    }
-    if (initOptions.silentCheckSsoRedirectUri) {
-      this.silentCheckSsoRedirectUri = initOptions.silentCheckSsoRedirectUri;
-    }
-    if (typeof initOptions.silentCheckSsoFallback === "boolean") {
-      this.silentCheckSsoFallback = initOptions.silentCheckSsoFallback;
-    }
-    if (typeof initOptions.pkceMethod !== "undefined") {
-      if (initOptions.pkceMethod !== "S256" && initOptions.pkceMethod !== false) {
-        throw new TypeError(`Invalid value for pkceMethod', expected 'S256' or false but got ${initOptions.pkceMethod}.`);
-      }
-      this.pkceMethod = initOptions.pkceMethod;
-    }
-    if (typeof initOptions.enableLogging === "boolean") {
-      this.enableLogging = initOptions.enableLogging;
-    }
-    if (initOptions.logoutMethod === "POST") {
-      this.logoutMethod = "POST";
-    }
-    if (typeof initOptions.scope === "string") {
-      this.scope = initOptions.scope;
-    }
-    if (typeof initOptions.messageReceiveTimeout === "number" && initOptions.messageReceiveTimeout > 0) {
-      this.messageReceiveTimeout = initOptions.messageReceiveTimeout;
-    }
-    await this.#loadConfig();
-    await this.#check3pCookiesSupported();
-    await this.#processInit(initOptions);
-    this.onReady?.(this.authenticated);
-    return this.authenticated;
-  };
-  /**
-   * @param {"default" | "cordova" | "cordova-native"} type
-   * @returns {KeycloakAdapter}
-   */
-  #loadAdapter(type) {
-    if (type === "default") {
-      return this.#loadDefaultAdapter();
-    }
-    if (type === "cordova") {
-      this.#loginIframe.enable = false;
-      return this.#loadCordovaAdapter();
-    }
-    if (type === "cordova-native") {
-      this.#loginIframe.enable = false;
-      return this.#loadCordovaNativeAdapter();
-    }
-    throw new Error("invalid adapter type: " + type);
-  }
-  /**
-   * @returns {KeycloakAdapter}
-   */
-  #loadDefaultAdapter() {
-    const redirectUri = (options) => {
-      return options?.redirectUri || this.redirectUri || globalThis.location.href;
-    };
-    return {
-      login: async (options) => {
-        window.location.assign(await this.createLoginUrl(options));
-        return await new Promise(() => {
-        });
-      },
-      logout: async (options) => {
-        const logoutMethod = options?.logoutMethod ?? this.logoutMethod;
-        if (logoutMethod === "GET") {
-          window.location.replace(this.createLogoutUrl(options));
-          return;
-        }
-        const form = document.createElement("form");
-        form.setAttribute("method", "POST");
-        form.setAttribute("action", this.createLogoutUrl(options));
-        form.style.display = "none";
-        const data2 = {
-          id_token_hint: this.idToken,
-          client_id: this.clientId,
-          post_logout_redirect_uri: redirectUri(options)
-        };
-        for (const [name, value] of Object.entries(data2)) {
-          const input = document.createElement("input");
-          input.setAttribute("type", "hidden");
-          input.setAttribute("name", name);
-          input.setAttribute(
-            "value",
-            /** @type {string} */
-            value
-          );
-          form.appendChild(input);
-        }
-        document.body.appendChild(form);
-        form.submit();
-      },
-      register: async (options) => {
-        window.location.assign(await this.createRegisterUrl(options));
-        return await new Promise(() => {
-        });
-      },
-      accountManagement: async () => {
-        const accountUrl = this.createAccountUrl();
-        if (typeof accountUrl !== "undefined") {
-          window.location.href = accountUrl;
-        } else {
-          throw new Error("Not supported by the OIDC server");
-        }
-        return await new Promise(() => {
-        });
-      },
-      redirectUri
-    };
-  }
-  /**
-   * @returns {KeycloakAdapter}
-   */
-  #loadCordovaAdapter() {
-    const cordovaOpenWindowWrapper = (loginUrl, target, options) => {
-      if (window.cordova && window.cordova.InAppBrowser) {
-        return window.cordova.InAppBrowser.open(loginUrl, target, options);
-      } else {
-        return window.open(loginUrl, target, options);
-      }
-    };
-    const shallowCloneCordovaOptions = (userOptions) => {
-      if (userOptions && userOptions.cordovaOptions) {
-        return Object.keys(userOptions.cordovaOptions).reduce((options, optionName) => {
-          options[optionName] = userOptions.cordovaOptions[optionName];
-          return options;
-        }, {});
-      } else {
-        return {};
-      }
-    };
-    const formatCordovaOptions = (cordovaOptions) => {
-      return Object.keys(cordovaOptions).reduce((options, optionName) => {
-        options.push(optionName + "=" + cordovaOptions[optionName]);
-        return options;
-      }, []).join(",");
-    };
-    const createCordovaOptions = (userOptions) => {
-      const cordovaOptions = shallowCloneCordovaOptions(userOptions);
-      cordovaOptions.location = "no";
-      if (userOptions && userOptions.prompt === "none") {
-        cordovaOptions.hidden = "yes";
-      }
-      return formatCordovaOptions(cordovaOptions);
-    };
-    const getCordovaRedirectUri = () => {
-      return this.redirectUri || "http://localhost";
-    };
-    return {
-      login: async (options) => {
-        const cordovaOptions = createCordovaOptions(options);
-        const loginUrl = await this.createLoginUrl(options);
-        const ref = cordovaOpenWindowWrapper(loginUrl, "_blank", cordovaOptions);
-        let completed = false;
-        let closed = false;
-        function closeBrowser() {
-          closed = true;
-          ref.close();
-        }
-        ;
-        return await new Promise((resolve, reject) => {
-          ref.addEventListener("loadstart", async (event) => {
-            if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
-              const callback = this.#parseCallback(event.url);
-              try {
-                await this.#processCallback(callback);
-                resolve();
-              } catch (error) {
-                reject(error);
-              }
-              closeBrowser();
-              completed = true;
-            }
-          });
-          ref.addEventListener("loaderror", async (event) => {
-            if (!completed) {
-              if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
-                const callback = this.#parseCallback(event.url);
-                try {
-                  await this.#processCallback(callback);
-                  resolve();
-                } catch (error) {
-                  reject(error);
-                }
-                closeBrowser();
-                completed = true;
-              } else {
-                reject(new Error("Unable to process login."));
-                closeBrowser();
-              }
-            }
-          });
-          ref.addEventListener("exit", function(event) {
-            if (!closed) {
-              reject(new Error("User closed the login window."));
-            }
-          });
-        });
-      },
-      logout: async (options) => {
-        const logoutUrl = this.createLogoutUrl(options);
-        const ref = cordovaOpenWindowWrapper(logoutUrl, "_blank", "location=no,hidden=yes,clearcache=yes");
-        let error = false;
-        ref.addEventListener("loadstart", (event) => {
-          if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
-            ref.close();
-          }
-        });
-        ref.addEventListener("loaderror", (event) => {
-          if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
-            ref.close();
-          } else {
-            error = true;
-            ref.close();
-          }
-        });
-        await new Promise((resolve, reject) => {
-          ref.addEventListener("exit", () => {
-            if (error) {
-              reject(new Error("User closed the login window."));
-            } else {
-              this.clearToken();
-              resolve();
-            }
-          });
-        });
-      },
-      register: async (options) => {
-        const registerUrl = await this.createRegisterUrl();
-        const cordovaOptions = createCordovaOptions(options);
-        const ref = cordovaOpenWindowWrapper(registerUrl, "_blank", cordovaOptions);
-        const promise = new Promise((resolve, reject) => {
-          ref.addEventListener("loadstart", async (event) => {
-            if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
-              ref.close();
-              const oauth = this.#parseCallback(event.url);
-              try {
-                await this.#processCallback(oauth);
-                resolve();
-              } catch (error) {
-                reject(error);
-              }
-            }
-          });
-        });
-        await promise;
-      },
-      accountManagement: async () => {
-        const accountUrl = this.createAccountUrl();
-        if (typeof accountUrl !== "undefined") {
-          const ref = cordovaOpenWindowWrapper(accountUrl, "_blank", "location=no");
-          ref.addEventListener("loadstart", function(event) {
-            if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
-              ref.close();
-            }
-          });
-        } else {
-          throw new Error("Not supported by the OIDC server");
-        }
-      },
-      redirectUri: () => {
-        return getCordovaRedirectUri();
-      }
-    };
-  }
-  /**
-   * @returns {KeycloakAdapter}
-   */
-  #loadCordovaNativeAdapter() {
-    return {
-      login: async (options) => {
-        const loginUrl = await this.createLoginUrl(options);
-        await new Promise((resolve, reject) => {
-          universalLinks.subscribe("keycloak", async (event) => {
-            universalLinks.unsubscribe("keycloak");
-            window.cordova.plugins.browsertab.close();
-            const oauth = this.#parseCallback(event.url);
-            try {
-              await this.#processCallback(oauth);
-              resolve();
-            } catch (error) {
-              reject(error);
-            }
-          });
-          window.cordova.plugins.browsertab.openUrl(loginUrl);
-        });
-      },
-      logout: async (options) => {
-        const logoutUrl = this.createLogoutUrl(options);
-        await new Promise((resolve) => {
-          universalLinks.subscribe("keycloak", () => {
-            universalLinks.unsubscribe("keycloak");
-            window.cordova.plugins.browsertab.close();
-            this.clearToken();
-            resolve();
-          });
-          window.cordova.plugins.browsertab.openUrl(logoutUrl);
-        });
-      },
-      register: async (options) => {
-        const registerUrl = await this.createRegisterUrl(options);
-        await new Promise((resolve, reject) => {
-          universalLinks.subscribe("keycloak", async (event) => {
-            universalLinks.unsubscribe("keycloak");
-            window.cordova.plugins.browsertab.close();
-            const oauth = this.#parseCallback(event.url);
-            try {
-              await this.#processCallback(oauth);
-              resolve();
-            } catch (error) {
-              reject(error);
-            }
-          });
-          window.cordova.plugins.browsertab.openUrl(registerUrl);
-        });
-      },
-      accountManagement: async () => {
-        const accountUrl = this.createAccountUrl();
-        if (typeof accountUrl !== "undefined") {
-          window.cordova.plugins.browsertab.openUrl(accountUrl);
-        } else {
-          throw new Error("Not supported by the OIDC server");
-        }
-      },
-      redirectUri: (options) => {
-        if (options && options.redirectUri) {
-          return options.redirectUri;
-        } else if (this.redirectUri) {
-          return this.redirectUri;
-        } else {
-          return "http://localhost";
-        }
-      }
-    };
-  }
-  /**
-   * @returns {Promise<void>}
-   */
-  async #loadConfig() {
-    if (typeof this.#config === "string") {
-      const jsonConfig = await fetchJsonConfig(this.#config);
-      this.authServerUrl = jsonConfig["auth-server-url"];
-      this.realm = jsonConfig.realm;
-      this.clientId = jsonConfig.resource;
-      this.#setupEndpoints();
-    } else {
-      this.clientId = this.#config.clientId;
-      if ("oidcProvider" in this.#config) {
-        await this.#loadOidcConfig(this.#config.oidcProvider);
-      } else {
-        this.authServerUrl = this.#config.url;
-        this.realm = this.#config.realm;
-        this.#setupEndpoints();
-      }
-    }
-  }
-  /**
-   * @returns {void}
-   */
-  #setupEndpoints() {
-    this.endpoints = {
-      authorize: () => {
-        return this.#getRealmUrl() + "/protocol/openid-connect/auth";
-      },
-      token: () => {
-        return this.#getRealmUrl() + "/protocol/openid-connect/token";
-      },
-      logout: () => {
-        return this.#getRealmUrl() + "/protocol/openid-connect/logout";
-      },
-      checkSessionIframe: () => {
-        return this.#getRealmUrl() + "/protocol/openid-connect/login-status-iframe.html";
-      },
-      thirdPartyCookiesIframe: () => {
-        return this.#getRealmUrl() + "/protocol/openid-connect/3p-cookies/step1.html";
-      },
-      register: () => {
-        return this.#getRealmUrl() + "/protocol/openid-connect/registrations";
-      },
-      userinfo: () => {
-        return this.#getRealmUrl() + "/protocol/openid-connect/userinfo";
-      }
-    };
-  }
-  /**
-   * @param {string | OpenIdProviderMetadata} oidcProvider
-   * @returns {Promise<void>}
-   */
-  async #loadOidcConfig(oidcProvider) {
-    if (typeof oidcProvider === "string") {
-      const url = `${stripTrailingSlash(oidcProvider)}/.well-known/openid-configuration`;
-      const openIdConfig = await fetchOpenIdConfig(url);
-      this.#setupOidcEndpoints(openIdConfig);
-    } else {
-      this.#setupOidcEndpoints(oidcProvider);
-    }
-  }
-  /**
-   * @param {OpenIdProviderMetadata} config
-   * @returns {void}
-   */
-  #setupOidcEndpoints(config) {
-    this.endpoints = {
-      authorize() {
-        return config.authorization_endpoint;
-      },
-      token() {
-        return config.token_endpoint;
-      },
-      logout() {
-        if (!config.end_session_endpoint) {
-          throw new Error("Not supported by the OIDC server");
-        }
-        return config.end_session_endpoint;
-      },
-      checkSessionIframe() {
-        if (!config.check_session_iframe) {
-          throw new Error("Not supported by the OIDC server");
-        }
-        return config.check_session_iframe;
-      },
-      register() {
-        throw new Error('Redirection to "Register user" page not supported in standard OIDC mode');
-      },
-      userinfo() {
-        if (!config.userinfo_endpoint) {
-          throw new Error("Not supported by the OIDC server");
-        }
-        return config.userinfo_endpoint;
-      }
-    };
-  }
-  /**
-   * @returns {Promise<void>}
-   */
-  async #check3pCookiesSupported() {
-    if (!this.#loginIframe.enable && !this.silentCheckSsoRedirectUri || typeof this.endpoints.thirdPartyCookiesIframe !== "function") {
-      return;
-    }
-    const iframe = document.createElement("iframe");
-    iframe.setAttribute("src", this.endpoints.thirdPartyCookiesIframe());
-    iframe.setAttribute("sandbox", "allow-storage-access-by-user-activation allow-scripts allow-same-origin");
-    iframe.setAttribute("title", "keycloak-3p-check-iframe");
-    iframe.style.display = "none";
-    document.body.appendChild(iframe);
-    const promise = new Promise((resolve) => {
-      const messageCallback = (event) => {
-        if (iframe.contentWindow !== event.source) {
-          return;
-        }
-        if (event.data !== "supported" && event.data !== "unsupported") {
-          return;
-        } else if (event.data === "unsupported") {
-          this.#logWarn(
-            "[KEYCLOAK] Your browser is blocking access to 3rd-party cookies, this means:\n\n - It is not possible to retrieve tokens without redirecting to the Keycloak server (a.k.a. no support for silent authentication).\n - It is not possible to automatically detect changes to the session status (such as the user logging out in another tab).\n\nFor more information see: https://www.keycloak.org/securing-apps/javascript-adapter#_modern_browsers"
-          );
-          this.#loginIframe.enable = false;
-          if (this.silentCheckSsoFallback) {
-            this.silentCheckSsoRedirectUri = void 0;
-          }
-        }
-        document.body.removeChild(iframe);
-        window.removeEventListener("message", messageCallback);
-        resolve();
-      };
-      window.addEventListener("message", messageCallback, false);
-    });
-    return await applyTimeoutToPromise(promise, this.messageReceiveTimeout, "Timeout when waiting for 3rd party check iframe message.");
-  }
-  /**
-   * @param {KeycloakInitOptions} initOptions
-   * @returns {Promise<void>}
-   */
-  async #processInit(initOptions) {
-    const callback = this.#parseCallback(window.location.href);
-    if (callback?.newUrl) {
-      window.history.replaceState(window.history.state, "", callback.newUrl);
-    }
-    if (callback && callback.valid) {
-      await this.#setupCheckLoginIframe();
-      await this.#processCallback(callback);
-      return;
-    }
-    const doLogin = async (prompt) => {
-      const options = {};
-      if (!prompt) {
-        options.prompt = "none";
-      }
-      if (initOptions.locale) {
-        options.locale = initOptions.locale;
-      }
-      await this.login(options);
-    };
-    const onLoad = async () => {
-      switch (initOptions.onLoad) {
-        case "check-sso":
-          if (this.#loginIframe.enable) {
-            await this.#setupCheckLoginIframe();
-            const unchanged = await this.#checkLoginIframe();
-            if (!unchanged) {
-              this.silentCheckSsoRedirectUri ? await this.#checkSsoSilently() : await doLogin(false);
-            }
-          } else {
-            this.silentCheckSsoRedirectUri ? await this.#checkSsoSilently() : await doLogin(false);
-          }
-          break;
-        case "login-required":
-          await doLogin(true);
-          break;
-        default:
-          throw new Error("Invalid value for onLoad");
-      }
-    };
-    if (initOptions.token && initOptions.refreshToken) {
-      this.#setToken(initOptions.token, initOptions.refreshToken, initOptions.idToken);
-      if (this.#loginIframe.enable) {
-        await this.#setupCheckLoginIframe();
-        const unchanged = await this.#checkLoginIframe();
-        if (unchanged) {
-          this.onAuthSuccess?.();
-          this.#scheduleCheckIframe();
-        }
-      } else {
-        try {
-          await this.updateToken(-1);
-          this.onAuthSuccess?.();
-        } catch (error) {
-          this.onAuthError?.();
-          if (initOptions.onLoad) {
-            await onLoad();
-          } else {
-            throw error;
-          }
-        }
-      }
-    } else if (initOptions.onLoad) {
-      await onLoad();
-    }
-  }
-  /**
-   * @returns {Promise<void>}
-   */
-  async #setupCheckLoginIframe() {
-    if (!this.#loginIframe.enable || this.#loginIframe.iframe) {
-      return;
-    }
-    const iframe = document.createElement("iframe");
-    this.#loginIframe.iframe = iframe;
-    iframe.setAttribute("src", this.endpoints.checkSessionIframe());
-    iframe.setAttribute("sandbox", "allow-storage-access-by-user-activation allow-scripts allow-same-origin");
-    iframe.setAttribute("title", "keycloak-session-iframe");
-    iframe.style.display = "none";
-    document.body.appendChild(iframe);
-    const messageCallback = (event) => {
-      if (event.origin !== this.#loginIframe.iframeOrigin || this.#loginIframe.iframe?.contentWindow !== event.source) {
-        return;
-      }
-      if (!(event.data === "unchanged" || event.data === "changed" || event.data === "error")) {
-        return;
-      }
-      if (event.data !== "unchanged") {
-        this.clearToken();
-      }
-      const callbacks = this.#loginIframe.callbackList;
-      this.#loginIframe.callbackList = [];
-      for (const callback of callbacks.reverse()) {
-        if (event.data === "error") {
-          callback(new Error("Error while checking login iframe"));
-        } else {
-          callback(null, event.data === "unchanged");
-        }
-      }
-    };
-    window.addEventListener("message", messageCallback, false);
-    const promise = new Promise((resolve) => {
-      iframe.addEventListener("load", () => {
-        const authUrl = this.endpoints.authorize();
-        if (authUrl.startsWith("/")) {
-          this.#loginIframe.iframeOrigin = globalThis.location.origin;
-        } else {
-          this.#loginIframe.iframeOrigin = new URL(authUrl).origin;
-        }
-        resolve();
-      });
-    });
-    await promise;
-  }
-  /**
-   * @returns {Promise<boolean | undefined>}
-   */
-  async #checkLoginIframe() {
-    if (!this.#loginIframe.iframe || !this.#loginIframe.iframeOrigin) {
-      return;
-    }
-    const message = `${this.clientId} ${this.sessionId ? this.sessionId : ""}`;
-    const origin = this.#loginIframe.iframeOrigin;
-    const promise = new Promise((resolve, reject) => {
-      const callback = (error, result) => error ? reject(error) : resolve(
-        /** @type {boolean} */
-        result
-      );
-      this.#loginIframe.callbackList.push(callback);
-      if (this.#loginIframe.callbackList.length === 1) {
-        this.#loginIframe.iframe?.contentWindow?.postMessage(message, origin);
-      }
-    });
-    return await promise;
-  }
-  /**
-   * @returns {Promise<void>}
-   */
-  async #checkSsoSilently() {
-    const iframe = document.createElement("iframe");
-    const src = await this.createLoginUrl({ prompt: "none", redirectUri: this.silentCheckSsoRedirectUri });
-    iframe.setAttribute("src", src);
-    iframe.setAttribute("sandbox", "allow-storage-access-by-user-activation allow-scripts allow-same-origin");
-    iframe.setAttribute("title", "keycloak-silent-check-sso");
-    iframe.style.display = "none";
-    document.body.appendChild(iframe);
-    return await new Promise((resolve, reject) => {
-      const messageCallback = async (event) => {
-        if (event.origin !== window.location.origin || iframe.contentWindow !== event.source) {
-          return;
-        }
-        const oauth = this.#parseCallback(event.data);
-        try {
-          await this.#processCallback(oauth);
-          resolve();
-        } catch (error) {
-          reject(error);
-        }
-        document.body.removeChild(iframe);
-        window.removeEventListener("message", messageCallback);
-      };
-      window.addEventListener("message", messageCallback);
-    });
-  }
-  /**
-   * @param {string} url
-   */
-  #parseCallback(url) {
-    const oauth = this.#parseCallbackUrl(url);
-    if (!oauth) {
-      return;
-    }
-    const oauthState = this.#callbackStorage.get(oauth.state);
-    if (oauthState) {
-      oauth.valid = true;
-      oauth.redirectUri = oauthState.redirectUri;
-      oauth.storedNonce = oauthState.nonce;
-      oauth.prompt = oauthState.prompt;
-      oauth.pkceCodeVerifier = oauthState.pkceCodeVerifier;
-      oauth.loginOptions = oauthState.loginOptions;
-    }
-    return oauth;
-  }
-  /**
-   * @param {string} urlString
-   */
-  #parseCallbackUrl(urlString) {
-    let supportedParams = [];
-    switch (this.flow) {
-      case "standard":
-        supportedParams = ["code", "state", "session_state", "kc_action_status", "kc_action", "iss"];
-        break;
-      case "implicit":
-        supportedParams = ["access_token", "token_type", "id_token", "state", "session_state", "expires_in", "kc_action_status", "kc_action", "iss"];
-        break;
-      case "hybrid":
-        supportedParams = ["access_token", "token_type", "id_token", "code", "state", "session_state", "expires_in", "kc_action_status", "kc_action", "iss"];
-        break;
-    }
-    supportedParams.push("error");
-    supportedParams.push("error_description");
-    supportedParams.push("error_uri");
-    const url = new URL(urlString);
-    let newUrl = "";
-    let parsed;
-    if (this.responseMode === "query" && url.searchParams.size > 0) {
-      parsed = this.#parseCallbackParams(url.search, supportedParams);
-      url.search = parsed.paramsString;
-      newUrl = url.toString();
-    } else if (this.responseMode === "fragment" && url.hash.length > 0) {
-      parsed = this.#parseCallbackParams(url.hash.substring(1), supportedParams);
-      url.hash = parsed.paramsString;
-      newUrl = url.toString();
-    }
-    if (parsed?.oauthParams) {
-      if (this.flow === "standard" || this.flow === "hybrid") {
-        if ((parsed.oauthParams.code || parsed.oauthParams.error) && parsed.oauthParams.state) {
-          parsed.oauthParams.newUrl = newUrl;
-          return parsed.oauthParams;
-        }
-      } else if (this.flow === "implicit") {
-        if ((parsed.oauthParams.access_token || parsed.oauthParams.error) && parsed.oauthParams.state) {
-          parsed.oauthParams.newUrl = newUrl;
-          return parsed.oauthParams;
-        }
-      }
-    }
-  }
-  /**
-   * @typedef {Object} ParsedCallbackParams
-   * @property {string} paramsString
-   * @property {Record<string, string | undefined>} oauthParams
-   */
-  /**
-   * @param {string} paramsString
-   * @param {string[]} supportedParams
-   * @returns {ParsedCallbackParams}
-   */
-  #parseCallbackParams(paramsString, supportedParams) {
-    const params = paramsString.split("&");
-    const oauthParams = {};
-    let result = "";
-    for (const param of params.reverse()) {
-      const entry = new URLSearchParams(param).entries().next().value;
-      if (!entry) {
-        result = "&" + result;
-        continue;
-      }
-      const [key, value] = entry;
-      if (supportedParams.includes(key) && !(key in oauthParams)) {
-        oauthParams[key] = value;
-      } else {
-        result = result.length === 0 ? param : param + "&" + result;
-      }
-    }
-    return {
-      paramsString: result,
-      oauthParams
-    };
-  }
-  async #processCallback(oauth) {
-    const { code, error, prompt } = oauth;
-    let timeLocal = (/* @__PURE__ */ new Date()).getTime();
-    const authSuccess = (accessToken2, refreshToken, idToken) => {
-      timeLocal = (timeLocal + (/* @__PURE__ */ new Date()).getTime()) / 2;
-      this.#setToken(accessToken2, refreshToken, idToken, timeLocal);
-      if (this.#useNonce && (this.idTokenParsed && this.idTokenParsed.nonce !== oauth.storedNonce)) {
-        this.#logInfo("[KEYCLOAK] Invalid nonce, clearing token");
-        this.clearToken();
-        throw new Error("Invalid nonce.");
-      }
-    };
-    if (oauth.kc_action_status) {
-      this.onActionUpdate && this.onActionUpdate(oauth.kc_action_status, oauth.kc_action);
-    }
-    if (error) {
-      if (prompt !== "none") {
-        if (oauth.error_description && oauth.error_description === "authentication_expired") {
-          await this.login(oauth.loginOptions);
-        } else {
-          const errorData = { error, error_description: oauth.error_description };
-          this.onAuthError?.(errorData);
-          throw errorData;
-        }
-      }
-      return;
-    } else if (this.flow !== "standard" && (oauth.access_token || oauth.id_token)) {
-      authSuccess(oauth.access_token, void 0, oauth.id_token);
-      this.onAuthSuccess?.();
-    }
-    if (this.flow !== "implicit" && code) {
-      try {
-        const response = await fetchAccessToken(
-          this.endpoints.token(),
-          code,
-          /** @type {string} */
-          this.clientId,
-          oauth.redirectUri,
-          oauth.pkceCodeVerifier
-        );
-        authSuccess(response.access_token, response.refresh_token, response.id_token);
-        if (this.flow === "standard") {
-          this.onAuthSuccess?.();
-        }
-        this.#scheduleCheckIframe();
-      } catch (error2) {
-        this.onAuthError?.();
-        throw error2;
-      }
-    }
-  }
-  async #scheduleCheckIframe() {
-    if (this.#loginIframe.enable && this.token) {
-      await waitForTimeout(this.#loginIframe.interval * 1e3);
-      const unchanged = await this.#checkLoginIframe();
-      if (unchanged) {
-        await this.#scheduleCheckIframe();
-      }
-    }
-  }
-  /**
-   * @param {KeycloakLoginOptions} [options]
-   * @returns {Promise<void>}
-   */
-  login = (options) => {
-    return this.#adapter.login(options);
-  };
-  /**
-   * @param {KeycloakLoginOptions} [options]
-   * @returns {Promise<string>}
-   */
-  createLoginUrl = async (options) => {
-    const state = createUUID();
-    const nonce = createUUID();
-    const redirectUri = this.#adapter.redirectUri(options);
-    const callbackState = {
-      state,
-      nonce,
-      redirectUri,
-      loginOptions: options
-    };
-    if (options?.prompt) {
-      callbackState.prompt = options.prompt;
-    }
-    const url = options?.action === "register" ? this.endpoints.register() : this.endpoints.authorize();
-    let scope = options?.scope || this.scope;
-    const scopeValues = scope ? scope.split(" ") : [];
-    if (!scopeValues.includes("openid")) {
-      scopeValues.unshift("openid");
-    }
-    scope = scopeValues.join(" ");
-    const params = new URLSearchParams([
-      [
-        "client_id",
-        /** @type {string} */
-        this.clientId
-      ],
-      ["redirect_uri", redirectUri],
-      ["state", state],
-      ["response_mode", this.responseMode],
-      ["response_type", this.responseType],
-      ["scope", scope]
-    ]);
-    if (this.#useNonce) {
-      params.append("nonce", nonce);
-    }
-    if (options?.prompt) {
-      params.append("prompt", options.prompt);
-    }
-    if (typeof options?.maxAge === "number") {
-      params.append("max_age", options.maxAge.toString());
-    }
-    if (options?.loginHint) {
-      params.append("login_hint", options.loginHint);
-    }
-    if (options?.idpHint) {
-      params.append("kc_idp_hint", options.idpHint);
-    }
-    if (options?.action && options.action !== "register") {
-      params.append("kc_action", options.action);
-    }
-    if (options?.locale) {
-      params.append("ui_locales", options.locale);
-    }
-    if (options?.acr) {
-      params.append("claims", buildClaimsParameter(options.acr));
-    }
-    if (options?.acrValues) {
-      params.append("acr_values", options.acrValues);
-    }
-    if (this.pkceMethod) {
-      try {
-        const codeVerifier = generateCodeVerifier(96);
-        const pkceChallenge = await generatePkceChallenge(this.pkceMethod, codeVerifier);
-        callbackState.pkceCodeVerifier = codeVerifier;
-        params.append("code_challenge", pkceChallenge);
-        params.append("code_challenge_method", this.pkceMethod);
-      } catch (error) {
-        throw new Error("Failed to generate PKCE challenge.", { cause: error });
-      }
-    }
-    this.#callbackStorage.add(callbackState);
-    return `${url}?${params.toString()}`;
-  };
-  /**
-   * @param {KeycloakLogoutOptions} [options]
-   * @returns {Promise<void>}
-   */
-  logout = (options) => {
-    return this.#adapter.logout(options);
-  };
-  /**
-   * @param {KeycloakLogoutOptions} [options]
-   * @returns {string}
-   */
-  createLogoutUrl = (options) => {
-    const logoutMethod = options?.logoutMethod ?? this.logoutMethod;
-    const url = this.endpoints.logout();
-    if (logoutMethod === "POST") {
-      return url;
-    }
-    const params = new URLSearchParams([
-      [
-        "client_id",
-        /** @type {string} */
-        this.clientId
-      ],
-      ["post_logout_redirect_uri", this.#adapter.redirectUri(options)]
-    ]);
-    if (this.idToken) {
-      params.append("id_token_hint", this.idToken);
-    }
-    return `${url}?${params.toString()}`;
-  };
-  /**
-   * @param {KeycloakRegisterOptions} [options]
-   * @returns {Promise<void>}
-   */
-  register = (options) => {
-    return this.#adapter.register(options);
-  };
-  /**
-   * @param {KeycloakRegisterOptions} [options]
-   * @returns {Promise<string>}
-   */
-  createRegisterUrl = (options) => {
-    return this.createLoginUrl({ ...options, action: "register" });
-  };
-  /**
-   * @param {KeycloakAccountOptions} [options]
-   * @returns {string}
-   */
-  createAccountUrl = (options) => {
-    const url = this.#getRealmUrl();
-    if (!url) {
-      throw new Error("Unable to create account URL, make sure the adapter is not configured using a generic OIDC provider.");
-    }
-    const params = new URLSearchParams([
-      [
-        "referrer",
-        /** @type {string} */
-        this.clientId
-      ],
-      ["referrer_uri", this.#adapter.redirectUri(options)]
-    ]);
-    return `${url}/account?${params.toString()}`;
-  };
-  /**
-   * @returns {Promise<void>}
-   */
-  accountManagement = () => {
-    return this.#adapter.accountManagement();
-  };
-  /**
-   * @param {string} role
-   * @returns {boolean}
-   */
-  hasRealmRole = (role) => {
-    const access = this.realmAccess;
-    return !!access && access.roles.indexOf(role) >= 0;
-  };
-  /**
-   * @param {string} role
-   * @param {string} [resource]
-   * @returns {boolean}
-   */
-  hasResourceRole = (role, resource) => {
-    if (!this.resourceAccess) {
-      return false;
-    }
-    const access = this.resourceAccess[resource || /** @type {string} */
-    this.clientId];
-    return !!access && access.roles.indexOf(role) >= 0;
-  };
-  /**
-   * @returns {Promise<KeycloakProfile>}
-   */
-  loadUserProfile = async () => {
-    const realmUrl = this.#getRealmUrl();
-    if (!realmUrl) {
-      throw new Error("Unable to load user profile, make sure the adapter is not configured using a generic OIDC provider.");
-    }
-    const url = `${realmUrl}/account`;
-    const profile = await fetchJSON(url, {
-      headers: [buildAuthorizationHeader(this.token)]
-    });
-    return this.profile = profile;
-  };
-  /**
-   * @returns {Promise<{}>}
-   */
-  loadUserInfo = async () => {
-    const url = this.endpoints.userinfo();
-    const userInfo = await fetchJSON(url, {
-      headers: [buildAuthorizationHeader(this.token)]
-    });
-    return this.userInfo = userInfo;
-  };
-  /**
-   * @param {number} [minValidity]
-   * @returns {boolean}
-   */
-  isTokenExpired = (minValidity) => {
-    if (!this.tokenParsed || !this.refreshToken && this.flow !== "implicit") {
-      throw new Error("Not authenticated");
-    }
-    if (this.timeSkew == null) {
-      this.#logInfo("[KEYCLOAK] Unable to determine if token is expired as timeskew is not set");
-      return true;
-    }
-    if (typeof this.tokenParsed.exp !== "number") {
-      return false;
-    }
-    let expiresIn = this.tokenParsed.exp - Math.ceil((/* @__PURE__ */ new Date()).getTime() / 1e3) + this.timeSkew;
-    if (minValidity) {
-      if (isNaN(minValidity)) {
-        throw new Error("Invalid minValidity");
-      }
-      expiresIn -= minValidity;
-    }
-    return expiresIn < 0;
-  };
-  /**
-   * @param {number} minValidity
-   * @returns {Promise<boolean>}
-   */
-  updateToken = async (minValidity) => {
-    if (!this.refreshToken) {
-      throw new Error("Unable to update token, no refresh token available.");
-    }
-    minValidity = minValidity || 5;
-    if (this.#loginIframe.enable) {
-      await this.#checkLoginIframe();
-    }
-    let refreshToken = false;
-    if (minValidity === -1) {
-      refreshToken = true;
-      this.#logInfo("[KEYCLOAK] Refreshing token: forced refresh");
-    } else if (!this.tokenParsed || this.isTokenExpired(minValidity)) {
-      refreshToken = true;
-      this.#logInfo("[KEYCLOAK] Refreshing token: token expired");
-    }
-    if (!refreshToken) {
-      return false;
-    }
-    const { promise, resolve, reject } = Promise.withResolvers();
-    this.#refreshQueue.push({ resolve, reject });
-    if (this.#refreshQueue.length === 1) {
-      const url = this.endpoints.token();
-      let timeLocal = (/* @__PURE__ */ new Date()).getTime();
-      try {
-        const response = await fetchRefreshToken(
-          url,
-          this.refreshToken,
-          /** @type {string} */
-          this.clientId
-        );
-        this.#logInfo("[KEYCLOAK] Token refreshed");
-        timeLocal = (timeLocal + (/* @__PURE__ */ new Date()).getTime()) / 2;
-        this.#setToken(response.access_token, response.refresh_token, response.id_token, timeLocal);
-        this.onAuthRefreshSuccess?.();
-        for (let p = this.#refreshQueue.pop(); p != null; p = this.#refreshQueue.pop()) {
-          p.resolve(true);
-        }
-      } catch (error) {
-        this.#logWarn("[KEYCLOAK] Failed to refresh token");
-        if (error instanceof NetworkError && error.response.status === 400) {
-          this.clearToken();
-        }
-        this.onAuthRefreshError?.();
-        for (let p = this.#refreshQueue.pop(); p != null; p = this.#refreshQueue.pop()) {
-          p.reject(error);
-        }
-      }
-    }
-    return await promise;
-  };
-  clearToken = () => {
-    if (this.token) {
-      this.#setToken();
-      this.onAuthLogout?.();
-      if (this.loginRequired) {
-        this.login();
-      }
-    }
-  };
-  /**
-   * @param {string} [token]
-   * @param {string} [refreshToken]
-   * @param {string} [idToken]
-   * @param {number} [timeLocal]
-   */
-  #setToken(token, refreshToken, idToken, timeLocal) {
-    if (this.tokenTimeoutHandle) {
-      clearTimeout(this.tokenTimeoutHandle);
-      this.tokenTimeoutHandle = void 0;
-    }
-    if (refreshToken) {
-      this.refreshToken = refreshToken;
-      this.refreshTokenParsed = decodeToken(refreshToken);
-    } else {
-      delete this.refreshToken;
-      delete this.refreshTokenParsed;
-    }
-    if (idToken) {
-      this.idToken = idToken;
-      this.idTokenParsed = decodeToken(idToken);
-    } else {
-      delete this.idToken;
-      delete this.idTokenParsed;
-    }
-    if (token) {
-      this.token = token;
-      this.tokenParsed = decodeToken(token);
-      this.sessionId = this.tokenParsed.sid;
-      this.authenticated = true;
-      this.subject = this.tokenParsed.sub;
-      this.realmAccess = this.tokenParsed.realm_access;
-      this.resourceAccess = this.tokenParsed.resource_access;
-      if (timeLocal) {
-        this.timeSkew = Math.floor(timeLocal / 1e3) - this.tokenParsed.iat;
-      }
-      if (this.timeSkew !== null) {
-        this.#logInfo("[KEYCLOAK] Estimated time difference between browser and server is " + this.timeSkew + " seconds");
-        if (this.onTokenExpired) {
-          const expiresIn = (this.tokenParsed.exp - (/* @__PURE__ */ new Date()).getTime() / 1e3 + this.timeSkew) * 1e3;
-          this.#logInfo("[KEYCLOAK] Token expires in " + Math.round(expiresIn / 1e3) + " s");
-          if (expiresIn <= 0) {
-            this.onTokenExpired();
-          } else {
-            this.tokenTimeoutHandle = window.setTimeout(this.onTokenExpired, expiresIn);
-          }
-        }
-      }
-    } else {
-      delete this.token;
-      delete this.tokenParsed;
-      delete this.subject;
-      delete this.realmAccess;
-      delete this.resourceAccess;
-      this.authenticated = false;
-    }
-  }
-  /**
-   * @returns {string=}
-   */
-  #getRealmUrl() {
-    if (typeof this.authServerUrl === "undefined") {
-      return;
-    }
-    return `${stripTrailingSlash(this.authServerUrl)}/realms/${encodeURIComponent(
-      /** @type {string} */
-      this.realm
-    )}`;
-  }
-  /**
-   * @param {Function} fn
-   * @returns {(message: string) => void}
-   */
-  #createLogger(fn) {
-    return (message) => {
-      if (this.enableLogging) {
-        fn.call(console, message);
-      }
-    };
-  }
-};
 function createUUID() {
   if (typeof crypto === "undefined" || typeof crypto.randomUUID === "undefined") {
     throw new Error("Web Crypto API is not available.");
@@ -16831,151 +15529,6 @@ function createCallbackStorage() {
     return new CookieStorage();
   }
 }
-var STORAGE_KEY_PREFIX = "kc-callback-";
-var LocalStorage = class {
-  constructor() {
-    globalThis.localStorage.setItem("kc-test", "test");
-    globalThis.localStorage.removeItem("kc-test");
-  }
-  /**
-   * @param {string} [state]
-   * @returns {CallbackState | null}
-   */
-  get(state) {
-    if (!state) {
-      return null;
-    }
-    this.#clearInvalidValues();
-    const key = STORAGE_KEY_PREFIX + state;
-    const value = globalThis.localStorage.getItem(key);
-    if (value) {
-      globalThis.localStorage.removeItem(key);
-      return JSON.parse(value);
-    }
-    return null;
-  }
-  /**
-   * @param {CallbackState} state
-   */
-  add(state) {
-    this.#clearInvalidValues();
-    const key = STORAGE_KEY_PREFIX + state.state;
-    const value = JSON.stringify({
-      ...state,
-      // Set the expiry time to 1 hour from now.
-      expires: Date.now() + 60 * 60 * 1e3
-    });
-    try {
-      globalThis.localStorage.setItem(key, value);
-    } catch (error) {
-      this.#clearAllValues();
-      globalThis.localStorage.setItem(key, value);
-    }
-  }
-  /**
-   * Clears all values from local storage that are no longer valid.
-   */
-  #clearInvalidValues() {
-    const currentTime = Date.now();
-    for (const [key, value] of this.#getStoredEntries()) {
-      const expiry = this.#parseExpiry(value);
-      if (expiry === null || expiry < currentTime) {
-        globalThis.localStorage.removeItem(key);
-      }
-    }
-  }
-  /**
-   * Clears all known values from local storage.
-   */
-  #clearAllValues() {
-    for (const [key] of this.#getStoredEntries()) {
-      globalThis.localStorage.removeItem(key);
-    }
-  }
-  /**
-   * Gets all entries stored in local storage that are known to be managed by this class.
-   * @returns {[string, string][]} An array of key-value pairs.
-   */
-  #getStoredEntries() {
-    return Object.entries(globalThis.localStorage).filter(([key]) => key.startsWith(STORAGE_KEY_PREFIX));
-  }
-  /**
-   * Parses the expiry time from a value stored in local storage.
-   * @param {string} value
-   * @returns {number | null} The expiry time in milliseconds, or `null` if the value is malformed.
-   */
-  #parseExpiry(value) {
-    let parsedValue;
-    try {
-      parsedValue = JSON.parse(value);
-    } catch (error) {
-      return null;
-    }
-    if (isObject(parsedValue) && "expires" in parsedValue && typeof parsedValue.expires === "number") {
-      return parsedValue.expires;
-    }
-    return null;
-  }
-};
-var CookieStorage = class {
-  /**
-   * @param {string} [state]
-   * @returns {CallbackState | null}
-   */
-  get(state) {
-    if (!state) {
-      return null;
-    }
-    const value = this.#getCookie(STORAGE_KEY_PREFIX + state);
-    this.#setCookie(STORAGE_KEY_PREFIX + state, "", this.#cookieExpiration(-100));
-    if (value) {
-      return JSON.parse(value);
-    }
-    return null;
-  }
-  /**
-   * @param {CallbackState} state
-   */
-  add(state) {
-    this.#setCookie(STORAGE_KEY_PREFIX + state.state, JSON.stringify(state), this.#cookieExpiration(60));
-  }
-  /**
-   * @param {string} key
-   * @returns
-   */
-  #getCookie(key) {
-    const name = key + "=";
-    const ca = document.cookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @param {Date} expirationDate
-   */
-  #setCookie(key, value, expirationDate) {
-    const cookie = key + "=" + value + "; expires=" + expirationDate.toUTCString() + "; ";
-    document.cookie = cookie;
-  }
-  /**
-   * @param {number} minutes
-   * @returns {Date}
-   */
-  #cookieExpiration(minutes) {
-    const exp = /* @__PURE__ */ new Date();
-    exp.setTime(exp.getTime() + minutes * 60 * 1e3);
-    return exp;
-  }
-};
 function bytesToBase64(bytes) {
   const binString = String.fromCodePoint(...bytes);
   return btoa(binString);
@@ -17096,25 +15649,1507 @@ function buildAuthorizationHeader(token) {
 function stripTrailingSlash(url) {
   return url.endsWith("/") ? url.slice(0, -1) : url;
 }
-var NetworkError = class extends Error {
-  /** @type {Response} */
-  response;
-  /**
-   * @param {string} message
-   * @param {NetworkErrorOptions} options
-   */
-  constructor(message, options) {
-    super(message, options);
-    this.response = options.response;
+var CONTENT_TYPE_JSON, Keycloak, STORAGE_KEY_PREFIX, LocalStorage, CookieStorage, NetworkError, waitForTimeout;
+var init_keycloak = __esm({
+  "node_modules/keycloak-js/lib/keycloak.js"() {
+    CONTENT_TYPE_JSON = "application/json";
+    Keycloak = class {
+      /** @type {Pick<PromiseWithResolvers<boolean>, 'resolve' | 'reject'>[]} */
+      #refreshQueue = [];
+      /** @type {KeycloakAdapter} */
+      #adapter;
+      /** @type {boolean} */
+      #useNonce = true;
+      /** @type {CallbackStorage} */
+      #callbackStorage;
+      #logInfo = this.#createLogger(console.info);
+      #logWarn = this.#createLogger(console.warn);
+      /** @type {LoginIframe} */
+      #loginIframe = {
+        enable: true,
+        callbackList: [],
+        interval: 5
+      };
+      /** @type {KeycloakConfig} config */
+      #config;
+      didInitialize = false;
+      authenticated = false;
+      loginRequired = false;
+      /** @type {KeycloakResponseMode} */
+      responseMode = "fragment";
+      /** @type {KeycloakResponseType} */
+      responseType = "code";
+      /** @type {KeycloakFlow} */
+      flow = "standard";
+      /** @type {number?} */
+      timeSkew = null;
+      /** @type {string=} */
+      redirectUri;
+      /** @type {string=} */
+      silentCheckSsoRedirectUri;
+      /** @type {boolean} */
+      silentCheckSsoFallback = true;
+      /** @type {KeycloakPkceMethod} */
+      pkceMethod = "S256";
+      enableLogging = false;
+      /** @type {'GET' | 'POST'} */
+      logoutMethod = "GET";
+      /** @type {string=} */
+      scope;
+      messageReceiveTimeout = 1e4;
+      /** @type {string=} */
+      idToken;
+      /** @type {KeycloakTokenParsed=} */
+      idTokenParsed;
+      /** @type {string=} */
+      token;
+      /** @type {KeycloakTokenParsed=} */
+      tokenParsed;
+      /** @type {string=} */
+      refreshToken;
+      /** @type {KeycloakTokenParsed=} */
+      refreshTokenParsed;
+      /** @type {string=} */
+      clientId;
+      /** @type {string=} */
+      sessionId;
+      /** @type {string=} */
+      subject;
+      /** @type {string=} */
+      authServerUrl;
+      /** @type {string=} */
+      realm;
+      /** @type {KeycloakRoles=} */
+      realmAccess;
+      /** @type {KeycloakResourceAccess=} */
+      resourceAccess;
+      /** @type {KeycloakProfile=} */
+      profile;
+      /** @type {{}=} */
+      userInfo;
+      /** @type {Endpoints} */
+      endpoints;
+      /** @type {number=} */
+      tokenTimeoutHandle;
+      /** @type {() => void=} */
+      onAuthSuccess;
+      /** @type {(errorData?: KeycloakError) => void=} */
+      onAuthError;
+      /** @type {() => void=} */
+      onAuthRefreshSuccess;
+      /** @type {() => void=} */
+      onAuthRefreshError;
+      /** @type {() => void=} */
+      onTokenExpired;
+      /** @type {() => void=} */
+      onAuthLogout;
+      /** @type {(authenticated: boolean) => void=} */
+      onReady;
+      /** @type {(status: 'success' | 'cancelled' | 'error', action: string) => void=} */
+      onActionUpdate;
+      /**
+       * @param {KeycloakConfig} config
+       */
+      constructor(config) {
+        if (typeof config !== "string" && !isObject(config)) {
+          throw new Error("The 'Keycloak' constructor must be provided with a configuration object, or a URL to a JSON configuration file.");
+        }
+        if (isObject(config)) {
+          const requiredProperties = "oidcProvider" in config ? ["clientId"] : ["url", "realm", "clientId"];
+          for (const property of requiredProperties) {
+            if (!(property in config)) {
+              throw new Error(`The configuration object is missing the required '${property}' property.`);
+            }
+          }
+        }
+        if (!globalThis.isSecureContext) {
+          this.#logWarn(
+            "[KEYCLOAK] Keycloak JS must be used in a 'secure context' to function properly as it relies on browser APIs that are otherwise not available.\nContinuing to run your application insecurely will lead to unexpected behavior and breakage.\n\nFor more information see: https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts"
+          );
+        }
+        this.#config = config;
+      }
+      /**
+       * @param {KeycloakInitOptions} initOptions
+       * @returns {Promise<boolean>}
+       */
+      init = async (initOptions = {}) => {
+        if (this.didInitialize) {
+          throw new Error("A 'Keycloak' instance can only be initialized once.");
+        }
+        this.didInitialize = true;
+        this.#callbackStorage = createCallbackStorage();
+        const adapters = ["default", "cordova", "cordova-native"];
+        if (typeof initOptions.adapter === "string" && adapters.includes(initOptions.adapter)) {
+          this.#adapter = this.#loadAdapter(initOptions.adapter);
+        } else if (typeof initOptions.adapter === "object") {
+          this.#adapter = initOptions.adapter;
+        } else if ("Cordova" in window || "cordova" in window) {
+          this.#adapter = this.#loadAdapter("cordova");
+        } else {
+          this.#adapter = this.#loadAdapter("default");
+        }
+        if (typeof initOptions.useNonce !== "undefined") {
+          this.#useNonce = initOptions.useNonce;
+        }
+        if (typeof initOptions.checkLoginIframe !== "undefined") {
+          this.#loginIframe.enable = initOptions.checkLoginIframe;
+        }
+        if (initOptions.checkLoginIframeInterval) {
+          this.#loginIframe.interval = initOptions.checkLoginIframeInterval;
+        }
+        if (initOptions.onLoad === "login-required") {
+          this.loginRequired = true;
+        }
+        if (initOptions.responseMode) {
+          if (initOptions.responseMode === "query" || initOptions.responseMode === "fragment") {
+            this.responseMode = initOptions.responseMode;
+          } else {
+            throw new Error("Invalid value for responseMode");
+          }
+        }
+        if (initOptions.flow) {
+          switch (initOptions.flow) {
+            case "standard":
+              this.responseType = "code";
+              break;
+            case "implicit":
+              this.responseType = "id_token token";
+              break;
+            case "hybrid":
+              this.responseType = "code id_token token";
+              break;
+            default:
+              throw new Error("Invalid value for flow");
+          }
+          this.flow = initOptions.flow;
+        }
+        if (typeof initOptions.timeSkew === "number") {
+          this.timeSkew = initOptions.timeSkew;
+        }
+        if (initOptions.redirectUri) {
+          this.redirectUri = initOptions.redirectUri;
+        }
+        if (initOptions.silentCheckSsoRedirectUri) {
+          this.silentCheckSsoRedirectUri = initOptions.silentCheckSsoRedirectUri;
+        }
+        if (typeof initOptions.silentCheckSsoFallback === "boolean") {
+          this.silentCheckSsoFallback = initOptions.silentCheckSsoFallback;
+        }
+        if (typeof initOptions.pkceMethod !== "undefined") {
+          if (initOptions.pkceMethod !== "S256" && initOptions.pkceMethod !== false) {
+            throw new TypeError(`Invalid value for pkceMethod', expected 'S256' or false but got ${initOptions.pkceMethod}.`);
+          }
+          this.pkceMethod = initOptions.pkceMethod;
+        }
+        if (typeof initOptions.enableLogging === "boolean") {
+          this.enableLogging = initOptions.enableLogging;
+        }
+        if (initOptions.logoutMethod === "POST") {
+          this.logoutMethod = "POST";
+        }
+        if (typeof initOptions.scope === "string") {
+          this.scope = initOptions.scope;
+        }
+        if (typeof initOptions.messageReceiveTimeout === "number" && initOptions.messageReceiveTimeout > 0) {
+          this.messageReceiveTimeout = initOptions.messageReceiveTimeout;
+        }
+        await this.#loadConfig();
+        await this.#check3pCookiesSupported();
+        await this.#processInit(initOptions);
+        this.onReady?.(this.authenticated);
+        return this.authenticated;
+      };
+      /**
+       * @param {"default" | "cordova" | "cordova-native"} type
+       * @returns {KeycloakAdapter}
+       */
+      #loadAdapter(type) {
+        if (type === "default") {
+          return this.#loadDefaultAdapter();
+        }
+        if (type === "cordova") {
+          this.#loginIframe.enable = false;
+          return this.#loadCordovaAdapter();
+        }
+        if (type === "cordova-native") {
+          this.#loginIframe.enable = false;
+          return this.#loadCordovaNativeAdapter();
+        }
+        throw new Error("invalid adapter type: " + type);
+      }
+      /**
+       * @returns {KeycloakAdapter}
+       */
+      #loadDefaultAdapter() {
+        const redirectUri = (options) => {
+          return options?.redirectUri || this.redirectUri || globalThis.location.href;
+        };
+        return {
+          login: async (options) => {
+            window.location.assign(await this.createLoginUrl(options));
+            return await new Promise(() => {
+            });
+          },
+          logout: async (options) => {
+            const logoutMethod = options?.logoutMethod ?? this.logoutMethod;
+            if (logoutMethod === "GET") {
+              window.location.replace(this.createLogoutUrl(options));
+              return;
+            }
+            const form = document.createElement("form");
+            form.setAttribute("method", "POST");
+            form.setAttribute("action", this.createLogoutUrl(options));
+            form.style.display = "none";
+            const data2 = {
+              id_token_hint: this.idToken,
+              client_id: this.clientId,
+              post_logout_redirect_uri: redirectUri(options)
+            };
+            for (const [name, value] of Object.entries(data2)) {
+              const input = document.createElement("input");
+              input.setAttribute("type", "hidden");
+              input.setAttribute("name", name);
+              input.setAttribute(
+                "value",
+                /** @type {string} */
+                value
+              );
+              form.appendChild(input);
+            }
+            document.body.appendChild(form);
+            form.submit();
+          },
+          register: async (options) => {
+            window.location.assign(await this.createRegisterUrl(options));
+            return await new Promise(() => {
+            });
+          },
+          accountManagement: async () => {
+            const accountUrl = this.createAccountUrl();
+            if (typeof accountUrl !== "undefined") {
+              window.location.href = accountUrl;
+            } else {
+              throw new Error("Not supported by the OIDC server");
+            }
+            return await new Promise(() => {
+            });
+          },
+          redirectUri
+        };
+      }
+      /**
+       * @returns {KeycloakAdapter}
+       */
+      #loadCordovaAdapter() {
+        const cordovaOpenWindowWrapper = (loginUrl, target, options) => {
+          if (window.cordova && window.cordova.InAppBrowser) {
+            return window.cordova.InAppBrowser.open(loginUrl, target, options);
+          } else {
+            return window.open(loginUrl, target, options);
+          }
+        };
+        const shallowCloneCordovaOptions = (userOptions) => {
+          if (userOptions && userOptions.cordovaOptions) {
+            return Object.keys(userOptions.cordovaOptions).reduce((options, optionName) => {
+              options[optionName] = userOptions.cordovaOptions[optionName];
+              return options;
+            }, {});
+          } else {
+            return {};
+          }
+        };
+        const formatCordovaOptions = (cordovaOptions) => {
+          return Object.keys(cordovaOptions).reduce((options, optionName) => {
+            options.push(optionName + "=" + cordovaOptions[optionName]);
+            return options;
+          }, []).join(",");
+        };
+        const createCordovaOptions = (userOptions) => {
+          const cordovaOptions = shallowCloneCordovaOptions(userOptions);
+          cordovaOptions.location = "no";
+          if (userOptions && userOptions.prompt === "none") {
+            cordovaOptions.hidden = "yes";
+          }
+          return formatCordovaOptions(cordovaOptions);
+        };
+        const getCordovaRedirectUri = () => {
+          return this.redirectUri || "http://localhost";
+        };
+        return {
+          login: async (options) => {
+            const cordovaOptions = createCordovaOptions(options);
+            const loginUrl = await this.createLoginUrl(options);
+            const ref = cordovaOpenWindowWrapper(loginUrl, "_blank", cordovaOptions);
+            let completed = false;
+            let closed = false;
+            function closeBrowser() {
+              closed = true;
+              ref.close();
+            }
+            ;
+            return await new Promise((resolve, reject) => {
+              ref.addEventListener("loadstart", async (event) => {
+                if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
+                  const callback = this.#parseCallback(event.url);
+                  try {
+                    await this.#processCallback(callback);
+                    resolve();
+                  } catch (error) {
+                    reject(error);
+                  }
+                  closeBrowser();
+                  completed = true;
+                }
+              });
+              ref.addEventListener("loaderror", async (event) => {
+                if (!completed) {
+                  if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
+                    const callback = this.#parseCallback(event.url);
+                    try {
+                      await this.#processCallback(callback);
+                      resolve();
+                    } catch (error) {
+                      reject(error);
+                    }
+                    closeBrowser();
+                    completed = true;
+                  } else {
+                    reject(new Error("Unable to process login."));
+                    closeBrowser();
+                  }
+                }
+              });
+              ref.addEventListener("exit", function(event) {
+                if (!closed) {
+                  reject(new Error("User closed the login window."));
+                }
+              });
+            });
+          },
+          logout: async (options) => {
+            const logoutUrl = this.createLogoutUrl(options);
+            const ref = cordovaOpenWindowWrapper(logoutUrl, "_blank", "location=no,hidden=yes,clearcache=yes");
+            let error = false;
+            ref.addEventListener("loadstart", (event) => {
+              if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
+                ref.close();
+              }
+            });
+            ref.addEventListener("loaderror", (event) => {
+              if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
+                ref.close();
+              } else {
+                error = true;
+                ref.close();
+              }
+            });
+            await new Promise((resolve, reject) => {
+              ref.addEventListener("exit", () => {
+                if (error) {
+                  reject(new Error("User closed the login window."));
+                } else {
+                  this.clearToken();
+                  resolve();
+                }
+              });
+            });
+          },
+          register: async (options) => {
+            const registerUrl = await this.createRegisterUrl();
+            const cordovaOptions = createCordovaOptions(options);
+            const ref = cordovaOpenWindowWrapper(registerUrl, "_blank", cordovaOptions);
+            const promise = new Promise((resolve, reject) => {
+              ref.addEventListener("loadstart", async (event) => {
+                if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
+                  ref.close();
+                  const oauth = this.#parseCallback(event.url);
+                  try {
+                    await this.#processCallback(oauth);
+                    resolve();
+                  } catch (error) {
+                    reject(error);
+                  }
+                }
+              });
+            });
+            await promise;
+          },
+          accountManagement: async () => {
+            const accountUrl = this.createAccountUrl();
+            if (typeof accountUrl !== "undefined") {
+              const ref = cordovaOpenWindowWrapper(accountUrl, "_blank", "location=no");
+              ref.addEventListener("loadstart", function(event) {
+                if (event.url.indexOf(getCordovaRedirectUri()) === 0) {
+                  ref.close();
+                }
+              });
+            } else {
+              throw new Error("Not supported by the OIDC server");
+            }
+          },
+          redirectUri: () => {
+            return getCordovaRedirectUri();
+          }
+        };
+      }
+      /**
+       * @returns {KeycloakAdapter}
+       */
+      #loadCordovaNativeAdapter() {
+        return {
+          login: async (options) => {
+            const loginUrl = await this.createLoginUrl(options);
+            await new Promise((resolve, reject) => {
+              universalLinks.subscribe("keycloak", async (event) => {
+                universalLinks.unsubscribe("keycloak");
+                window.cordova.plugins.browsertab.close();
+                const oauth = this.#parseCallback(event.url);
+                try {
+                  await this.#processCallback(oauth);
+                  resolve();
+                } catch (error) {
+                  reject(error);
+                }
+              });
+              window.cordova.plugins.browsertab.openUrl(loginUrl);
+            });
+          },
+          logout: async (options) => {
+            const logoutUrl = this.createLogoutUrl(options);
+            await new Promise((resolve) => {
+              universalLinks.subscribe("keycloak", () => {
+                universalLinks.unsubscribe("keycloak");
+                window.cordova.plugins.browsertab.close();
+                this.clearToken();
+                resolve();
+              });
+              window.cordova.plugins.browsertab.openUrl(logoutUrl);
+            });
+          },
+          register: async (options) => {
+            const registerUrl = await this.createRegisterUrl(options);
+            await new Promise((resolve, reject) => {
+              universalLinks.subscribe("keycloak", async (event) => {
+                universalLinks.unsubscribe("keycloak");
+                window.cordova.plugins.browsertab.close();
+                const oauth = this.#parseCallback(event.url);
+                try {
+                  await this.#processCallback(oauth);
+                  resolve();
+                } catch (error) {
+                  reject(error);
+                }
+              });
+              window.cordova.plugins.browsertab.openUrl(registerUrl);
+            });
+          },
+          accountManagement: async () => {
+            const accountUrl = this.createAccountUrl();
+            if (typeof accountUrl !== "undefined") {
+              window.cordova.plugins.browsertab.openUrl(accountUrl);
+            } else {
+              throw new Error("Not supported by the OIDC server");
+            }
+          },
+          redirectUri: (options) => {
+            if (options && options.redirectUri) {
+              return options.redirectUri;
+            } else if (this.redirectUri) {
+              return this.redirectUri;
+            } else {
+              return "http://localhost";
+            }
+          }
+        };
+      }
+      /**
+       * @returns {Promise<void>}
+       */
+      async #loadConfig() {
+        if (typeof this.#config === "string") {
+          const jsonConfig = await fetchJsonConfig(this.#config);
+          this.authServerUrl = jsonConfig["auth-server-url"];
+          this.realm = jsonConfig.realm;
+          this.clientId = jsonConfig.resource;
+          this.#setupEndpoints();
+        } else {
+          this.clientId = this.#config.clientId;
+          if ("oidcProvider" in this.#config) {
+            await this.#loadOidcConfig(this.#config.oidcProvider);
+          } else {
+            this.authServerUrl = this.#config.url;
+            this.realm = this.#config.realm;
+            this.#setupEndpoints();
+          }
+        }
+      }
+      /**
+       * @returns {void}
+       */
+      #setupEndpoints() {
+        this.endpoints = {
+          authorize: () => {
+            return this.#getRealmUrl() + "/protocol/openid-connect/auth";
+          },
+          token: () => {
+            return this.#getRealmUrl() + "/protocol/openid-connect/token";
+          },
+          logout: () => {
+            return this.#getRealmUrl() + "/protocol/openid-connect/logout";
+          },
+          checkSessionIframe: () => {
+            return this.#getRealmUrl() + "/protocol/openid-connect/login-status-iframe.html";
+          },
+          thirdPartyCookiesIframe: () => {
+            return this.#getRealmUrl() + "/protocol/openid-connect/3p-cookies/step1.html";
+          },
+          register: () => {
+            return this.#getRealmUrl() + "/protocol/openid-connect/registrations";
+          },
+          userinfo: () => {
+            return this.#getRealmUrl() + "/protocol/openid-connect/userinfo";
+          }
+        };
+      }
+      /**
+       * @param {string | OpenIdProviderMetadata} oidcProvider
+       * @returns {Promise<void>}
+       */
+      async #loadOidcConfig(oidcProvider) {
+        if (typeof oidcProvider === "string") {
+          const url = `${stripTrailingSlash(oidcProvider)}/.well-known/openid-configuration`;
+          const openIdConfig = await fetchOpenIdConfig(url);
+          this.#setupOidcEndpoints(openIdConfig);
+        } else {
+          this.#setupOidcEndpoints(oidcProvider);
+        }
+      }
+      /**
+       * @param {OpenIdProviderMetadata} config
+       * @returns {void}
+       */
+      #setupOidcEndpoints(config) {
+        this.endpoints = {
+          authorize() {
+            return config.authorization_endpoint;
+          },
+          token() {
+            return config.token_endpoint;
+          },
+          logout() {
+            if (!config.end_session_endpoint) {
+              throw new Error("Not supported by the OIDC server");
+            }
+            return config.end_session_endpoint;
+          },
+          checkSessionIframe() {
+            if (!config.check_session_iframe) {
+              throw new Error("Not supported by the OIDC server");
+            }
+            return config.check_session_iframe;
+          },
+          register() {
+            throw new Error('Redirection to "Register user" page not supported in standard OIDC mode');
+          },
+          userinfo() {
+            if (!config.userinfo_endpoint) {
+              throw new Error("Not supported by the OIDC server");
+            }
+            return config.userinfo_endpoint;
+          }
+        };
+      }
+      /**
+       * @returns {Promise<void>}
+       */
+      async #check3pCookiesSupported() {
+        if (!this.#loginIframe.enable && !this.silentCheckSsoRedirectUri || typeof this.endpoints.thirdPartyCookiesIframe !== "function") {
+          return;
+        }
+        const iframe = document.createElement("iframe");
+        iframe.setAttribute("src", this.endpoints.thirdPartyCookiesIframe());
+        iframe.setAttribute("sandbox", "allow-storage-access-by-user-activation allow-scripts allow-same-origin");
+        iframe.setAttribute("title", "keycloak-3p-check-iframe");
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+        const promise = new Promise((resolve) => {
+          const messageCallback = (event) => {
+            if (iframe.contentWindow !== event.source) {
+              return;
+            }
+            if (event.data !== "supported" && event.data !== "unsupported") {
+              return;
+            } else if (event.data === "unsupported") {
+              this.#logWarn(
+                "[KEYCLOAK] Your browser is blocking access to 3rd-party cookies, this means:\n\n - It is not possible to retrieve tokens without redirecting to the Keycloak server (a.k.a. no support for silent authentication).\n - It is not possible to automatically detect changes to the session status (such as the user logging out in another tab).\n\nFor more information see: https://www.keycloak.org/securing-apps/javascript-adapter#_modern_browsers"
+              );
+              this.#loginIframe.enable = false;
+              if (this.silentCheckSsoFallback) {
+                this.silentCheckSsoRedirectUri = void 0;
+              }
+            }
+            document.body.removeChild(iframe);
+            window.removeEventListener("message", messageCallback);
+            resolve();
+          };
+          window.addEventListener("message", messageCallback, false);
+        });
+        return await applyTimeoutToPromise(promise, this.messageReceiveTimeout, "Timeout when waiting for 3rd party check iframe message.");
+      }
+      /**
+       * @param {KeycloakInitOptions} initOptions
+       * @returns {Promise<void>}
+       */
+      async #processInit(initOptions) {
+        const callback = this.#parseCallback(window.location.href);
+        if (callback?.newUrl) {
+          window.history.replaceState(window.history.state, "", callback.newUrl);
+        }
+        if (callback && callback.valid) {
+          await this.#setupCheckLoginIframe();
+          await this.#processCallback(callback);
+          return;
+        }
+        const doLogin = async (prompt) => {
+          const options = {};
+          if (!prompt) {
+            options.prompt = "none";
+          }
+          if (initOptions.locale) {
+            options.locale = initOptions.locale;
+          }
+          await this.login(options);
+        };
+        const onLoad = async () => {
+          switch (initOptions.onLoad) {
+            case "check-sso":
+              if (this.#loginIframe.enable) {
+                await this.#setupCheckLoginIframe();
+                const unchanged = await this.#checkLoginIframe();
+                if (!unchanged) {
+                  this.silentCheckSsoRedirectUri ? await this.#checkSsoSilently() : await doLogin(false);
+                }
+              } else {
+                this.silentCheckSsoRedirectUri ? await this.#checkSsoSilently() : await doLogin(false);
+              }
+              break;
+            case "login-required":
+              await doLogin(true);
+              break;
+            default:
+              throw new Error("Invalid value for onLoad");
+          }
+        };
+        if (initOptions.token && initOptions.refreshToken) {
+          this.#setToken(initOptions.token, initOptions.refreshToken, initOptions.idToken);
+          if (this.#loginIframe.enable) {
+            await this.#setupCheckLoginIframe();
+            const unchanged = await this.#checkLoginIframe();
+            if (unchanged) {
+              this.onAuthSuccess?.();
+              this.#scheduleCheckIframe();
+            }
+          } else {
+            try {
+              await this.updateToken(-1);
+              this.onAuthSuccess?.();
+            } catch (error) {
+              this.onAuthError?.();
+              if (initOptions.onLoad) {
+                await onLoad();
+              } else {
+                throw error;
+              }
+            }
+          }
+        } else if (initOptions.onLoad) {
+          await onLoad();
+        }
+      }
+      /**
+       * @returns {Promise<void>}
+       */
+      async #setupCheckLoginIframe() {
+        if (!this.#loginIframe.enable || this.#loginIframe.iframe) {
+          return;
+        }
+        const iframe = document.createElement("iframe");
+        this.#loginIframe.iframe = iframe;
+        iframe.setAttribute("src", this.endpoints.checkSessionIframe());
+        iframe.setAttribute("sandbox", "allow-storage-access-by-user-activation allow-scripts allow-same-origin");
+        iframe.setAttribute("title", "keycloak-session-iframe");
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+        const messageCallback = (event) => {
+          if (event.origin !== this.#loginIframe.iframeOrigin || this.#loginIframe.iframe?.contentWindow !== event.source) {
+            return;
+          }
+          if (!(event.data === "unchanged" || event.data === "changed" || event.data === "error")) {
+            return;
+          }
+          if (event.data !== "unchanged") {
+            this.clearToken();
+          }
+          const callbacks = this.#loginIframe.callbackList;
+          this.#loginIframe.callbackList = [];
+          for (const callback of callbacks.reverse()) {
+            if (event.data === "error") {
+              callback(new Error("Error while checking login iframe"));
+            } else {
+              callback(null, event.data === "unchanged");
+            }
+          }
+        };
+        window.addEventListener("message", messageCallback, false);
+        const promise = new Promise((resolve) => {
+          iframe.addEventListener("load", () => {
+            const authUrl = this.endpoints.authorize();
+            if (authUrl.startsWith("/")) {
+              this.#loginIframe.iframeOrigin = globalThis.location.origin;
+            } else {
+              this.#loginIframe.iframeOrigin = new URL(authUrl).origin;
+            }
+            resolve();
+          });
+        });
+        await promise;
+      }
+      /**
+       * @returns {Promise<boolean | undefined>}
+       */
+      async #checkLoginIframe() {
+        if (!this.#loginIframe.iframe || !this.#loginIframe.iframeOrigin) {
+          return;
+        }
+        const message = `${this.clientId} ${this.sessionId ? this.sessionId : ""}`;
+        const origin = this.#loginIframe.iframeOrigin;
+        const promise = new Promise((resolve, reject) => {
+          const callback = (error, result) => error ? reject(error) : resolve(
+            /** @type {boolean} */
+            result
+          );
+          this.#loginIframe.callbackList.push(callback);
+          if (this.#loginIframe.callbackList.length === 1) {
+            this.#loginIframe.iframe?.contentWindow?.postMessage(message, origin);
+          }
+        });
+        return await promise;
+      }
+      /**
+       * @returns {Promise<void>}
+       */
+      async #checkSsoSilently() {
+        const iframe = document.createElement("iframe");
+        const src = await this.createLoginUrl({ prompt: "none", redirectUri: this.silentCheckSsoRedirectUri });
+        iframe.setAttribute("src", src);
+        iframe.setAttribute("sandbox", "allow-storage-access-by-user-activation allow-scripts allow-same-origin");
+        iframe.setAttribute("title", "keycloak-silent-check-sso");
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+        return await new Promise((resolve, reject) => {
+          const messageCallback = async (event) => {
+            if (event.origin !== window.location.origin || iframe.contentWindow !== event.source) {
+              return;
+            }
+            const oauth = this.#parseCallback(event.data);
+            try {
+              await this.#processCallback(oauth);
+              resolve();
+            } catch (error) {
+              reject(error);
+            }
+            document.body.removeChild(iframe);
+            window.removeEventListener("message", messageCallback);
+          };
+          window.addEventListener("message", messageCallback);
+        });
+      }
+      /**
+       * @param {string} url
+       */
+      #parseCallback(url) {
+        const oauth = this.#parseCallbackUrl(url);
+        if (!oauth) {
+          return;
+        }
+        const oauthState = this.#callbackStorage.get(oauth.state);
+        if (oauthState) {
+          oauth.valid = true;
+          oauth.redirectUri = oauthState.redirectUri;
+          oauth.storedNonce = oauthState.nonce;
+          oauth.prompt = oauthState.prompt;
+          oauth.pkceCodeVerifier = oauthState.pkceCodeVerifier;
+          oauth.loginOptions = oauthState.loginOptions;
+        }
+        return oauth;
+      }
+      /**
+       * @param {string} urlString
+       */
+      #parseCallbackUrl(urlString) {
+        let supportedParams = [];
+        switch (this.flow) {
+          case "standard":
+            supportedParams = ["code", "state", "session_state", "kc_action_status", "kc_action", "iss"];
+            break;
+          case "implicit":
+            supportedParams = ["access_token", "token_type", "id_token", "state", "session_state", "expires_in", "kc_action_status", "kc_action", "iss"];
+            break;
+          case "hybrid":
+            supportedParams = ["access_token", "token_type", "id_token", "code", "state", "session_state", "expires_in", "kc_action_status", "kc_action", "iss"];
+            break;
+        }
+        supportedParams.push("error");
+        supportedParams.push("error_description");
+        supportedParams.push("error_uri");
+        const url = new URL(urlString);
+        let newUrl = "";
+        let parsed;
+        if (this.responseMode === "query" && url.searchParams.size > 0) {
+          parsed = this.#parseCallbackParams(url.search, supportedParams);
+          url.search = parsed.paramsString;
+          newUrl = url.toString();
+        } else if (this.responseMode === "fragment" && url.hash.length > 0) {
+          parsed = this.#parseCallbackParams(url.hash.substring(1), supportedParams);
+          url.hash = parsed.paramsString;
+          newUrl = url.toString();
+        }
+        if (parsed?.oauthParams) {
+          if (this.flow === "standard" || this.flow === "hybrid") {
+            if ((parsed.oauthParams.code || parsed.oauthParams.error) && parsed.oauthParams.state) {
+              parsed.oauthParams.newUrl = newUrl;
+              return parsed.oauthParams;
+            }
+          } else if (this.flow === "implicit") {
+            if ((parsed.oauthParams.access_token || parsed.oauthParams.error) && parsed.oauthParams.state) {
+              parsed.oauthParams.newUrl = newUrl;
+              return parsed.oauthParams;
+            }
+          }
+        }
+      }
+      /**
+       * @typedef {Object} ParsedCallbackParams
+       * @property {string} paramsString
+       * @property {Record<string, string | undefined>} oauthParams
+       */
+      /**
+       * @param {string} paramsString
+       * @param {string[]} supportedParams
+       * @returns {ParsedCallbackParams}
+       */
+      #parseCallbackParams(paramsString, supportedParams) {
+        const params = paramsString.split("&");
+        const oauthParams = {};
+        let result = "";
+        for (const param of params.reverse()) {
+          const entry = new URLSearchParams(param).entries().next().value;
+          if (!entry) {
+            result = "&" + result;
+            continue;
+          }
+          const [key, value] = entry;
+          if (supportedParams.includes(key) && !(key in oauthParams)) {
+            oauthParams[key] = value;
+          } else {
+            result = result.length === 0 ? param : param + "&" + result;
+          }
+        }
+        return {
+          paramsString: result,
+          oauthParams
+        };
+      }
+      async #processCallback(oauth) {
+        const { code, error, prompt } = oauth;
+        let timeLocal = (/* @__PURE__ */ new Date()).getTime();
+        const authSuccess = (accessToken2, refreshToken, idToken) => {
+          timeLocal = (timeLocal + (/* @__PURE__ */ new Date()).getTime()) / 2;
+          this.#setToken(accessToken2, refreshToken, idToken, timeLocal);
+          if (this.#useNonce && (this.idTokenParsed && this.idTokenParsed.nonce !== oauth.storedNonce)) {
+            this.#logInfo("[KEYCLOAK] Invalid nonce, clearing token");
+            this.clearToken();
+            throw new Error("Invalid nonce.");
+          }
+        };
+        if (oauth.kc_action_status) {
+          this.onActionUpdate && this.onActionUpdate(oauth.kc_action_status, oauth.kc_action);
+        }
+        if (error) {
+          if (prompt !== "none") {
+            if (oauth.error_description && oauth.error_description === "authentication_expired") {
+              await this.login(oauth.loginOptions);
+            } else {
+              const errorData = { error, error_description: oauth.error_description };
+              this.onAuthError?.(errorData);
+              throw errorData;
+            }
+          }
+          return;
+        } else if (this.flow !== "standard" && (oauth.access_token || oauth.id_token)) {
+          authSuccess(oauth.access_token, void 0, oauth.id_token);
+          this.onAuthSuccess?.();
+        }
+        if (this.flow !== "implicit" && code) {
+          try {
+            const response = await fetchAccessToken(
+              this.endpoints.token(),
+              code,
+              /** @type {string} */
+              this.clientId,
+              oauth.redirectUri,
+              oauth.pkceCodeVerifier
+            );
+            authSuccess(response.access_token, response.refresh_token, response.id_token);
+            if (this.flow === "standard") {
+              this.onAuthSuccess?.();
+            }
+            this.#scheduleCheckIframe();
+          } catch (error2) {
+            this.onAuthError?.();
+            throw error2;
+          }
+        }
+      }
+      async #scheduleCheckIframe() {
+        if (this.#loginIframe.enable && this.token) {
+          await waitForTimeout(this.#loginIframe.interval * 1e3);
+          const unchanged = await this.#checkLoginIframe();
+          if (unchanged) {
+            await this.#scheduleCheckIframe();
+          }
+        }
+      }
+      /**
+       * @param {KeycloakLoginOptions} [options]
+       * @returns {Promise<void>}
+       */
+      login = (options) => {
+        return this.#adapter.login(options);
+      };
+      /**
+       * @param {KeycloakLoginOptions} [options]
+       * @returns {Promise<string>}
+       */
+      createLoginUrl = async (options) => {
+        const state = createUUID();
+        const nonce = createUUID();
+        const redirectUri = this.#adapter.redirectUri(options);
+        const callbackState = {
+          state,
+          nonce,
+          redirectUri,
+          loginOptions: options
+        };
+        if (options?.prompt) {
+          callbackState.prompt = options.prompt;
+        }
+        const url = options?.action === "register" ? this.endpoints.register() : this.endpoints.authorize();
+        let scope = options?.scope || this.scope;
+        const scopeValues = scope ? scope.split(" ") : [];
+        if (!scopeValues.includes("openid")) {
+          scopeValues.unshift("openid");
+        }
+        scope = scopeValues.join(" ");
+        const params = new URLSearchParams([
+          [
+            "client_id",
+            /** @type {string} */
+            this.clientId
+          ],
+          ["redirect_uri", redirectUri],
+          ["state", state],
+          ["response_mode", this.responseMode],
+          ["response_type", this.responseType],
+          ["scope", scope]
+        ]);
+        if (this.#useNonce) {
+          params.append("nonce", nonce);
+        }
+        if (options?.prompt) {
+          params.append("prompt", options.prompt);
+        }
+        if (typeof options?.maxAge === "number") {
+          params.append("max_age", options.maxAge.toString());
+        }
+        if (options?.loginHint) {
+          params.append("login_hint", options.loginHint);
+        }
+        if (options?.idpHint) {
+          params.append("kc_idp_hint", options.idpHint);
+        }
+        if (options?.action && options.action !== "register") {
+          params.append("kc_action", options.action);
+        }
+        if (options?.locale) {
+          params.append("ui_locales", options.locale);
+        }
+        if (options?.acr) {
+          params.append("claims", buildClaimsParameter(options.acr));
+        }
+        if (options?.acrValues) {
+          params.append("acr_values", options.acrValues);
+        }
+        if (this.pkceMethod) {
+          try {
+            const codeVerifier = generateCodeVerifier(96);
+            const pkceChallenge = await generatePkceChallenge(this.pkceMethod, codeVerifier);
+            callbackState.pkceCodeVerifier = codeVerifier;
+            params.append("code_challenge", pkceChallenge);
+            params.append("code_challenge_method", this.pkceMethod);
+          } catch (error) {
+            throw new Error("Failed to generate PKCE challenge.", { cause: error });
+          }
+        }
+        this.#callbackStorage.add(callbackState);
+        return `${url}?${params.toString()}`;
+      };
+      /**
+       * @param {KeycloakLogoutOptions} [options]
+       * @returns {Promise<void>}
+       */
+      logout = (options) => {
+        return this.#adapter.logout(options);
+      };
+      /**
+       * @param {KeycloakLogoutOptions} [options]
+       * @returns {string}
+       */
+      createLogoutUrl = (options) => {
+        const logoutMethod = options?.logoutMethod ?? this.logoutMethod;
+        const url = this.endpoints.logout();
+        if (logoutMethod === "POST") {
+          return url;
+        }
+        const params = new URLSearchParams([
+          [
+            "client_id",
+            /** @type {string} */
+            this.clientId
+          ],
+          ["post_logout_redirect_uri", this.#adapter.redirectUri(options)]
+        ]);
+        if (this.idToken) {
+          params.append("id_token_hint", this.idToken);
+        }
+        return `${url}?${params.toString()}`;
+      };
+      /**
+       * @param {KeycloakRegisterOptions} [options]
+       * @returns {Promise<void>}
+       */
+      register = (options) => {
+        return this.#adapter.register(options);
+      };
+      /**
+       * @param {KeycloakRegisterOptions} [options]
+       * @returns {Promise<string>}
+       */
+      createRegisterUrl = (options) => {
+        return this.createLoginUrl({ ...options, action: "register" });
+      };
+      /**
+       * @param {KeycloakAccountOptions} [options]
+       * @returns {string}
+       */
+      createAccountUrl = (options) => {
+        const url = this.#getRealmUrl();
+        if (!url) {
+          throw new Error("Unable to create account URL, make sure the adapter is not configured using a generic OIDC provider.");
+        }
+        const params = new URLSearchParams([
+          [
+            "referrer",
+            /** @type {string} */
+            this.clientId
+          ],
+          ["referrer_uri", this.#adapter.redirectUri(options)]
+        ]);
+        return `${url}/account?${params.toString()}`;
+      };
+      /**
+       * @returns {Promise<void>}
+       */
+      accountManagement = () => {
+        return this.#adapter.accountManagement();
+      };
+      /**
+       * @param {string} role
+       * @returns {boolean}
+       */
+      hasRealmRole = (role) => {
+        const access = this.realmAccess;
+        return !!access && access.roles.indexOf(role) >= 0;
+      };
+      /**
+       * @param {string} role
+       * @param {string} [resource]
+       * @returns {boolean}
+       */
+      hasResourceRole = (role, resource) => {
+        if (!this.resourceAccess) {
+          return false;
+        }
+        const access = this.resourceAccess[resource || /** @type {string} */
+        this.clientId];
+        return !!access && access.roles.indexOf(role) >= 0;
+      };
+      /**
+       * @returns {Promise<KeycloakProfile>}
+       */
+      loadUserProfile = async () => {
+        const realmUrl = this.#getRealmUrl();
+        if (!realmUrl) {
+          throw new Error("Unable to load user profile, make sure the adapter is not configured using a generic OIDC provider.");
+        }
+        const url = `${realmUrl}/account`;
+        const profile = await fetchJSON(url, {
+          headers: [buildAuthorizationHeader(this.token)]
+        });
+        return this.profile = profile;
+      };
+      /**
+       * @returns {Promise<{}>}
+       */
+      loadUserInfo = async () => {
+        const url = this.endpoints.userinfo();
+        const userInfo = await fetchJSON(url, {
+          headers: [buildAuthorizationHeader(this.token)]
+        });
+        return this.userInfo = userInfo;
+      };
+      /**
+       * @param {number} [minValidity]
+       * @returns {boolean}
+       */
+      isTokenExpired = (minValidity) => {
+        if (!this.tokenParsed || !this.refreshToken && this.flow !== "implicit") {
+          throw new Error("Not authenticated");
+        }
+        if (this.timeSkew == null) {
+          this.#logInfo("[KEYCLOAK] Unable to determine if token is expired as timeskew is not set");
+          return true;
+        }
+        if (typeof this.tokenParsed.exp !== "number") {
+          return false;
+        }
+        let expiresIn = this.tokenParsed.exp - Math.ceil((/* @__PURE__ */ new Date()).getTime() / 1e3) + this.timeSkew;
+        if (minValidity) {
+          if (isNaN(minValidity)) {
+            throw new Error("Invalid minValidity");
+          }
+          expiresIn -= minValidity;
+        }
+        return expiresIn < 0;
+      };
+      /**
+       * @param {number} minValidity
+       * @returns {Promise<boolean>}
+       */
+      updateToken = async (minValidity) => {
+        if (!this.refreshToken) {
+          throw new Error("Unable to update token, no refresh token available.");
+        }
+        minValidity = minValidity || 5;
+        if (this.#loginIframe.enable) {
+          await this.#checkLoginIframe();
+        }
+        let refreshToken = false;
+        if (minValidity === -1) {
+          refreshToken = true;
+          this.#logInfo("[KEYCLOAK] Refreshing token: forced refresh");
+        } else if (!this.tokenParsed || this.isTokenExpired(minValidity)) {
+          refreshToken = true;
+          this.#logInfo("[KEYCLOAK] Refreshing token: token expired");
+        }
+        if (!refreshToken) {
+          return false;
+        }
+        const { promise, resolve, reject } = Promise.withResolvers();
+        this.#refreshQueue.push({ resolve, reject });
+        if (this.#refreshQueue.length === 1) {
+          const url = this.endpoints.token();
+          let timeLocal = (/* @__PURE__ */ new Date()).getTime();
+          try {
+            const response = await fetchRefreshToken(
+              url,
+              this.refreshToken,
+              /** @type {string} */
+              this.clientId
+            );
+            this.#logInfo("[KEYCLOAK] Token refreshed");
+            timeLocal = (timeLocal + (/* @__PURE__ */ new Date()).getTime()) / 2;
+            this.#setToken(response.access_token, response.refresh_token, response.id_token, timeLocal);
+            this.onAuthRefreshSuccess?.();
+            for (let p = this.#refreshQueue.pop(); p != null; p = this.#refreshQueue.pop()) {
+              p.resolve(true);
+            }
+          } catch (error) {
+            this.#logWarn("[KEYCLOAK] Failed to refresh token");
+            if (error instanceof NetworkError && error.response.status === 400) {
+              this.clearToken();
+            }
+            this.onAuthRefreshError?.();
+            for (let p = this.#refreshQueue.pop(); p != null; p = this.#refreshQueue.pop()) {
+              p.reject(error);
+            }
+          }
+        }
+        return await promise;
+      };
+      clearToken = () => {
+        if (this.token) {
+          this.#setToken();
+          this.onAuthLogout?.();
+          if (this.loginRequired) {
+            this.login();
+          }
+        }
+      };
+      /**
+       * @param {string} [token]
+       * @param {string} [refreshToken]
+       * @param {string} [idToken]
+       * @param {number} [timeLocal]
+       */
+      #setToken(token, refreshToken, idToken, timeLocal) {
+        if (this.tokenTimeoutHandle) {
+          clearTimeout(this.tokenTimeoutHandle);
+          this.tokenTimeoutHandle = void 0;
+        }
+        if (refreshToken) {
+          this.refreshToken = refreshToken;
+          this.refreshTokenParsed = decodeToken(refreshToken);
+        } else {
+          delete this.refreshToken;
+          delete this.refreshTokenParsed;
+        }
+        if (idToken) {
+          this.idToken = idToken;
+          this.idTokenParsed = decodeToken(idToken);
+        } else {
+          delete this.idToken;
+          delete this.idTokenParsed;
+        }
+        if (token) {
+          this.token = token;
+          this.tokenParsed = decodeToken(token);
+          this.sessionId = this.tokenParsed.sid;
+          this.authenticated = true;
+          this.subject = this.tokenParsed.sub;
+          this.realmAccess = this.tokenParsed.realm_access;
+          this.resourceAccess = this.tokenParsed.resource_access;
+          if (timeLocal) {
+            this.timeSkew = Math.floor(timeLocal / 1e3) - this.tokenParsed.iat;
+          }
+          if (this.timeSkew !== null) {
+            this.#logInfo("[KEYCLOAK] Estimated time difference between browser and server is " + this.timeSkew + " seconds");
+            if (this.onTokenExpired) {
+              const expiresIn = (this.tokenParsed.exp - (/* @__PURE__ */ new Date()).getTime() / 1e3 + this.timeSkew) * 1e3;
+              this.#logInfo("[KEYCLOAK] Token expires in " + Math.round(expiresIn / 1e3) + " s");
+              if (expiresIn <= 0) {
+                this.onTokenExpired();
+              } else {
+                this.tokenTimeoutHandle = window.setTimeout(this.onTokenExpired, expiresIn);
+              }
+            }
+          }
+        } else {
+          delete this.token;
+          delete this.tokenParsed;
+          delete this.subject;
+          delete this.realmAccess;
+          delete this.resourceAccess;
+          this.authenticated = false;
+        }
+      }
+      /**
+       * @returns {string=}
+       */
+      #getRealmUrl() {
+        if (typeof this.authServerUrl === "undefined") {
+          return;
+        }
+        return `${stripTrailingSlash(this.authServerUrl)}/realms/${encodeURIComponent(
+          /** @type {string} */
+          this.realm
+        )}`;
+      }
+      /**
+       * @param {Function} fn
+       * @returns {(message: string) => void}
+       */
+      #createLogger(fn) {
+        return (message) => {
+          if (this.enableLogging) {
+            fn.call(console, message);
+          }
+        };
+      }
+    };
+    STORAGE_KEY_PREFIX = "kc-callback-";
+    LocalStorage = class {
+      constructor() {
+        globalThis.localStorage.setItem("kc-test", "test");
+        globalThis.localStorage.removeItem("kc-test");
+      }
+      /**
+       * @param {string} [state]
+       * @returns {CallbackState | null}
+       */
+      get(state) {
+        if (!state) {
+          return null;
+        }
+        this.#clearInvalidValues();
+        const key = STORAGE_KEY_PREFIX + state;
+        const value = globalThis.localStorage.getItem(key);
+        if (value) {
+          globalThis.localStorage.removeItem(key);
+          return JSON.parse(value);
+        }
+        return null;
+      }
+      /**
+       * @param {CallbackState} state
+       */
+      add(state) {
+        this.#clearInvalidValues();
+        const key = STORAGE_KEY_PREFIX + state.state;
+        const value = JSON.stringify({
+          ...state,
+          // Set the expiry time to 1 hour from now.
+          expires: Date.now() + 60 * 60 * 1e3
+        });
+        try {
+          globalThis.localStorage.setItem(key, value);
+        } catch (error) {
+          this.#clearAllValues();
+          globalThis.localStorage.setItem(key, value);
+        }
+      }
+      /**
+       * Clears all values from local storage that are no longer valid.
+       */
+      #clearInvalidValues() {
+        const currentTime = Date.now();
+        for (const [key, value] of this.#getStoredEntries()) {
+          const expiry = this.#parseExpiry(value);
+          if (expiry === null || expiry < currentTime) {
+            globalThis.localStorage.removeItem(key);
+          }
+        }
+      }
+      /**
+       * Clears all known values from local storage.
+       */
+      #clearAllValues() {
+        for (const [key] of this.#getStoredEntries()) {
+          globalThis.localStorage.removeItem(key);
+        }
+      }
+      /**
+       * Gets all entries stored in local storage that are known to be managed by this class.
+       * @returns {[string, string][]} An array of key-value pairs.
+       */
+      #getStoredEntries() {
+        return Object.entries(globalThis.localStorage).filter(([key]) => key.startsWith(STORAGE_KEY_PREFIX));
+      }
+      /**
+       * Parses the expiry time from a value stored in local storage.
+       * @param {string} value
+       * @returns {number | null} The expiry time in milliseconds, or `null` if the value is malformed.
+       */
+      #parseExpiry(value) {
+        let parsedValue;
+        try {
+          parsedValue = JSON.parse(value);
+        } catch (error) {
+          return null;
+        }
+        if (isObject(parsedValue) && "expires" in parsedValue && typeof parsedValue.expires === "number") {
+          return parsedValue.expires;
+        }
+        return null;
+      }
+    };
+    CookieStorage = class {
+      /**
+       * @param {string} [state]
+       * @returns {CallbackState | null}
+       */
+      get(state) {
+        if (!state) {
+          return null;
+        }
+        const value = this.#getCookie(STORAGE_KEY_PREFIX + state);
+        this.#setCookie(STORAGE_KEY_PREFIX + state, "", this.#cookieExpiration(-100));
+        if (value) {
+          return JSON.parse(value);
+        }
+        return null;
+      }
+      /**
+       * @param {CallbackState} state
+       */
+      add(state) {
+        this.#setCookie(STORAGE_KEY_PREFIX + state.state, JSON.stringify(state), this.#cookieExpiration(60));
+      }
+      /**
+       * @param {string} key
+       * @returns
+       */
+      #getCookie(key) {
+        const name = key + "=";
+        const ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+      /**
+       * @param {string} key
+       * @param {string} value
+       * @param {Date} expirationDate
+       */
+      #setCookie(key, value, expirationDate) {
+        const cookie = key + "=" + value + "; expires=" + expirationDate.toUTCString() + "; ";
+        document.cookie = cookie;
+      }
+      /**
+       * @param {number} minutes
+       * @returns {Date}
+       */
+      #cookieExpiration(minutes) {
+        const exp = /* @__PURE__ */ new Date();
+        exp.setTime(exp.getTime() + minutes * 60 * 1e3);
+        return exp;
+      }
+    };
+    NetworkError = class extends Error {
+      /** @type {Response} */
+      response;
+      /**
+       * @param {string} message
+       * @param {NetworkErrorOptions} options
+       */
+      constructor(message, options) {
+        super(message, options);
+        this.response = options.response;
+      }
+    };
+    waitForTimeout = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
   }
-};
-var waitForTimeout = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
-
-// frontend/src/app/providers/AuthProvider.tsx
-var import_react2 = __toESM(require_react(), 1);
+});
 
 // frontend/src/shared/lib/auth/accessTokenStore.ts
-var accessToken = "";
 function getAccessToken() {
   return accessToken;
 }
@@ -17124,21 +17159,33 @@ function setAccessToken(token) {
 function clearAccessToken() {
   accessToken = "";
 }
+var accessToken;
+var init_accessTokenStore = __esm({
+  "frontend/src/shared/lib/auth/accessTokenStore.ts"() {
+    "use strict";
+    accessToken = "";
+  }
+});
 
 // frontend/src/shared/api/http/errors.ts
-var ApiError = class extends Error {
-  status;
-  code;
-  constructor(message, options) {
-    super(message);
-    this.name = "ApiError";
-    this.status = options.status;
-    this.code = options.code;
+var ApiError;
+var init_errors = __esm({
+  "frontend/src/shared/api/http/errors.ts"() {
+    "use strict";
+    ApiError = class extends Error {
+      status;
+      code;
+      constructor(message, options) {
+        super(message);
+        this.name = "ApiError";
+        this.status = options.status;
+        this.code = options.code;
+      }
+    };
   }
-};
+});
 
 // frontend/src/shared/api/http/client.ts
-var API_BASE_URL = "/api";
 function buildUrl(path) {
   return `${API_BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
@@ -17190,13 +17237,58 @@ function createApiError(response, payload) {
     code
   });
 }
+function createAbortTools(signal, timeoutMs) {
+  const controller = new AbortController();
+  const cleanupFns = [];
+  let timedOut = false;
+  if (signal) {
+    if (signal.aborted) {
+      controller.abort(signal.reason);
+    } else {
+      const handleAbort = () => controller.abort(signal.reason);
+      signal.addEventListener("abort", handleAbort, { once: true });
+      cleanupFns.push(() => signal.removeEventListener("abort", handleAbort));
+    }
+  }
+  const timeoutId = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeoutMs);
+  cleanupFns.push(() => clearTimeout(timeoutId));
+  return {
+    signal: controller.signal,
+    didTimeout: () => timedOut,
+    cleanup: () => {
+      cleanupFns.forEach((cleanup) => cleanup());
+    }
+  };
+}
+function normalizeAbortError(error, didTimeout, timeoutMs) {
+  if (didTimeout && error instanceof Error && error.name === "AbortError") {
+    return new ApiError(`Request timed out after ${timeoutMs} ms`, {
+      status: 408,
+      code: "HTTP_TIMEOUT"
+    });
+  }
+  return error instanceof Error ? error : new Error("Unknown network error");
+}
 async function executeRequest(path, options = {}) {
   const { body, includeJsonHeader } = normalizeBody(options.body);
-  const response = await fetch(buildUrl(path), {
-    ...options,
-    body,
-    headers: buildHeaders(options.headers, includeJsonHeader)
-  });
+  const timeoutMs = options.timeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
+  const abortTools = createAbortTools(options.signal, timeoutMs);
+  let response;
+  try {
+    response = await fetch(buildUrl(path), {
+      ...options,
+      body,
+      signal: abortTools.signal,
+      headers: buildHeaders(options.headers, includeJsonHeader)
+    });
+  } catch (error) {
+    throw normalizeAbortError(error, abortTools.didTimeout(), timeoutMs);
+  } finally {
+    abortTools.cleanup();
+  }
   const data2 = await readResponsePayload(response);
   if (!response.ok && options.throwOnHttpError !== false) {
     throw createApiError(response, data2);
@@ -17209,11 +17301,21 @@ async function requestJson(path, options = {}) {
 }
 async function requestBlob(path, options = {}) {
   const { body, includeJsonHeader } = normalizeBody(options.body);
-  const response = await fetch(buildUrl(path), {
-    ...options,
-    body,
-    headers: buildHeaders(options.headers, includeJsonHeader)
-  });
+  const timeoutMs = options.timeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
+  const abortTools = createAbortTools(options.signal, timeoutMs);
+  let response;
+  try {
+    response = await fetch(buildUrl(path), {
+      ...options,
+      body,
+      signal: abortTools.signal,
+      headers: buildHeaders(options.headers, includeJsonHeader)
+    });
+  } catch (error) {
+    throw normalizeAbortError(error, abortTools.didTimeout(), timeoutMs);
+  } finally {
+    abortTools.cleanup();
+  }
   if (!response.ok) {
     const payload = await readResponsePayload(response);
     throw createApiError(response, payload);
@@ -17221,6 +17323,16 @@ async function requestBlob(path, options = {}) {
   const blob = await response.blob();
   return { response, blob };
 }
+var API_BASE_URL, DEFAULT_REQUEST_TIMEOUT_MS;
+var init_client = __esm({
+  "frontend/src/shared/api/http/client.ts"() {
+    "use strict";
+    init_accessTokenStore();
+    init_errors();
+    API_BASE_URL = "/api";
+    DEFAULT_REQUEST_TIMEOUT_MS = 15e3;
+  }
+});
 
 // frontend/src/entities/auth/api/authApi.ts
 function fetchAuthConfig() {
@@ -17245,6 +17357,12 @@ function updateManagedUserRoles(userId, appRoles) {
     body: { appRoles }
   });
 }
+var init_authApi = __esm({
+  "frontend/src/entities/auth/api/authApi.ts"() {
+    "use strict";
+    init_client();
+  }
+});
 
 // frontend/src/entities/auth/model/access.ts
 function hasPermission(permissions, expected) {
@@ -17253,6 +17371,11 @@ function hasPermission(permissions, expected) {
 function hasRole(roles, expected) {
   return roles.includes(expected);
 }
+var init_access = __esm({
+  "frontend/src/entities/auth/model/access.ts"() {
+    "use strict";
+  }
+});
 
 // frontend/src/shared/lib/browser/dialogs.ts
 function confirmAction(message) {
@@ -17261,9 +17384,13 @@ function confirmAction(message) {
 function promptText(message, defaultValue = "") {
   return window.prompt(message, defaultValue);
 }
+var init_dialogs = __esm({
+  "frontend/src/shared/lib/browser/dialogs.ts"() {
+    "use strict";
+  }
+});
 
 // frontend/src/shared/lib/storage/apiKeyStorage.ts
-var API_KEY_STORAGE_KEY = "parserNews.apiKey";
 function getApiKey() {
   return window.localStorage.getItem(API_KEY_STORAGE_KEY)?.trim() || "";
 }
@@ -17281,10 +17408,15 @@ function setApiKey(value) {
 function clearApiKey() {
   window.localStorage.removeItem(API_KEY_STORAGE_KEY);
 }
+var API_KEY_STORAGE_KEY;
+var init_apiKeyStorage = __esm({
+  "frontend/src/shared/lib/storage/apiKeyStorage.ts"() {
+    "use strict";
+    API_KEY_STORAGE_KEY = "parserNews.apiKey";
+  }
+});
 
 // frontend/src/app/providers/AuthProvider.tsx
-var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-var AuthContext = (0, import_react2.createContext)(null);
 function normalizeStringArray(value) {
   return Array.isArray(value) ? value.filter((item) => typeof item === "string") : [];
 }
@@ -17572,73 +17704,84 @@ function useAuthContext() {
   }
   return context;
 }
+var import_react2, import_jsx_runtime3, AuthContext;
+var init_AuthProvider = __esm({
+  "frontend/src/app/providers/AuthProvider.tsx"() {
+    "use strict";
+    init_keycloak();
+    import_react2 = __toESM(require_react(), 1);
+    init_authApi();
+    init_access();
+    init_accessTokenStore();
+    init_dialogs();
+    init_apiKeyStorage();
+    init_ToastProvider();
+    import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+    AuthContext = (0, import_react2.createContext)(null);
+  }
+});
 
 // frontend/src/features/auth/model/useAuth.ts
 function useAuth() {
   return useAuthContext();
 }
+var init_useAuth = __esm({
+  "frontend/src/features/auth/model/useAuth.ts"() {
+    "use strict";
+    init_AuthProvider();
+  }
+});
 
 // frontend/src/shared/ui/error-card/ErrorCard.tsx
-var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 function ErrorCard({ message }) {
   return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card card-danger", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: message }) });
 }
+var import_jsx_runtime4;
+var init_ErrorCard = __esm({
+  "frontend/src/shared/ui/error-card/ErrorCard.tsx"() {
+    "use strict";
+    import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/shared/ui/loading-state/LoadingState.tsx
-var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 function LoadingState() {
   return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "loading", children: [
     /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "spinner" }),
     "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430..."
   ] });
 }
+var import_jsx_runtime5;
+var init_LoadingState = __esm({
+  "frontend/src/shared/ui/loading-state/LoadingState.tsx"() {
+    "use strict";
+    import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
-// frontend/src/features/auth/ui/ProtectedRoute.tsx
-var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-function getProviderLabel(provider) {
-  return provider === "keycloak" ? "Keycloak" : "API key";
-}
-function ProtectedRoute({ children, permission }) {
-  const auth = useAuth();
-  if (auth.status === "loading") {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(LoadingState, {});
+// frontend/src/shared/config/routes.ts
+var routePaths;
+var init_routes = __esm({
+  "frontend/src/shared/config/routes.ts"() {
+    "use strict";
+    routePaths = {
+      dashboard: "/",
+      areasEdtech: "/areas/edtech",
+      areasMedtech: "/areas/medtech",
+      areasBiotech: "/areas/biotech",
+      articles: "/articles",
+      companies: "/companies",
+      tags: "/tags",
+      queues: "/queues",
+      settings: "/settings",
+      vpo: "/vpo",
+      profile: "/profile",
+      access: "/access"
+    };
   }
-  if (!auth.config) {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ErrorCard, { message: auth.error || "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u044E \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438" });
-  }
-  if (!auth.isAuthenticated) {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card auth-card", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card-label", children: "\u0410\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u044F" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { className: "page-title", children: "\u0412\u0445\u043E\u0434 \u0432 ParserNews" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "auth-card-text", children: auth.config.provider === "keycloak" ? "\u0414\u043B\u044F \u0434\u043E\u0441\u0442\u0443\u043F\u0430 \u043A \u0440\u0430\u0431\u043E\u0447\u0438\u043C \u0440\u0430\u0437\u0434\u0435\u043B\u0430\u043C \u0432\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u0432\u0445\u043E\u0434 \u0447\u0435\u0440\u0435\u0437 Keycloak." : auth.config.authRequired ? "\u0421\u0435\u0440\u0432\u0435\u0440 \u043E\u0436\u0438\u0434\u0430\u0435\u0442 API key \u0432 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0435 Authorization." : "\u0421\u0435\u0440\u0432\u0435\u0440 \u043E\u0442\u043A\u0440\u044B\u0442 \u0431\u0435\u0437 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438, \u043D\u043E \u043F\u0440\u043E\u0444\u0438\u043B\u044C \u043F\u043E\u043A\u0430 \u043D\u0435 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043D." }),
-      auth.error ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "settings-page-status settings-page-status-error", children: auth.error }) : null,
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "auth-card-actions", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-primary", onClick: () => void auth.login(), children: auth.config.provider === "keycloak" ? "\u0412\u043E\u0439\u0442\u0438 \u0447\u0435\u0440\u0435\u0437 Keycloak" : "\u0412\u0432\u0435\u0441\u0442\u0438 API key" }),
-        auth.config.provider === "api_key" && auth.apiKeyConfigured ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: () => void auth.clearStoredApiKey(), children: "\u041E\u0447\u0438\u0441\u0442\u0438\u0442\u044C \u043A\u043B\u044E\u0447" }) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: () => void auth.reloadAuth(), children: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { className: "auth-card-note", children: [
-        "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u0434\u043E\u0441\u0442\u0443\u043F\u0430: ",
-        getProviderLabel(auth.provider)
-      ] })
-    ] });
-  }
-  if (permission && !auth.hasPermission(permission)) {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card auth-card", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card-label", children: "\u041D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u043F\u0440\u0430\u0432" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { className: "page-title", children: "\u0414\u043E\u0441\u0442\u0443\u043F \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { className: "auth-card-text", children: [
-        "\u0412\u0430\u0448\u0435\u0439 \u0440\u043E\u043B\u0438 \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F ",
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: permission }),
-        " \u0434\u043B\u044F \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u044D\u0442\u043E\u0433\u043E \u0440\u0430\u0437\u0434\u0435\u043B\u0430."
-      ] })
-    ] });
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_jsx_runtime6.Fragment, { children });
-}
+});
 
 // frontend/src/shared/ui/icons/AppIcons.tsx
-var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 function IconBase({ children, size = 20 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
     "svg",
@@ -17754,9 +17897,15 @@ function EmptyStateIcon() {
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("path", { d: "M15 9h.01", strokeWidth: "1.5" })
   ] });
 }
+var import_jsx_runtime7;
+var init_AppIcons = __esm({
+  "frontend/src/shared/ui/icons/AppIcons.tsx"() {
+    "use strict";
+    import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/shared/ui/empty-state/EmptyState.tsx
-var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 function EmptyState({ title, subtitle }) {
   return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "empty-state", children: [
     /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(EmptyStateIcon, {}),
@@ -17764,23 +17913,36 @@ function EmptyState({ title, subtitle }) {
     subtitle ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "sub", children: subtitle }) : null
   ] });
 }
+var import_jsx_runtime8;
+var init_EmptyState = __esm({
+  "frontend/src/shared/ui/empty-state/EmptyState.tsx"() {
+    "use strict";
+    init_AppIcons();
+    import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/shared/config/constants.ts
-var PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
-var POLLING_INTERVALS = {
-  health: 3e4,
-  queues: 1e4,
-  vpoHistory: 8e3
-};
-var PARSER_ACTIONS = [
-  { name: "tadviser", label: "TAdviser", tone: "btn-primary" },
-  { name: "ria", label: "\u0420\u0418\u0410", tone: "btn-secondary" },
-  { name: "smartranking", label: "MedTech", tone: "btn-secondary" },
-  { name: "edtechs", label: "EdTech", tone: "btn-secondary" }
-];
+var PAGE_SIZE_OPTIONS, POLLING_INTERVALS, PARSER_ACTIONS;
+var init_constants = __esm({
+  "frontend/src/shared/config/constants.ts"() {
+    "use strict";
+    PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
+    POLLING_INTERVALS = {
+      health: 3e4,
+      queues: 1e4,
+      vpoHistory: 8e3
+    };
+    PARSER_ACTIONS = [
+      { name: "tadviser", label: "TAdviser", tone: "btn-primary" },
+      { name: "ria", label: "\u0420\u0418\u0410", tone: "btn-secondary" },
+      { name: "smartranking", label: "MedTech", tone: "btn-secondary" },
+      { name: "edtechs", label: "EdTech", tone: "btn-secondary" }
+    ];
+  }
+});
 
 // frontend/src/shared/ui/page-size-select/PageSizeSelect.tsx
-var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 function PageSizeSelect({ id, value, onChange }) {
   return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "page-size-label", htmlFor: id, children: [
     /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "page-size-label-text", children: "\u041D\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435" }),
@@ -17796,9 +17958,14 @@ function PageSizeSelect({ id, value, onChange }) {
     )
   ] });
 }
-
-// frontend/src/shared/ui/pagination/Pagination.tsx
-var import_react3 = __toESM(require_react(), 1);
+var import_jsx_runtime9;
+var init_PageSizeSelect = __esm({
+  "frontend/src/shared/ui/page-size-select/PageSizeSelect.tsx"() {
+    "use strict";
+    init_constants();
+    import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/shared/lib/pagination/getPaginationPages.ts
 function getTotalPages(total, limit) {
@@ -17827,9 +17994,13 @@ function getPaginationPages(page, totalPages) {
   pages.push(totalPages);
   return pages;
 }
+var init_getPaginationPages = __esm({
+  "frontend/src/shared/lib/pagination/getPaginationPages.ts"() {
+    "use strict";
+  }
+});
 
 // frontend/src/shared/ui/pagination/Pagination.tsx
-var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 function Pagination({ page, limit, total, onPageChange }) {
   const totalPages = getTotalPages(total, limit);
   const [gotoValue, setGotoValue] = (0, import_react3.useState)(String(page));
@@ -17911,28 +18082,26 @@ function Pagination({ page, limit, total, onPageChange }) {
     ] })
   ] });
 }
-
-// frontend/src/pages/access/model/useAccessPage.ts
-var import_react4 = __toESM(require_react(), 1);
+var import_react3, import_jsx_runtime10;
+var init_Pagination = __esm({
+  "frontend/src/shared/ui/pagination/Pagination.tsx"() {
+    "use strict";
+    import_react3 = __toESM(require_react(), 1);
+    init_getPaginationPages();
+    import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/entities/auth/model/types.ts
-var APP_ROLES = ["admin", "operator", "viewer"];
+var APP_ROLES;
+var init_types = __esm({
+  "frontend/src/entities/auth/model/types.ts"() {
+    "use strict";
+    APP_ROLES = ["admin", "operator", "viewer"];
+  }
+});
 
 // frontend/src/pages/access/model/useAccessPage.ts
-var INITIAL_VIEW_STATE = {
-  page: 1,
-  limit: 20,
-  query: "",
-  draft: ""
-};
-var INITIAL_DATA = {
-  ok: true,
-  total: 0,
-  page: 1,
-  limit: 20,
-  roles: [...APP_ROLES],
-  users: []
-};
 function normalizeRoles(roles) {
   return [...roles].sort((left, right) => APP_ROLES.indexOf(left) - APP_ROLES.indexOf(right));
 }
@@ -18062,9 +18231,37 @@ function useAccessPage(enabled) {
     }
   };
 }
+var import_react4, INITIAL_VIEW_STATE, INITIAL_DATA;
+var init_useAccessPage = __esm({
+  "frontend/src/pages/access/model/useAccessPage.ts"() {
+    "use strict";
+    import_react4 = __toESM(require_react(), 1);
+    init_ToastProvider();
+    init_authApi();
+    init_types();
+    init_getPaginationPages();
+    INITIAL_VIEW_STATE = {
+      page: 1,
+      limit: 20,
+      query: "",
+      draft: ""
+    };
+    INITIAL_DATA = {
+      ok: true,
+      total: 0,
+      page: 1,
+      limit: 20,
+      roles: [...APP_ROLES],
+      users: []
+    };
+  }
+});
 
 // frontend/src/pages/access/ui/AccessPage.tsx
-var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+var AccessPage_exports = {};
+__export(AccessPage_exports, {
+  AccessPage: () => AccessPage
+});
 function findRoleDescriptor(role, descriptors) {
   return descriptors.find((descriptor) => descriptor.name === role);
 }
@@ -18183,9 +18380,26 @@ function AccessPage() {
     ] })
   ] });
 }
+var import_jsx_runtime11;
+var init_AccessPage = __esm({
+  "frontend/src/pages/access/ui/AccessPage.tsx"() {
+    "use strict";
+    init_useAuth();
+    init_EmptyState();
+    init_ErrorCard();
+    init_LoadingState();
+    init_PageSizeSelect();
+    init_Pagination();
+    init_useAccessPage();
+    import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/pages/areas/ui/AreaDashboardPage.tsx
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+var AreaDashboardPage_exports = {};
+__export(AreaDashboardPage_exports, {
+  AreaDashboardPage: () => AreaDashboardPage
+});
 function AreaDashboardPage({ area }) {
   return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "page-header", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
@@ -18199,12 +18413,25 @@ function AreaDashboardPage({ area }) {
     ] })
   ] });
 }
+var import_jsx_runtime12;
+var init_AreaDashboardPage = __esm({
+  "frontend/src/pages/areas/ui/AreaDashboardPage.tsx"() {
+    "use strict";
+    import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/entities/article/model/constants.ts
-var PRESET_ARTICLE_CATEGORIES = ["EdTech", "MedTech", "BioTech", "\u0417\u0430\u043A\u043E\u043D\u043E\u0434\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"];
 function isPresetArticleCategory(value) {
   return PRESET_ARTICLE_CATEGORIES.includes(value);
 }
+var PRESET_ARTICLE_CATEGORIES;
+var init_constants2 = __esm({
+  "frontend/src/entities/article/model/constants.ts"() {
+    "use strict";
+    PRESET_ARTICLE_CATEGORIES = ["EdTech", "MedTech", "BioTech", "\u0417\u0430\u043A\u043E\u043D\u043E\u0434\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"];
+  }
+});
 
 // frontend/src/shared/lib/date/format.ts
 function formatDate(value) {
@@ -18229,9 +18456,11 @@ function formatDateTime(value) {
     minute: "2-digit"
   });
 }
-
-// frontend/src/pages/articles/model/useArticlesPage.ts
-var import_react5 = __toESM(require_react(), 1);
+var init_format = __esm({
+  "frontend/src/shared/lib/date/format.ts"() {
+    "use strict";
+  }
+});
 
 // frontend/src/entities/article/api/articlesApi.ts
 function fetchArticles(query) {
@@ -18266,29 +18495,14 @@ function deleteArticle(id) {
     method: "DELETE"
   });
 }
+var init_articlesApi = __esm({
+  "frontend/src/entities/article/api/articlesApi.ts"() {
+    "use strict";
+    init_client();
+  }
+});
 
 // frontend/src/pages/articles/model/useArticlesPage.ts
-var INITIAL_VIEW_STATE2 = {
-  page: 1,
-  limit: 20,
-  search: "",
-  source: "",
-  category: "",
-  draftSearch: "",
-  draftSource: "",
-  draftCategory: "",
-  editMode: false
-};
-var INITIAL_DATA2 = {
-  total: 0,
-  page: 1,
-  limit: 20,
-  articles: [],
-  filterOptions: {
-    sources: [],
-    categories: []
-  }
-};
 function normalizeCategory(value) {
   return value?.trim() ?? "";
 }
@@ -18468,9 +18682,44 @@ function useArticlesPage() {
     }
   };
 }
+var import_react5, INITIAL_VIEW_STATE2, INITIAL_DATA2;
+var init_useArticlesPage = __esm({
+  "frontend/src/pages/articles/model/useArticlesPage.ts"() {
+    "use strict";
+    import_react5 = __toESM(require_react(), 1);
+    init_ToastProvider();
+    init_articlesApi();
+    init_dialogs();
+    init_getPaginationPages();
+    INITIAL_VIEW_STATE2 = {
+      page: 1,
+      limit: 20,
+      search: "",
+      source: "",
+      category: "",
+      draftSearch: "",
+      draftSource: "",
+      draftCategory: "",
+      editMode: false
+    };
+    INITIAL_DATA2 = {
+      total: 0,
+      page: 1,
+      limit: 20,
+      articles: [],
+      filterOptions: {
+        sources: [],
+        categories: []
+      }
+    };
+  }
+});
 
 // frontend/src/pages/articles/ui/ArticlesPage.tsx
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var ArticlesPage_exports = {};
+__export(ArticlesPage_exports, {
+  ArticlesPage: () => ArticlesPage
+});
 function ArticlesPage() {
   const auth = useAuth();
   const canEditArticles = auth.hasPermission("articles.manage");
@@ -18632,9 +18881,22 @@ function ArticlesPage() {
     ] })
   ] });
 }
-
-// frontend/src/pages/companies/model/useCompaniesPage.ts
-var import_react6 = __toESM(require_react(), 1);
+var import_jsx_runtime13;
+var init_ArticlesPage = __esm({
+  "frontend/src/pages/articles/ui/ArticlesPage.tsx"() {
+    "use strict";
+    init_useAuth();
+    init_constants2();
+    init_format();
+    init_EmptyState();
+    init_ErrorCard();
+    init_LoadingState();
+    init_PageSizeSelect();
+    init_Pagination();
+    init_useArticlesPage();
+    import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/entities/company/api/companiesApi.ts
 function fetchCompanies(page, limit, search, pool) {
@@ -18660,21 +18922,14 @@ function deleteCompany(id, pool) {
     method: "DELETE"
   });
 }
+var init_companiesApi = __esm({
+  "frontend/src/entities/company/api/companiesApi.ts"() {
+    "use strict";
+    init_client();
+  }
+});
 
 // frontend/src/pages/companies/model/useCompaniesPage.ts
-var INITIAL_VIEW_STATE3 = {
-  page: 1,
-  limit: 20,
-  query: "",
-  draft: "",
-  pool: "medtech"
-};
-var INITIAL_DATA3 = {
-  total: 0,
-  page: 1,
-  limit: 20,
-  companies: []
-};
 function useCompaniesPage() {
   const { pushToast } = useToast();
   const [view, setView] = (0, import_react6.useState)(INITIAL_VIEW_STATE3);
@@ -18780,9 +19035,36 @@ function useCompaniesPage() {
     }
   };
 }
+var import_react6, INITIAL_VIEW_STATE3, INITIAL_DATA3;
+var init_useCompaniesPage = __esm({
+  "frontend/src/pages/companies/model/useCompaniesPage.ts"() {
+    "use strict";
+    import_react6 = __toESM(require_react(), 1);
+    init_ToastProvider();
+    init_companiesApi();
+    init_dialogs();
+    init_getPaginationPages();
+    INITIAL_VIEW_STATE3 = {
+      page: 1,
+      limit: 20,
+      query: "",
+      draft: "",
+      pool: "medtech"
+    };
+    INITIAL_DATA3 = {
+      total: 0,
+      page: 1,
+      limit: 20,
+      companies: []
+    };
+  }
+});
 
 // frontend/src/pages/companies/ui/CompaniesPage.tsx
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var CompaniesPage_exports = {};
+__export(CompaniesPage_exports, {
+  CompaniesPage: () => CompaniesPage
+});
 function getCompaniesSubtitle(pool) {
   return pool === "edtech" ? "\u0420\u0435\u0439\u0442\u0438\u043D\u0433 EdTech \u2014 edtechs.ru (\u043E\u043D\u043B\u0430\u0439\u043D-\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u0435)" : "\u0420\u0435\u0439\u0442\u0438\u043D\u0433 Smart Ranking \u2014 \u043C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u0435 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u0438 (MedTech)";
 }
@@ -18891,9 +19173,20 @@ function CompaniesPage() {
     ] })
   ] });
 }
-
-// frontend/src/features/parser-actions/model/useParserActions.ts
-var import_react7 = __toESM(require_react(), 1);
+var import_jsx_runtime14;
+var init_CompaniesPage = __esm({
+  "frontend/src/pages/companies/ui/CompaniesPage.tsx"() {
+    "use strict";
+    init_useAuth();
+    init_EmptyState();
+    init_ErrorCard();
+    init_LoadingState();
+    init_PageSizeSelect();
+    init_Pagination();
+    init_useCompaniesPage();
+    import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/entities/parser/api/parserApi.ts
 function triggerParser(parserName) {
@@ -18901,6 +19194,12 @@ function triggerParser(parserName) {
     method: "POST"
   });
 }
+var init_parserApi = __esm({
+  "frontend/src/entities/parser/api/parserApi.ts"() {
+    "use strict";
+    init_client();
+  }
+});
 
 // frontend/src/features/parser-actions/model/useParserActions.ts
 function useParserActions() {
@@ -18922,25 +19221,21 @@ function useParserActions() {
     runParser
   };
 }
-
-// frontend/src/shared/config/routes.ts
-var routePaths = {
-  dashboard: "/",
-  areasEdtech: "/areas/edtech",
-  areasMedtech: "/areas/medtech",
-  areasBiotech: "/areas/biotech",
-  articles: "/articles",
-  companies: "/companies",
-  tags: "/tags",
-  queues: "/queues",
-  settings: "/settings",
-  vpo: "/vpo",
-  profile: "/profile",
-  access: "/access"
-};
+var import_react7;
+var init_useParserActions = __esm({
+  "frontend/src/features/parser-actions/model/useParserActions.ts"() {
+    "use strict";
+    import_react7 = __toESM(require_react(), 1);
+    init_ToastProvider();
+    init_parserApi();
+  }
+});
 
 // frontend/src/pages/dashboard/ui/DashboardPage.tsx
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var DashboardPage_exports = {};
+__export(DashboardPage_exports, {
+  DashboardPage: () => DashboardPage
+});
 function DashboardPage() {
   const auth = useAuth();
   const { pendingParser, runParser } = useParserActions();
@@ -19017,9 +19312,24 @@ function DashboardPage() {
     ] })
   ] });
 }
+var import_jsx_runtime15;
+var init_DashboardPage = __esm({
+  "frontend/src/pages/dashboard/ui/DashboardPage.tsx"() {
+    "use strict";
+    init_dist();
+    init_useAuth();
+    init_useParserActions();
+    init_constants();
+    init_routes();
+    import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/pages/profile/ui/ProfilePage.tsx
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var ProfilePage_exports = {};
+__export(ProfilePage_exports, {
+  ProfilePage: () => ProfilePage
+});
 function renderValue(value) {
   return value?.trim() || "\u2014";
 }
@@ -19090,9 +19400,14 @@ function ProfilePage() {
     ] })
   ] });
 }
-
-// frontend/src/pages/queues/model/useQueuesPage.ts
-var import_react9 = __toESM(require_react(), 1);
+var import_jsx_runtime16;
+var init_ProfilePage = __esm({
+  "frontend/src/pages/profile/ui/ProfilePage.tsx"() {
+    "use strict";
+    init_useAuth();
+    import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/entities/queue/api/queuesApi.ts
 function fetchQueues() {
@@ -19101,9 +19416,14 @@ function fetchQueues() {
 function fetchFailedJobs() {
   return requestJson("/queues/failed");
 }
+var init_queuesApi = __esm({
+  "frontend/src/entities/queue/api/queuesApi.ts"() {
+    "use strict";
+    init_client();
+  }
+});
 
 // frontend/src/shared/lib/react/usePollingEffect.ts
-var import_react8 = __toESM(require_react(), 1);
 function usePollingEffect(effect, delayMs, deps = []) {
   const isRunningRef = (0, import_react8.useRef)(false);
   const runEffect = (0, import_react8.useEffectEvent)(async () => {
@@ -19128,6 +19448,13 @@ function usePollingEffect(effect, delayMs, deps = []) {
     };
   }, [delayMs, ...deps]);
 }
+var import_react8;
+var init_usePollingEffect = __esm({
+  "frontend/src/shared/lib/react/usePollingEffect.ts"() {
+    "use strict";
+    import_react8 = __toESM(require_react(), 1);
+  }
+});
 
 // frontend/src/pages/queues/model/useQueuesPage.ts
 function useQueuesPage() {
@@ -19160,9 +19487,22 @@ function useQueuesPage() {
     reload: () => setRefreshKey((current) => current + 1)
   };
 }
+var import_react9;
+var init_useQueuesPage = __esm({
+  "frontend/src/pages/queues/model/useQueuesPage.ts"() {
+    "use strict";
+    import_react9 = __toESM(require_react(), 1);
+    init_queuesApi();
+    init_constants();
+    init_usePollingEffect();
+  }
+});
 
 // frontend/src/pages/queues/ui/QueuesPage.tsx
-var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+var QueuesPage_exports = {};
+__export(QueuesPage_exports, {
+  QueuesPage: () => QueuesPage
+});
 function QueueCard({ label, queue }) {
   return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "card card-accent", children: [
     /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "card-label", children: label }),
@@ -19219,9 +19559,18 @@ function QueuesPage() {
     ] }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(EmptyState, { title: "\u0414\u0430\u043D\u043D\u044B\u0435 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u044F\u043C \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B" })
   ] });
 }
-
-// frontend/src/pages/settings/model/useRiaSettingsPage.ts
-var import_react10 = __toESM(require_react(), 1);
+var import_jsx_runtime17;
+var init_QueuesPage = __esm({
+  "frontend/src/pages/queues/ui/QueuesPage.tsx"() {
+    "use strict";
+    init_format();
+    init_EmptyState();
+    init_ErrorCard();
+    init_LoadingState();
+    init_useQueuesPage();
+    import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/entities/ria-settings/api/riaSettingsApi.ts
 function fetchRiaSettings() {
@@ -19233,13 +19582,14 @@ function updateRiaSettings(payload) {
     body: payload
   });
 }
+var init_riaSettingsApi = __esm({
+  "frontend/src/entities/ria-settings/api/riaSettingsApi.ts"() {
+    "use strict";
+    init_client();
+  }
+});
 
 // frontend/src/pages/settings/model/useRiaSettingsPage.ts
-var INITIAL_FORM_STATE = {
-  lentaPages: "",
-  pageDelayMs: "",
-  puppeteerSettleMs: ""
-};
 function useRiaSettingsPage() {
   const { pushToast } = useToast();
   const [form, setForm] = (0, import_react10.useState)(INITIAL_FORM_STATE);
@@ -19327,9 +19677,26 @@ function useRiaSettingsPage() {
     }
   };
 }
+var import_react10, INITIAL_FORM_STATE;
+var init_useRiaSettingsPage = __esm({
+  "frontend/src/pages/settings/model/useRiaSettingsPage.ts"() {
+    "use strict";
+    import_react10 = __toESM(require_react(), 1);
+    init_ToastProvider();
+    init_riaSettingsApi();
+    INITIAL_FORM_STATE = {
+      lentaPages: "",
+      pageDelayMs: "",
+      puppeteerSettleMs: ""
+    };
+  }
+});
 
 // frontend/src/pages/settings/ui/SettingsPage.tsx
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var SettingsPage_exports = {};
+__export(SettingsPage_exports, {
+  SettingsPage: () => SettingsPage
+});
 function SettingsPage() {
   const { form, statusText, statusIsError, saving, actions } = useRiaSettingsPage();
   return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
@@ -19406,23 +19773,34 @@ function SettingsPage() {
     ] })
   ] });
 }
+var import_jsx_runtime18;
+var init_SettingsPage = __esm({
+  "frontend/src/pages/settings/ui/SettingsPage.tsx"() {
+    "use strict";
+    init_useRiaSettingsPage();
+    import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/entities/tag/model/constants.ts
-var TAG_MODE_LABELS = {
-  phrase: "\u0424\u0440\u0430\u0437\u0430",
-  words: "\u0412\u0441\u0435 \u0441\u043B\u043E\u0432\u0430",
-  prefix: "\u041F\u0440\u0435\u0444\u0438\u043A\u0441",
-  regex: "Regex"
-};
-var TAG_MODE_HINTS = {
-  phrase: "\u0418\u0449\u0435\u0442 \u0442\u043E\u0447\u043D\u043E\u0435 \u0432\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u0435 \u043F\u043E\u0434\u0441\u0442\u0440\u043E\u043A\u0438 \u0432 \u0442\u0435\u043A\u0441\u0442\u0435.",
-  words: "\u0412\u0441\u0435 \u0441\u043B\u043E\u0432\u0430 \u0442\u0435\u0433\u0430 \u0434\u043E\u043B\u0436\u043D\u044B \u043F\u0440\u0438\u0441\u0443\u0442\u0441\u0442\u0432\u043E\u0432\u0430\u0442\u044C \u0432 \u043B\u044E\u0431\u043E\u043C \u043F\u043E\u0440\u044F\u0434\u043A\u0435.",
-  prefix: "\u041A\u0430\u0436\u0434\u043E\u0435 \u0441\u043B\u043E\u0432\u043E \u0442\u0440\u0430\u043A\u0442\u0443\u0435\u0442\u0441\u044F \u043A\u0430\u043A \u043F\u0440\u0435\u0444\u0438\u043A\u0441.",
-  regex: "\u0420\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0432 \u0441\u0438\u043D\u0442\u0430\u043A\u0441\u0438\u0441\u0435 JavaScript."
-};
-
-// frontend/src/pages/tags/model/useTagsPage.ts
-var import_react11 = __toESM(require_react(), 1);
+var TAG_MODE_LABELS, TAG_MODE_HINTS;
+var init_constants3 = __esm({
+  "frontend/src/entities/tag/model/constants.ts"() {
+    "use strict";
+    TAG_MODE_LABELS = {
+      phrase: "\u0424\u0440\u0430\u0437\u0430",
+      words: "\u0412\u0441\u0435 \u0441\u043B\u043E\u0432\u0430",
+      prefix: "\u041F\u0440\u0435\u0444\u0438\u043A\u0441",
+      regex: "Regex"
+    };
+    TAG_MODE_HINTS = {
+      phrase: "\u0418\u0449\u0435\u0442 \u0442\u043E\u0447\u043D\u043E\u0435 \u0432\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u0435 \u043F\u043E\u0434\u0441\u0442\u0440\u043E\u043A\u0438 \u0432 \u0442\u0435\u043A\u0441\u0442\u0435.",
+      words: "\u0412\u0441\u0435 \u0441\u043B\u043E\u0432\u0430 \u0442\u0435\u0433\u0430 \u0434\u043E\u043B\u0436\u043D\u044B \u043F\u0440\u0438\u0441\u0443\u0442\u0441\u0442\u0432\u043E\u0432\u0430\u0442\u044C \u0432 \u043B\u044E\u0431\u043E\u043C \u043F\u043E\u0440\u044F\u0434\u043A\u0435.",
+      prefix: "\u041A\u0430\u0436\u0434\u043E\u0435 \u0441\u043B\u043E\u0432\u043E \u0442\u0440\u0430\u043A\u0442\u0443\u0435\u0442\u0441\u044F \u043A\u0430\u043A \u043F\u0440\u0435\u0444\u0438\u043A\u0441.",
+      regex: "\u0420\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0432 \u0441\u0438\u043D\u0442\u0430\u043A\u0441\u0438\u0441\u0435 JavaScript."
+    };
+  }
+});
 
 // frontend/src/entities/tag/api/tagsApi.ts
 function fetchTags() {
@@ -19455,6 +19833,12 @@ function resetTags() {
     method: "POST"
   });
 }
+var init_tagsApi = __esm({
+  "frontend/src/entities/tag/api/tagsApi.ts"() {
+    "use strict";
+    init_client();
+  }
+});
 
 // frontend/src/pages/tags/model/useTagsPage.ts
 function useTagsPage() {
@@ -19583,9 +19967,23 @@ function useTagsPage() {
     }
   };
 }
+var import_react11;
+var init_useTagsPage = __esm({
+  "frontend/src/pages/tags/model/useTagsPage.ts"() {
+    "use strict";
+    import_react11 = __toESM(require_react(), 1);
+    init_ToastProvider();
+    init_tagsApi();
+    init_constants3();
+    init_dialogs();
+  }
+});
 
 // frontend/src/pages/tags/ui/TagsPage.tsx
-var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var TagsPage_exports = {};
+__export(TagsPage_exports, {
+  TagsPage: () => TagsPage
+});
 function TagChip({ tag, onToggleExclude, onDelete, onModeChange }) {
   return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("span", { className: `tag-chip${tag.exclude ? " tag-chip-exclude" : ""}`, children: [
     /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
@@ -19706,12 +20104,18 @@ function TagsPage() {
     ] })
   ] });
 }
-
-// frontend/src/pages/vpo/ui/VpoPage.tsx
-var import_react13 = __toESM(require_react(), 1);
-
-// frontend/src/pages/vpo/model/useVpoPage.ts
-var import_react12 = __toESM(require_react(), 1);
+var import_jsx_runtime19;
+var init_TagsPage = __esm({
+  "frontend/src/pages/tags/ui/TagsPage.tsx"() {
+    "use strict";
+    init_constants3();
+    init_EmptyState();
+    init_ErrorCard();
+    init_LoadingState();
+    init_useTagsPage();
+    import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  }
+});
 
 // frontend/src/entities/vpo/api/vpoApi.ts
 function fetchVpoHistory() {
@@ -19749,6 +20153,12 @@ function deleteAllVpoHistory() {
     method: "DELETE"
   });
 }
+var init_vpoApi = __esm({
+  "frontend/src/entities/vpo/api/vpoApi.ts"() {
+    "use strict";
+    init_client();
+  }
+});
 
 // frontend/src/shared/lib/files/downloadBlob.ts
 function downloadBlob(blob, fileName) {
@@ -19763,6 +20173,11 @@ function downloadBlob(blob, fileName) {
     URL.revokeObjectURL(objectUrl);
   }, 0);
 }
+var init_downloadBlob = __esm({
+  "frontend/src/shared/lib/files/downloadBlob.ts"() {
+    "use strict";
+  }
+});
 
 // frontend/src/pages/vpo/model/useVpoPage.ts
 function useVpoPage() {
@@ -19874,9 +20289,25 @@ function useVpoPage() {
     }
   };
 }
+var import_react12;
+var init_useVpoPage = __esm({
+  "frontend/src/pages/vpo/model/useVpoPage.ts"() {
+    "use strict";
+    import_react12 = __toESM(require_react(), 1);
+    init_ToastProvider();
+    init_vpoApi();
+    init_dialogs();
+    init_downloadBlob();
+    init_usePollingEffect();
+    init_constants();
+  }
+});
 
 // frontend/src/pages/vpo/ui/VpoPage.tsx
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var VpoPage_exports = {};
+__export(VpoPage_exports, {
+  VpoPage: () => VpoPage
+});
 function VpoPage() {
   const auth = useAuth();
   const canUpload = auth.hasPermission("vpo.upload");
@@ -19971,6 +20402,77 @@ function VpoPage() {
     ] })
   ] });
 }
+var import_react13, import_jsx_runtime20;
+var init_VpoPage = __esm({
+  "frontend/src/pages/vpo/ui/VpoPage.tsx"() {
+    "use strict";
+    import_react13 = __toESM(require_react(), 1);
+    init_useAuth();
+    init_format();
+    init_LoadingState();
+    init_useVpoPage();
+    import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  }
+});
+
+// frontend/src/main.tsx
+var import_client10 = __toESM(require_client(), 1);
+
+// frontend/src/app/App.tsx
+init_dist();
+init_ToastProvider();
+init_AuthProvider();
+
+// frontend/src/app/router/AppRouter.tsx
+var import_react14 = __toESM(require_react(), 1);
+init_dist();
+
+// frontend/src/features/auth/ui/ProtectedRoute.tsx
+init_useAuth();
+init_ErrorCard();
+init_LoadingState();
+var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+function getProviderLabel(provider) {
+  return provider === "keycloak" ? "Keycloak" : "API key";
+}
+function ProtectedRoute({ children, permission }) {
+  const auth = useAuth();
+  if (auth.status === "loading") {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(LoadingState, {});
+  }
+  if (!auth.config) {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ErrorCard, { message: auth.error || "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u044E \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438" });
+  }
+  if (!auth.isAuthenticated) {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card auth-card", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card-label", children: "\u0410\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u044F" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { className: "page-title", children: "\u0412\u0445\u043E\u0434 \u0432 ParserNews" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "auth-card-text", children: auth.config.provider === "keycloak" ? "\u0414\u043B\u044F \u0434\u043E\u0441\u0442\u0443\u043F\u0430 \u043A \u0440\u0430\u0431\u043E\u0447\u0438\u043C \u0440\u0430\u0437\u0434\u0435\u043B\u0430\u043C \u0432\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u0432\u0445\u043E\u0434 \u0447\u0435\u0440\u0435\u0437 Keycloak." : auth.config.authRequired ? "\u0421\u0435\u0440\u0432\u0435\u0440 \u043E\u0436\u0438\u0434\u0430\u0435\u0442 API key \u0432 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0435 Authorization." : "\u0421\u0435\u0440\u0432\u0435\u0440 \u043E\u0442\u043A\u0440\u044B\u0442 \u0431\u0435\u0437 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438, \u043D\u043E \u043F\u0440\u043E\u0444\u0438\u043B\u044C \u043F\u043E\u043A\u0430 \u043D\u0435 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043D." }),
+      auth.error ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "settings-page-status settings-page-status-error", children: auth.error }) : null,
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "auth-card-actions", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-primary", onClick: () => void auth.login(), children: auth.config.provider === "keycloak" ? "\u0412\u043E\u0439\u0442\u0438 \u0447\u0435\u0440\u0435\u0437 Keycloak" : "\u0412\u0432\u0435\u0441\u0442\u0438 API key" }),
+        auth.config.provider === "api_key" && auth.apiKeyConfigured ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: () => void auth.clearStoredApiKey(), children: "\u041E\u0447\u0438\u0441\u0442\u0438\u0442\u044C \u043A\u043B\u044E\u0447" }) : null,
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: () => void auth.reloadAuth(), children: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { className: "auth-card-note", children: [
+        "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u0434\u043E\u0441\u0442\u0443\u043F\u0430: ",
+        getProviderLabel(auth.provider)
+      ] })
+    ] });
+  }
+  if (permission && !auth.hasPermission(permission)) {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card auth-card", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card-label", children: "\u041D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u043F\u0440\u0430\u0432" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { className: "page-title", children: "\u0414\u043E\u0441\u0442\u0443\u043F \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { className: "auth-card-text", children: [
+        "\u0412\u0430\u0448\u0435\u0439 \u0440\u043E\u043B\u0438 \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F ",
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: permission }),
+        " \u0434\u043B\u044F \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u044D\u0442\u043E\u0433\u043E \u0440\u0430\u0437\u0434\u0435\u043B\u0430."
+      ] })
+    ] });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_jsx_runtime6.Fragment, { children });
+}
 
 // frontend/src/shared/config/areas.ts
 var AREA_OPTIONS = [
@@ -20001,21 +20503,36 @@ function findAreaByPath(pathname) {
 }
 
 // frontend/src/app/router/AppRouter.tsx
+init_routes();
+init_LoadingState();
 var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+var AccessPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_AccessPage(), AccessPage_exports)).then((module) => ({ default: module.AccessPage })));
+var AreaDashboardPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_AreaDashboardPage(), AreaDashboardPage_exports)).then((module) => ({ default: module.AreaDashboardPage })));
+var ArticlesPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_ArticlesPage(), ArticlesPage_exports)).then((module) => ({ default: module.ArticlesPage })));
+var CompaniesPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_CompaniesPage(), CompaniesPage_exports)).then((module) => ({ default: module.CompaniesPage })));
+var DashboardPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_DashboardPage(), DashboardPage_exports)).then((module) => ({ default: module.DashboardPage })));
+var ProfilePage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_ProfilePage(), ProfilePage_exports)).then((module) => ({ default: module.ProfilePage })));
+var QueuesPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_QueuesPage(), QueuesPage_exports)).then((module) => ({ default: module.QueuesPage })));
+var SettingsPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_SettingsPage(), SettingsPage_exports)).then((module) => ({ default: module.SettingsPage })));
+var TagsPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_TagsPage(), TagsPage_exports)).then((module) => ({ default: module.TagsPage })));
+var VpoPage2 = (0, import_react14.lazy)(() => Promise.resolve().then(() => (init_VpoPage(), VpoPage_exports)).then((module) => ({ default: module.VpoPage })));
+function withSuspense(element) {
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_react14.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(LoadingState, {}), children: element });
+}
 function AppRouter() {
   return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(Routes, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.dashboard,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "dashboard.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(DashboardPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "dashboard.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(DashboardPage2, {})) })
       }
     ),
     AREA_OPTIONS.map((area) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: area.path,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "dashboard.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(AreaDashboardPage, { area }) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "dashboard.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(AreaDashboardPage2, { area })) })
       },
       area.id
     )),
@@ -20023,56 +20540,56 @@ function AppRouter() {
       Route,
       {
         path: routePaths.articles,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "articles.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ArticlesPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "articles.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ArticlesPage2, {})) })
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.companies,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "companies.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(CompaniesPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "companies.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(CompaniesPage2, {})) })
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.tags,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "tags.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(TagsPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "tags.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(TagsPage2, {})) })
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.queues,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "queues.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(QueuesPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "queues.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(QueuesPage2, {})) })
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.settings,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "settings.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SettingsPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "settings.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SettingsPage2, {})) })
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.vpo,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "vpo.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(VpoPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "vpo.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(VpoPage2, {})) })
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.profile,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "profile.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProfilePage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "profile.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProfilePage2, {})) })
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       Route,
       {
         path: routePaths.access,
-        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "access.users.view", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(AccessPage, {}) })
+        element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProtectedRoute, { permission: "access.users.view", children: withSuspense(/* @__PURE__ */ (0, import_jsx_runtime21.jsx)(AccessPage2, {})) })
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Route, { path: "*", element: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Navigate, { to: routePaths.dashboard, replace: true }) })
@@ -20080,12 +20597,15 @@ function AppRouter() {
 }
 
 // frontend/src/widgets/app-shell/ui/AppShell.tsx
-var import_react16 = __toESM(require_react(), 1);
+var import_react17 = __toESM(require_react(), 1);
+init_dist();
+init_useAuth();
 
 // frontend/src/features/health/model/useHealthStatus.ts
-var import_react14 = __toESM(require_react(), 1);
+var import_react15 = __toESM(require_react(), 1);
 
 // frontend/src/entities/health/api/healthApi.ts
+init_client();
 function fetchHealth() {
   return requestJson("/health", {
     throwOnHttpError: false
@@ -20093,6 +20613,8 @@ function fetchHealth() {
 }
 
 // frontend/src/features/health/model/useHealthStatus.ts
+init_constants();
+init_usePollingEffect();
 var INITIAL_HEALTH_STATE = {
   status: "unknown",
   timestamp: "",
@@ -20131,7 +20653,7 @@ function normalizeHealthResponse(value) {
   };
 }
 function useHealthStatus(reloadKey) {
-  const [health, setHealth] = (0, import_react14.useState)(INITIAL_HEALTH_STATE);
+  const [health, setHealth] = (0, import_react15.useState)(INITIAL_HEALTH_STATE);
   usePollingEffect(
     async () => {
       try {
@@ -20155,8 +20677,15 @@ function useHealthStatus(reloadKey) {
   return health;
 }
 
+// frontend/src/widgets/app-shell/ui/AppShell.tsx
+init_AppIcons();
+
 // frontend/src/widgets/sidebar/ui/AppSidebar.tsx
-var import_react15 = __toESM(require_react(), 1);
+var import_react16 = __toESM(require_react(), 1);
+init_dist();
+init_useAuth();
+init_routes();
+init_AppIcons();
 var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 var NAV_ITEMS = [
   { path: routePaths.dashboard, label: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F", Icon: DashboardIcon, permission: "dashboard.view", end: true },
@@ -20185,18 +20714,18 @@ function AppSidebar({ sidebarOpen, health }) {
   const auth = useAuth();
   const userAppRoles = auth.user?.appRoles ?? [];
   const selectedArea = findAreaByPath(location.pathname);
-  const [areasExpanded, setAreasExpanded] = (0, import_react15.useState)(Boolean(selectedArea));
+  const [areasExpanded, setAreasExpanded] = (0, import_react16.useState)(Boolean(selectedArea));
   const visibleSettingsItems = SETTINGS_ITEMS.filter((item) => auth.hasPermission(item.permission));
   const selectedSettingsItem = visibleSettingsItems.find((item) => item.path === location.pathname) ?? null;
-  const [settingsExpanded, setSettingsExpanded] = (0, import_react15.useState)(Boolean(selectedSettingsItem));
+  const [settingsExpanded, setSettingsExpanded] = (0, import_react16.useState)(Boolean(selectedSettingsItem));
   const healthDotClassName = !health.loading ? health.error || health.status !== "ok" ? "health-dot error" : "health-dot ok" : "health-dot";
   const visibleNavItems = NAV_ITEMS.filter((item) => auth.hasPermission(item.permission));
-  (0, import_react15.useEffect)(() => {
+  (0, import_react16.useEffect)(() => {
     if (selectedArea) {
       setAreasExpanded(true);
     }
   }, [selectedArea]);
-  (0, import_react15.useEffect)(() => {
+  (0, import_react16.useEffect)(() => {
     if (selectedSettingsItem) {
       setSettingsExpanded(true);
     }
@@ -20320,13 +20849,13 @@ function AppSidebar({ sidebarOpen, health }) {
 var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 function AppShell({ children }) {
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = (0, import_react16.useState)(false);
+  const [sidebarOpen, setSidebarOpen] = (0, import_react17.useState)(false);
   const auth = useAuth();
   const health = useHealthStatus(auth.sessionVersion);
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     setSidebarOpen(false);
   }, [location.pathname]);
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     function handleDocumentClick(event) {
       if (!sidebarOpen) return;
       if (!(event.target instanceof Element)) return;
@@ -20355,9 +20884,10 @@ function AppShell({ children }) {
 }
 
 // frontend/src/shared/ui/error-boundary/AppErrorBoundary.tsx
-var import_react17 = __toESM(require_react(), 1);
+var import_react18 = __toESM(require_react(), 1);
+init_ErrorCard();
 var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-var AppErrorBoundary = class extends import_react17.Component {
+var AppErrorBoundary = class extends import_react18.Component {
   state = {
     hasError: false
   };
@@ -20440,17 +20970,6 @@ react-dom/cjs/react-dom-client.production.js:
    * LICENSE file in the root directory of this source tree.
    *)
 
-react/cjs/react-jsx-runtime.production.js:
-  (**
-   * @license React
-   * react-jsx-runtime.production.js
-   *
-   * Copyright (c) Meta Platforms, Inc. and affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
-
 react-router/dist/development/chunk-UVKPFVEO.mjs:
 react-router/dist/development/index.mjs:
   (**
@@ -20462,5 +20981,28 @@ react-router/dist/development/index.mjs:
    * LICENSE.md file in the root directory of this source tree.
    *
    * @license MIT
+   *)
+
+react-router-dom/dist/index.mjs:
+  (**
+   * react-router-dom v7.13.2
+   *
+   * Copyright (c) Remix Software Inc.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+react/cjs/react-jsx-runtime.production.js:
+  (**
+   * @license React
+   * react-jsx-runtime.production.js
+   *
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
    *)
 */

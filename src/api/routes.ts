@@ -11,12 +11,16 @@ import { isSafeUrl } from '../lib/validateUrl.js';
 import { createChildLogger } from '../lib/logger.js';
 import { getConfig, getRedisOptions } from '../config/index.js';
 import { asyncHandler } from './asyncHandler.js';
+import { buildOpenApiDocument } from './openapi.js';
 import { getAllTags, addTag, updateTag, addManyTags, deleteTag, deleteAllTags, resetToDefaults, type TagMode } from '../services/tags.js';
 import { getRiaParserOptions, updateRiaParserOptions } from '../services/parserSettings.js';
 import { listVpoHistory, resolveVpoHistoryFilePath, deleteVpoHistoryEntry, deleteAllVpoHistory } from '../services/vpoHistory.js';
 import { KeycloakAdminError, listManagedUsers, replaceUserAppRoles } from '../auth/admin.js';
 import { getAllAppRoles, getPublicAuthConfig, requirePermissions } from './auth.js';
 import { isAppRole, type AppRole } from '../auth/rbac.js';
+import { createArticlesRepository } from '../modules/articles/repository.js';
+import { createArticlesService } from '../modules/articles/service.js';
+import { createArticlesRouter } from '../modules/articles/router.js';
 
 const log = createChildLogger('routes');
 const router = Router();
@@ -32,31 +36,6 @@ function paginationParams(query: Record<string, unknown>) {
   const limit = Math.min(100, Math.max(1, parseInt(String(query.limit ?? '20'), 10) || 20));
   const search = String(query.search ?? '').trim();
   return { page, limit, offset: (page - 1) * limit, search };
-}
-
-function optionalTextParam(value: unknown): string {
-  return typeof value === 'string' ? value.trim() : '';
-}
-
-function normalizeNullableText(value: unknown): string | null {
-  if (value === null || value === undefined) {
-    return null;
-  }
-
-  if (typeof value !== 'string') {
-    return null;
-  }
-
-  const trimmed = value.trim();
-  return trimmed ? trimmed : null;
-}
-
-function collectDistinctTextOptions(rows: Array<{ value: string | null }>): string[] {
-  return [...new Set(
-    rows
-      .map((row) => row.value?.trim())
-      .filter((value): value is string => Boolean(value)),
-  )].sort((left, right) => left.localeCompare(right, 'ru-RU'));
 }
 
 /** Escape LIKE/ILIKE wildcard characters so user input is treated literally. */
@@ -75,6 +54,10 @@ function vpoCreatedAtToIso(created: unknown): string {
 /* ───── shared Redis singleton for health checks ───── */
 
 let _healthRedis: IORedis | null = null;
+const articlesService = createArticlesService({
+  repository: createArticlesRepository(getDb()),
+  logger: log,
+});
 
 function getHealthRedis(): IORedis {
   if (_healthRedis) return _healthRedis;
@@ -120,6 +103,10 @@ router.get('/health', asyncHandler(async (_req, res) => {
     authProvider: authConfig.provider,
     checks,
   });
+}));
+
+router.get('/openapi.json', asyncHandler(async (_req, res) => {
+  res.json(buildOpenApiDocument());
 }));
 
 /* ───── parse triggers ───── */
@@ -410,103 +397,9 @@ router.patch('/settings/ria', requirePermissions('settings.manage'), asyncHandle
   res.json({ ok: true, settings });
 }));
 
-/* ───── articles (paginated) ───── */
-
-router.get('/articles', requirePermissions('articles.view'), asyncHandler(async (req, res) => {
-  const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);
-  const source = optionalTextParam(req.query.source);
-  const category = optionalTextParam(req.query.category);
-  const db = getDb();
-
-  let base = db('news_articles');
-  if (search) {
-    const escaped = escapeLike(search);
-    base = base.where(function () {
-      this.whereILike('title', `%${escaped}%`)
-        .orWhereILike('summary', `%${escaped}%`)
-        .orWhereILike('source', `%${escaped}%`)
-        .orWhereILike('category', `%${escaped}%`);
-    });
-  }
-
-  if (source) {
-    const escapedSource = escapeLike(source);
-    base = base.whereILike('source', `%${escapedSource}%`);
-  }
-
-  if (category) {
-    const escapedCategory = escapeLike(category);
-    base = base.whereILike('category', `%${escapedCategory}%`);
-  }
-
-  const [countRows, rows, sourceRows, categoryRows] = await Promise.all([
-    base.clone().count('* as count'),
-    base.clone()
-      .select('id', 'title', 'summary', 'source', 'source_url', 'category', 'published_at', 'created_at')
-      .orderBy([{ column: 'published_at', order: 'desc', nulls: 'last' }, { column: 'id', order: 'desc' }])
-      .limit(limit)
-      .offset(offset),
-    db('news_articles')
-      .distinct<{ value: string | null }[]>({ value: 'source' })
-      .whereNotNull('source'),
-    db('news_articles')
-      .distinct<{ value: string | null }[]>({ value: 'category' })
-      .whereNotNull('category'),
-  ]);
-
-  const [{ count }] = countRows;
-
-  res.json({
-    total: Number(count),
-    page,
-    limit,
-    articles: rows,
-    filterOptions: {
-      sources: collectDistinctTextOptions(sourceRows),
-      categories: collectDistinctTextOptions(categoryRows),
-    },
-  });
-}));
+router.use(createArticlesRouter({ service: articlesService }));
 
 /* ───── companies: EdTech (edtechs.ru) ───── */
-
-router.patch('/articles/:id', requirePermissions('articles.manage'), asyncHandler(async (req, res) => {
-  const id = parseInt(req.params.id, 10);
-
-  if (Number.isNaN(id)) {
-    res.status(400).json({ error: 'Invalid id' });
-    return;
-  }
-
-  if (!Object.prototype.hasOwnProperty.call(req.body ?? {}, 'category')) {
-    res.status(400).json({ error: 'category is required' });
-    return;
-  }
-
-  if (req.body?.category !== null && req.body?.category !== undefined && typeof req.body.category !== 'string') {
-    res.status(400).json({ error: 'category must be a string or null' });
-    return;
-  }
-
-  const categoryValue = normalizeNullableText(req.body?.category);
-
-  if (categoryValue && categoryValue.length > 120) {
-    res.status(400).json({ error: 'category is too long (max 120 chars)' });
-    return;
-  }
-
-  const [article] = await getDb()('news_articles')
-    .where({ id })
-    .update({ category: categoryValue })
-    .returning(['id', 'title', 'summary', 'source', 'source_url', 'category', 'published_at', 'created_at']);
-
-  if (!article) {
-    res.status(404).json({ error: 'Article not found' });
-    return;
-  }
-
-  res.json({ ok: true, article });
-}));
 
 router.get('/companies/edtech', requirePermissions('companies.view'), asyncHandler(async (req, res) => {
   const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);
@@ -626,20 +519,6 @@ router.post('/tags/reset', requirePermissions('tags.manage'), asyncHandler(async
 }));
 
 /* ───── delete articles / companies ───── */
-
-router.delete('/articles', requirePermissions('articles.delete'), asyncHandler(async (_req, res) => {
-  const { rowCount } = await getDb()('news_articles').delete() as unknown as { rowCount: number };
-  log.info({ deleted: rowCount }, 'All articles deleted');
-  res.json({ ok: true, deleted: rowCount ?? 0 });
-}));
-
-router.delete('/articles/:id', requirePermissions('articles.delete'), asyncHandler(async (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  if (isNaN(id)) { res.status(400).json({ error: 'Invalid id' }); return; }
-  const deleted = await getDb()('news_articles').where({ id }).delete();
-  if (!deleted) { res.status(404).json({ error: 'Article not found' }); return; }
-  res.json({ ok: true, id });
-}));
 
 router.delete('/companies/edtech', requirePermissions('companies.delete'), asyncHandler(async (_req, res) => {
   const { rowCount } = await getDb()('edtech_companies').delete() as unknown as { rowCount: number };
