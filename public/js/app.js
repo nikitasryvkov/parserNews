@@ -18890,7 +18890,18 @@ function fetchFailedJobs() {
 // frontend/src/shared/lib/react/usePollingEffect.ts
 var import_react8 = __toESM(require_react(), 1);
 function usePollingEffect(effect, delayMs, deps = []) {
-  const runEffect = (0, import_react8.useEffectEvent)(effect);
+  const isRunningRef = (0, import_react8.useRef)(false);
+  const runEffect = (0, import_react8.useEffectEvent)(async () => {
+    if (isRunningRef.current) {
+      return;
+    }
+    isRunningRef.current = true;
+    try {
+      await effect();
+    } finally {
+      isRunningRef.current = false;
+    }
+  });
   (0, import_react8.useEffect)(() => {
     if (delayMs === null) return void 0;
     void runEffect();
@@ -18900,7 +18911,7 @@ function usePollingEffect(effect, delayMs, deps = []) {
     return () => {
       window.clearInterval(intervalId);
     };
-  }, [delayMs, runEffect, ...deps]);
+  }, [delayMs, ...deps]);
 }
 
 // frontend/src/pages/queues/model/useQueuesPage.ts

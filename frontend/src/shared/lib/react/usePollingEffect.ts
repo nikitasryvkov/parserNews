@@ -1,11 +1,24 @@
-import { type DependencyList, useEffect, useEffectEvent } from 'react';
+import { type DependencyList, useEffect, useEffectEvent, useRef } from 'react';
 
 export function usePollingEffect(
   effect: () => void | Promise<void>,
   delayMs: number | null,
   deps: DependencyList = [],
 ): void {
-  const runEffect = useEffectEvent(effect);
+  const isRunningRef = useRef(false);
+  const runEffect = useEffectEvent(async () => {
+    if (isRunningRef.current) {
+      return;
+    }
+
+    isRunningRef.current = true;
+
+    try {
+      await effect();
+    } finally {
+      isRunningRef.current = false;
+    }
+  });
 
   useEffect(() => {
     if (delayMs === null) return undefined;
@@ -19,5 +32,5 @@ export function usePollingEffect(
     return () => {
       window.clearInterval(intervalId);
     };
-  }, [delayMs, runEffect, ...deps]);
+  }, [delayMs, ...deps]);
 }

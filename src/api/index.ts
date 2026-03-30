@@ -1,7 +1,8 @@
 import { join } from 'path';
+import { createHash } from 'crypto';
 import express from 'express';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
+import { ipKeyGenerator, rateLimit } from 'express-rate-limit';
 import routes from './routes.js';
 import { authMiddleware } from './auth.js';
 import { getConfig } from '../config/index.js';
@@ -9,7 +10,9 @@ import { createChildLogger } from '../lib/logger.js';
 import type { Request, Response, NextFunction } from 'express';
 
 const log = createChildLogger('api');
-const PUBLIC_RATE_LIMIT_EXCLUDE = new Set(['/api/health', '/api/auth/config']);
+const READ_RATE_LIMIT_EXCLUDE = new Set(['/api/health', '/api/auth/config', '/api/auth/me']);
+const WRITE_RATE_LIMIT_EXCLUDE = new Set(['/api/health', '/api/auth/config']);
+const READ_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 
 function resolveTrustProxySetting(raw: string | undefined): boolean | number | string {
   const normalized = raw?.trim().toLowerCase() ?? '';
@@ -34,6 +37,38 @@ function resolveTrustProxySetting(raw: string | undefined): boolean | number | s
   return raw ?? false;
 }
 
+function hashRateLimitToken(token: string): string {
+  return createHash('sha256').update(token).digest('hex').slice(0, 24);
+}
+
+function buildRateLimitKey(req: Request): string {
+  const auth = req.auth;
+
+  if (auth?.provider === 'keycloak' && auth.user.id) {
+    return `user:${auth.user.id}`;
+  }
+
+  if (auth?.provider === 'api_key' && auth.token) {
+    return `api-key:${hashRateLimitToken(auth.token)}`;
+  }
+
+  return `ip:${ipKeyGenerator(req.ip ?? req.socket.remoteAddress ?? '')}`;
+}
+
+function logRateLimitHit(req: Request, _res: Response): void {
+  log.warn(
+    {
+      path: req.originalUrl,
+      method: req.method,
+      key: buildRateLimitKey(req),
+      ip: req.ip,
+      userId: req.auth?.user.id ?? null,
+      provider: req.auth?.provider ?? null,
+    },
+    'API rate limit exceeded',
+  );
+}
+
 export function createApp(): express.Express {
   const app = express();
   const trustProxy = resolveTrustProxySetting(process.env.TRUST_PROXY);
@@ -46,19 +81,39 @@ export function createApp(): express.Express {
 
   app.use(express.static(join(process.cwd(), 'public')));
 
+  const readApiLimiter = rateLimit({
+    windowMs: 60_000,
+    max: 600,
+    standardHeaders: true,
+    legacyHeaders: false,
+    keyGenerator: buildRateLimitKey,
+    skip: (req) => !READ_METHODS.has(req.method) || READ_RATE_LIMIT_EXCLUDE.has(req.originalUrl),
+    handler: (req, res, _next, options) => {
+      logRateLimitHit(req, res);
+      res.status(options.statusCode).json({ error: 'Too many requests, please try again later' });
+    },
+  });
+
+  const writeApiLimiter = rateLimit({
+    windowMs: 60_000,
+    max: 120,
+    standardHeaders: true,
+    legacyHeaders: false,
+    keyGenerator: buildRateLimitKey,
+    skip: (req) => READ_METHODS.has(req.method) || WRITE_RATE_LIMIT_EXCLUDE.has(req.originalUrl),
+    handler: (req, res, _next, options) => {
+      logRateLimitHit(req, res);
+      res.status(options.statusCode).json({ error: 'Too many requests, please try again later' });
+    },
+  });
+
   app.use(
     '/api',
-    rateLimit({
-      windowMs: 60_000,
-      max: 120,
-      standardHeaders: true,
-      legacyHeaders: false,
-      skip: (req) => PUBLIC_RATE_LIMIT_EXCLUDE.has(req.originalUrl),
-      message: { error: 'Too many requests, please try again later' },
-    }),
+    authMiddleware,
+    readApiLimiter,
+    writeApiLimiter,
+    routes,
   );
-
-  app.use('/api', authMiddleware, routes);
 
   app.use((_req: Request, res: Response) => {
     res.status(404).json({ error: 'Not found' });
