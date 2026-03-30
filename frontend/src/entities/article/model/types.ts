@@ -14,6 +14,10 @@ export interface ArticlesResponse {
   page: number;
   limit: number;
   articles: Article[];
+  filterOptions: {
+    sources: string[];
+    categories: string[];
+  };
 }
 
 export interface ArticlesQuery {

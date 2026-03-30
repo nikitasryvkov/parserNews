@@ -51,6 +51,14 @@ function normalizeNullableText(value: unknown): string | null {
   return trimmed ? trimmed : null;
 }
 
+function collectDistinctTextOptions(rows: Array<{ value: string | null }>): string[] {
+  return [...new Set(
+    rows
+      .map((row) => row.value?.trim())
+      .filter((value): value is string => Boolean(value)),
+  )].sort((left, right) => left.localeCompare(right, 'ru-RU'));
+}
+
 /** Escape LIKE/ILIKE wildcard characters so user input is treated literally. */
 function escapeLike(s: string): string {
   return s.replace(/[%_\\]/g, '\\$&');
@@ -431,14 +439,33 @@ router.get('/articles', requirePermissions('articles.view'), asyncHandler(async 
     base = base.whereILike('category', `%${escapedCategory}%`);
   }
 
-  const [{ count }] = await base.clone().count('* as count');
-  const rows = await base.clone()
-    .select('id', 'title', 'summary', 'source', 'source_url', 'category', 'published_at', 'created_at')
-    .orderBy([{ column: 'published_at', order: 'desc', nulls: 'last' }, { column: 'id', order: 'desc' }])
-    .limit(limit)
-    .offset(offset);
+  const [countRows, rows, sourceRows, categoryRows] = await Promise.all([
+    base.clone().count('* as count'),
+    base.clone()
+      .select('id', 'title', 'summary', 'source', 'source_url', 'category', 'published_at', 'created_at')
+      .orderBy([{ column: 'published_at', order: 'desc', nulls: 'last' }, { column: 'id', order: 'desc' }])
+      .limit(limit)
+      .offset(offset),
+    db('news_articles')
+      .distinct<{ value: string | null }[]>({ value: 'source' })
+      .whereNotNull('source'),
+    db('news_articles')
+      .distinct<{ value: string | null }[]>({ value: 'category' })
+      .whereNotNull('category'),
+  ]);
 
-  res.json({ total: Number(count), page, limit, articles: rows });
+  const [{ count }] = countRows;
+
+  res.json({
+    total: Number(count),
+    page,
+    limit,
+    articles: rows,
+    filterOptions: {
+      sources: collectDistinctTextOptions(sourceRows),
+      categories: collectDistinctTextOptions(categoryRows),
+    },
+  });
 }));
 
 /* ───── companies: EdTech (edtechs.ru) ───── */

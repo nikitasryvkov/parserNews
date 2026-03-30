@@ -18256,7 +18256,11 @@ var INITIAL_DATA2 = {
   total: 0,
   page: 1,
   limit: 20,
-  articles: []
+  articles: [],
+  filterOptions: {
+    sources: [],
+    categories: []
+  }
 };
 function normalizeCategory(value) {
   return value?.trim() ?? "";
@@ -18375,17 +18379,9 @@ function useArticlesPage() {
     const nextCategory = normalizeCategory(getDraftCategory(article));
     setSavingId(article.id);
     try {
-      const response = await updateArticleCategory(article.id, nextCategory || null);
-      const updatedArticle = response.article;
-      setData((current) => ({
-        ...current,
-        articles: current.articles.map((item) => item.id === updatedArticle.id ? updatedArticle : item)
-      }));
-      setDraftCategoriesById((current) => ({
-        ...current,
-        [String(updatedArticle.id)]: normalizeCategory(updatedArticle.category)
-      }));
+      await updateArticleCategory(article.id, nextCategory || null);
       pushToast("\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F \u0441\u0442\u0430\u0442\u044C\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430", "success");
+      setReloadKey((current) => current + 1);
     } catch (errorValue) {
       pushToast(errorValue instanceof Error ? errorValue.message : "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E \u0441\u0442\u0430\u0442\u044C\u0438", "error");
     } finally {
@@ -18448,19 +18444,14 @@ function useArticlesPage() {
 
 // frontend/src/pages/articles/ui/ArticlesPage.tsx
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-function getUniqueValues(values) {
-  return [...new Set(values.map((value) => value?.trim()).filter((value) => Boolean(value)))].sort(
-    (left, right) => left.localeCompare(right, "ru-RU")
-  );
-}
 function ArticlesPage() {
   const auth = useAuth();
   const canEditArticles = auth.hasPermission("articles.manage");
   const canDeleteArticles = auth.hasPermission("articles.delete");
   const canUseEditMode = canEditArticles || canDeleteArticles;
   const { view, data: data2, loading, error, deletingId, deletingAll, savingId, actions } = useArticlesPage();
-  const sourceOptions = getUniqueValues(data2.articles.map((article) => article.source));
-  const categoryOptions = getUniqueValues(data2.articles.map((article) => article.category));
+  const sourceOptions = data2.filterOptions.sources;
+  const categoryOptions = data2.filterOptions.categories;
   return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "page-header", children: [
       /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
@@ -18492,26 +18483,28 @@ function ArticlesPage() {
               onChange: (event) => actions.setDraftSearch(event.target.value)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-            "input",
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+            "select",
             {
               className: "search-input article-filter-input",
-              type: "text",
-              placeholder: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A",
-              list: "article-source-options",
               value: view.draftSource,
-              onChange: (event) => actions.setDraftSource(event.target.value)
+              onChange: (event) => actions.setDraftSource(event.target.value),
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: "", children: "\u0412\u0441\u0435 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438" }),
+                sourceOptions.map((source) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: source, children: source }, source))
+              ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-            "input",
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+            "select",
             {
               className: "search-input article-filter-input",
-              type: "text",
-              placeholder: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F",
-              list: "article-category-options",
               value: view.draftCategory,
-              onChange: (event) => actions.setDraftCategory(event.target.value)
+              onChange: (event) => actions.setDraftCategory(event.target.value),
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: "", children: "\u0412\u0441\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438" }),
+                categoryOptions.map((category) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: category, children: category }, category))
+              ]
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", className: "btn btn-primary", children: "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C" }),
@@ -18520,8 +18513,6 @@ function ArticlesPage() {
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("datalist", { id: "article-source-options", children: sourceOptions.map((source) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: source }, source)) }),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("datalist", { id: "article-category-options", children: categoryOptions.map((category) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: category }, category)) }),
     loading ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ErrorCard, { message: error }) : data2.articles.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       EmptyState,
       {
@@ -18551,7 +18542,6 @@ function ArticlesPage() {
               {
                 type: "text",
                 className: "search-input article-category-input",
-                list: "article-category-options",
                 value: draftCategory,
                 onChange: (event) => actions.setArticleCategory(article.id, event.target.value),
                 placeholder: "\u0411\u0435\u0437 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438"

@@ -39,6 +39,10 @@ const INITIAL_DATA: ArticlesResponse = {
   page: 1,
   limit: 20,
   articles: [],
+  filterOptions: {
+    sources: [],
+    categories: [],
+  },
 };
 
 function normalizeCategory(value: string | null | undefined): string {
@@ -182,18 +186,9 @@ export function useArticlesPage() {
     setSavingId(article.id);
 
     try {
-      const response = await updateArticleCategory(article.id, nextCategory || null);
-      const updatedArticle = response.article;
-
-      setData((current) => ({
-        ...current,
-        articles: current.articles.map((item) => (item.id === updatedArticle.id ? updatedArticle : item)),
-      }));
-      setDraftCategoriesById((current) => ({
-        ...current,
-        [String(updatedArticle.id)]: normalizeCategory(updatedArticle.category),
-      }));
+      await updateArticleCategory(article.id, nextCategory || null);
       pushToast('Категория статьи обновлена', 'success');
+      setReloadKey((current) => current + 1);
     } catch (errorValue) {
       pushToast(errorValue instanceof Error ? errorValue.message : 'Не удалось обновить категорию статьи', 'error');
     } finally {

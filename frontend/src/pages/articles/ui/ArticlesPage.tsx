@@ -7,20 +7,14 @@ import { PageSizeSelect } from '../../../shared/ui/page-size-select/PageSizeSele
 import { Pagination } from '../../../shared/ui/pagination/Pagination';
 import { useArticlesPage } from '../model/useArticlesPage';
 
-function getUniqueValues(values: Array<string | null | undefined>): string[] {
-  return [...new Set(values.map((value) => value?.trim()).filter((value): value is string => Boolean(value)))].sort((left, right) =>
-    left.localeCompare(right, 'ru-RU'),
-  );
-}
-
 export function ArticlesPage() {
   const auth = useAuth();
   const canEditArticles = auth.hasPermission('articles.manage');
   const canDeleteArticles = auth.hasPermission('articles.delete');
   const canUseEditMode = canEditArticles || canDeleteArticles;
   const { view, data, loading, error, deletingId, deletingAll, savingId, actions } = useArticlesPage();
-  const sourceOptions = getUniqueValues(data.articles.map((article) => article.source));
-  const categoryOptions = getUniqueValues(data.articles.map((article) => article.category));
+  const sourceOptions = data.filterOptions.sources;
+  const categoryOptions = data.filterOptions.categories;
 
   return (
     <>
@@ -60,22 +54,30 @@ export function ArticlesPage() {
           value={view.draftSearch}
           onChange={(event) => actions.setDraftSearch(event.target.value)}
         />
-        <input
+        <select
           className="search-input article-filter-input"
-          type="text"
-          placeholder="Источник"
-          list="article-source-options"
           value={view.draftSource}
           onChange={(event) => actions.setDraftSource(event.target.value)}
-        />
-        <input
+        >
+          <option value="">Все источники</option>
+          {sourceOptions.map((source) => (
+            <option key={source} value={source}>
+              {source}
+            </option>
+          ))}
+        </select>
+        <select
           className="search-input article-filter-input"
-          type="text"
-          placeholder="Категория"
-          list="article-category-options"
           value={view.draftCategory}
           onChange={(event) => actions.setDraftCategory(event.target.value)}
-        />
+        >
+          <option value="">Все категории</option>
+          {categoryOptions.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
         <button type="submit" className="btn btn-primary">
           Применить
         </button>
@@ -84,17 +86,6 @@ export function ArticlesPage() {
         </button>
         <PageSizeSelect id="articles-page-size" value={view.limit} onChange={actions.setLimit} />
       </form>
-
-      <datalist id="article-source-options">
-        {sourceOptions.map((source) => (
-          <option key={source} value={source} />
-        ))}
-      </datalist>
-      <datalist id="article-category-options">
-        {categoryOptions.map((category) => (
-          <option key={category} value={category} />
-        ))}
-      </datalist>
 
       {loading ? (
         <LoadingState />
@@ -143,7 +134,6 @@ export function ArticlesPage() {
                           <input
                             type="text"
                             className="search-input article-category-input"
-                            list="article-category-options"
                             value={draftCategory}
                             onChange={(event) => actions.setArticleCategory(article.id, event.target.value)}
                             placeholder="Без категории"
