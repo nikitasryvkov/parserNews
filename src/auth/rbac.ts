@@ -4,6 +4,7 @@ export type AppRole = (typeof APP_ROLES)[number];
 export const APP_PERMISSIONS = [
   'dashboard.view',
   'articles.view',
+  'articles.manage',
   'articles.delete',
   'companies.view',
   'companies.delete',
@@ -34,6 +35,7 @@ const ROLE_PERMISSION_MAP: Record<AppRole, AppPermission[]> = {
   operator: [
     'dashboard.view',
     'articles.view',
+    'articles.manage',
     'companies.view',
     'tags.view',
     'tags.manage',

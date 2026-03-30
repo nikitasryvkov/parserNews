@@ -18207,15 +18207,27 @@ function formatDateTime(value) {
 var import_react5 = __toESM(require_react(), 1);
 
 // frontend/src/entities/article/api/articlesApi.ts
-function fetchArticles(page, limit, search) {
+function fetchArticles(query) {
   const params = new URLSearchParams({
-    page: String(page),
-    limit: String(limit)
+    page: String(query.page),
+    limit: String(query.limit)
   });
-  if (search) {
-    params.set("search", search);
+  if (query.search) {
+    params.set("search", query.search);
+  }
+  if (query.source) {
+    params.set("source", query.source);
+  }
+  if (query.category) {
+    params.set("category", query.category);
   }
   return requestJson(`/articles?${params.toString()}`);
+}
+function updateArticleCategory(id, category) {
+  return requestJson(`/articles/${id}`, {
+    method: "PATCH",
+    body: { category }
+  });
 }
 function deleteAllArticles() {
   return requestJson("/articles", {
@@ -18232,8 +18244,13 @@ function deleteArticle(id) {
 var INITIAL_VIEW_STATE2 = {
   page: 1,
   limit: 20,
-  query: "",
-  draft: ""
+  search: "",
+  source: "",
+  category: "",
+  draftSearch: "",
+  draftSource: "",
+  draftCategory: "",
+  editMode: false
 };
 var INITIAL_DATA2 = {
   total: 0,
@@ -18241,6 +18258,12 @@ var INITIAL_DATA2 = {
   limit: 20,
   articles: []
 };
+function normalizeCategory(value) {
+  return value?.trim() ?? "";
+}
+function buildCategoryDrafts(articles) {
+  return Object.fromEntries(articles.map((article) => [String(article.id), normalizeCategory(article.category)]));
+}
 function useArticlesPage() {
   const { pushToast } = useToast();
   const [view, setView] = (0, import_react5.useState)(INITIAL_VIEW_STATE2);
@@ -18250,12 +18273,20 @@ function useArticlesPage() {
   const [reloadKey, setReloadKey] = (0, import_react5.useState)(0);
   const [deletingId, setDeletingId] = (0, import_react5.useState)(null);
   const [deletingAll, setDeletingAll] = (0, import_react5.useState)(false);
+  const [savingId, setSavingId] = (0, import_react5.useState)(null);
+  const [draftCategoriesById, setDraftCategoriesById] = (0, import_react5.useState)({});
   (0, import_react5.useEffect)(() => {
     let cancelled = false;
     async function loadArticles() {
       setLoading(true);
       try {
-        const response = await fetchArticles(view.page, view.limit, view.query);
+        const response = await fetchArticles({
+          page: view.page,
+          limit: view.limit,
+          search: view.search,
+          source: view.source,
+          category: view.category
+        });
         if (cancelled) return;
         const totalPages = getTotalPages(response.total, response.limit);
         if (view.page > totalPages) {
@@ -18263,6 +18294,7 @@ function useArticlesPage() {
           return;
         }
         setData(response);
+        setDraftCategoriesById(buildCategoryDrafts(response.articles));
         setError("");
       } catch (loadError) {
         if (cancelled) return;
@@ -18277,15 +18309,35 @@ function useArticlesPage() {
     return () => {
       cancelled = true;
     };
-  }, [reloadKey, view.limit, view.page, view.query]);
-  function setDraft(value) {
-    setView((current) => ({ ...current, draft: value }));
+  }, [reloadKey, view.limit, view.page, view.search, view.source, view.category]);
+  function setDraftSearch(value) {
+    setView((current) => ({ ...current, draftSearch: value }));
   }
-  function submitSearch() {
+  function setDraftSource(value) {
+    setView((current) => ({ ...current, draftSource: value }));
+  }
+  function setDraftCategory(value) {
+    setView((current) => ({ ...current, draftCategory: value }));
+  }
+  function submitFilters() {
     setView((current) => ({
       ...current,
-      query: current.draft.trim(),
+      search: current.draftSearch.trim(),
+      source: current.draftSource.trim(),
+      category: current.draftCategory.trim(),
       page: 1
+    }));
+  }
+  function resetFilters() {
+    setView((current) => ({
+      ...current,
+      page: 1,
+      search: "",
+      source: "",
+      category: "",
+      draftSearch: "",
+      draftSource: "",
+      draftCategory: ""
     }));
   }
   function setPage(page) {
@@ -18293,6 +18345,52 @@ function useArticlesPage() {
   }
   function setLimit(limit) {
     setView((current) => ({ ...current, limit, page: 1 }));
+  }
+  function toggleEditMode() {
+    setView((current) => ({ ...current, editMode: !current.editMode }));
+    if (view.editMode) {
+      setDraftCategoriesById(buildCategoryDrafts(data2.articles));
+    }
+  }
+  function setArticleCategory(id, value) {
+    setDraftCategoriesById((current) => ({
+      ...current,
+      [String(id)]: value
+    }));
+  }
+  function getDraftCategory(article) {
+    const key = String(article.id);
+    return draftCategoriesById[key] ?? normalizeCategory(article.category);
+  }
+  function hasPendingCategoryChange(article) {
+    return normalizeCategory(getDraftCategory(article)) !== normalizeCategory(article.category);
+  }
+  function resetArticleCategory(article) {
+    setDraftCategoriesById((current) => ({
+      ...current,
+      [String(article.id)]: normalizeCategory(article.category)
+    }));
+  }
+  async function saveArticleCategory(article) {
+    const nextCategory = normalizeCategory(getDraftCategory(article));
+    setSavingId(article.id);
+    try {
+      const response = await updateArticleCategory(article.id, nextCategory || null);
+      const updatedArticle = response.article;
+      setData((current) => ({
+        ...current,
+        articles: current.articles.map((item) => item.id === updatedArticle.id ? updatedArticle : item)
+      }));
+      setDraftCategoriesById((current) => ({
+        ...current,
+        [String(updatedArticle.id)]: normalizeCategory(updatedArticle.category)
+      }));
+      pushToast("\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F \u0441\u0442\u0430\u0442\u044C\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430", "success");
+    } catch (errorValue) {
+      pushToast(errorValue instanceof Error ? errorValue.message : "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E \u0441\u0442\u0430\u0442\u044C\u0438", "error");
+    } finally {
+      setSavingId(null);
+    }
   }
   async function removeArticle(id) {
     setDeletingId(id);
@@ -18327,11 +18425,21 @@ function useArticlesPage() {
     error,
     deletingId,
     deletingAll,
+    savingId,
     actions: {
-      setDraft,
-      submitSearch,
+      setDraftSearch,
+      setDraftSource,
+      setDraftCategory,
+      submitFilters,
+      resetFilters,
       setPage,
       setLimit,
+      toggleEditMode,
+      setArticleCategory,
+      getDraftCategory,
+      hasPendingCategoryChange,
+      resetArticleCategory,
+      saveArticleCategory,
       removeArticle,
       removeAllArticles
     }
@@ -18340,17 +18448,30 @@ function useArticlesPage() {
 
 // frontend/src/pages/articles/ui/ArticlesPage.tsx
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+function getUniqueValues(values) {
+  return [...new Set(values.map((value) => value?.trim()).filter((value) => Boolean(value)))].sort(
+    (left, right) => left.localeCompare(right, "ru-RU")
+  );
+}
 function ArticlesPage() {
   const auth = useAuth();
+  const canEditArticles = auth.hasPermission("articles.manage");
   const canDeleteArticles = auth.hasPermission("articles.delete");
-  const { view, data: data2, loading, error, deletingId, deletingAll, actions } = useArticlesPage();
+  const canUseEditMode = canEditArticles || canDeleteArticles;
+  const { view, data: data2, loading, error, deletingId, deletingAll, savingId, actions } = useArticlesPage();
+  const sourceOptions = getUniqueValues(data2.articles.map((article) => article.source));
+  const categoryOptions = getUniqueValues(data2.articles.map((article) => article.category));
   return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "page-header", children: [
       /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
         /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h1", { className: "page-title", children: "\u0421\u0442\u0430\u0442\u044C\u0438" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "page-subtitle", children: "\u0421\u043F\u0430\u0440\u0448\u0435\u043D\u043D\u044B\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u0438\u0437 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u043D\u044B\u0445 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u043E\u0432" })
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "page-subtitle", children: "\u0421\u043F\u0430\u0440\u0448\u0435\u043D\u043D\u044B\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u0438\u0437 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u043D\u044B\u0445 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u043E\u0432" }),
+        view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "auth-card-note article-editor-note", children: "\u0420\u0435\u0436\u0438\u043C \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0432\u043A\u043B\u044E\u0447\u0451\u043D: \u043C\u043E\u0436\u043D\u043E \u043C\u0435\u043D\u044F\u0442\u044C \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E \u0438 \u0443\u0434\u0430\u043B\u044F\u0442\u044C \u0441\u0442\u0430\u0442\u044C\u0438." }) : null
       ] }),
-      canDeleteArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAllArticles, disabled: deletingAll, children: deletingAll ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u0435 \u0441\u0442\u0430\u0442\u044C\u0438" }) : null
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "btn-group", children: [
+        canUseEditMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: `btn ${view.editMode ? "btn-primary" : "btn-secondary"} btn-sm`, onClick: actions.toggleEditMode, children: view.editMode ? "\u0413\u043E\u0442\u043E\u0432\u043E" : "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C" }) : null,
+        canDeleteArticles && view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-danger btn-sm", onClick: actions.removeAllArticles, disabled: deletingAll, children: deletingAll ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0441\u0435 \u0441\u0442\u0430\u0442\u044C\u0438" }) : null
+      ] })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
       "form",
@@ -18358,63 +18479,121 @@ function ArticlesPage() {
         className: "search-bar",
         onSubmit: (event) => {
           event.preventDefault();
-          actions.submitSearch();
+          actions.submitFilters();
         },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
             "input",
             {
-              className: "search-input search-bar-grow",
+              className: "search-input article-filter-input article-filter-input-wide",
               type: "text",
-              placeholder: "\u041F\u043E\u0438\u0441\u043A \u043F\u043E \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0443, \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0443, \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438...",
-              value: view.draft,
-              onChange: (event) => actions.setDraft(event.target.value)
+              placeholder: "\u041F\u043E\u0438\u0441\u043A \u043F\u043E \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044E, \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044E, \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0443...",
+              value: view.draftSearch,
+              onChange: (event) => actions.setDraftSearch(event.target.value)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", className: "btn btn-primary", children: "\u041D\u0430\u0439\u0442\u0438" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            "input",
+            {
+              className: "search-input article-filter-input",
+              type: "text",
+              placeholder: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A",
+              list: "article-source-options",
+              value: view.draftSource,
+              onChange: (event) => actions.setDraftSource(event.target.value)
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            "input",
+            {
+              className: "search-input article-filter-input",
+              type: "text",
+              placeholder: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F",
+              list: "article-category-options",
+              value: view.draftCategory,
+              onChange: (event) => actions.setDraftCategory(event.target.value)
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", className: "btn btn-primary", children: "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-secondary", onClick: actions.resetFilters, children: "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C" }),
           /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(PageSizeSelect, { id: "articles-page-size", value: view.limit, onChange: actions.setLimit })
         ]
       }
     ),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("datalist", { id: "article-source-options", children: sourceOptions.map((source) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: source }, source)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("datalist", { id: "article-category-options", children: categoryOptions.map((category) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("option", { value: category }, category)) }),
     loading ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(LoadingState, {}) : error ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ErrorCard, { message: error }) : data2.articles.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       EmptyState,
       {
         title: "\u0421\u0442\u0430\u0442\u044C\u0438 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B",
-        subtitle: view.query ? "\u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u043E\u0438\u0441\u043A\u043E\u0432\u044B\u0439 \u0437\u0430\u043F\u0440\u043E\u0441" : "\u0417\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0435 \u0441\u0431\u043E\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441 \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B"
+        subtitle: view.search || view.source || view.category ? "\u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043E\u0441\u043B\u0430\u0431\u0438\u0442\u044C \u0444\u0438\u043B\u044C\u0442\u0440\u044B \u0438\u043B\u0438 \u0441\u0431\u0440\u043E\u0441\u0438\u0442\u044C \u043F\u043E\u0438\u0441\u043A" : "\u0417\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0435 \u0441\u0431\u043E\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441 \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B"
       }
     ) : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "table-wrap", children: [
       /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("table", { children: [
         /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { style: { width: "50px" }, children: "#" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435" }),
           /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A" }),
           /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F" }),
           /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u041E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { children: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { style: { width: "50px" } })
+          view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { className: "table-actions-head", children: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F" }) : null
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("tbody", { children: data2.articles.map((article) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim cell-mono", children: article.id }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("td", { className: "cell-title", children: [
-            article.source_url ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: article.source_url, target: "_blank", rel: "noreferrer", children: article.title }) : article.title,
-            article.summary ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cell-summary", children: article.summary }) : null
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "badge badge-info", children: article.source }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim", children: article.category || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim", style: { whiteSpace: "nowrap" }, children: formatDate(article.published_at) }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim", style: { whiteSpace: "nowrap" }, children: formatDateTime(article.created_at) }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { children: canDeleteArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-            "button",
-            {
-              type: "button",
-              className: "btn-icon",
-              title: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C",
-              onClick: () => actions.removeArticle(article.id),
-              disabled: deletingId === article.id,
-              children: "\xD7"
-            }
-          ) : null })
-        ] }, article.id)) })
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("tbody", { children: data2.articles.map((article) => {
+          const draftCategory = actions.getDraftCategory(article);
+          const categoryChanged = actions.hasPendingCategoryChange(article);
+          return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("tr", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("td", { className: "cell-title", children: [
+              article.source_url ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: article.source_url, target: "_blank", rel: "noreferrer", children: article.title }) : article.title,
+              article.summary ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cell-summary", children: article.summary }) : null
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "badge badge-info", children: article.source }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim", children: view.editMode && canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "article-category-editor", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              "input",
+              {
+                type: "text",
+                className: "search-input article-category-input",
+                list: "article-category-options",
+                value: draftCategory,
+                onChange: (event) => actions.setArticleCategory(article.id, event.target.value),
+                placeholder: "\u0411\u0435\u0437 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438"
+              }
+            ) }) : article.category || "\u2014" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "cell-dim article-published-cell", children: formatDate(article.published_at) }),
+            view.editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { className: "table-actions-cell", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "article-row-actions", children: [
+              canEditArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                  "button",
+                  {
+                    type: "button",
+                    className: "btn btn-primary btn-sm",
+                    onClick: () => void actions.saveArticleCategory(article),
+                    disabled: !categoryChanged || savingId === article.id,
+                    children: savingId === article.id ? "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435\u2026" : "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                  "button",
+                  {
+                    type: "button",
+                    className: "btn btn-secondary btn-sm",
+                    onClick: () => actions.resetArticleCategory(article),
+                    disabled: !categoryChanged || savingId === article.id,
+                    children: "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C"
+                  }
+                )
+              ] }) : null,
+              canDeleteArticles ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                "button",
+                {
+                  type: "button",
+                  className: "btn btn-danger btn-sm",
+                  onClick: () => void actions.removeArticle(article.id),
+                  disabled: deletingId === article.id,
+                  children: deletingId === article.id ? "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435\u2026" : "\u0423\u0434\u0430\u043B\u0438\u0442\u044C"
+                }
+              ) : null
+            ] }) }) : null
+          ] }, article.id);
+        }) })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Pagination, { page: data2.page, limit: data2.limit, total: data2.total, onPageChange: actions.setPage })
     ] })

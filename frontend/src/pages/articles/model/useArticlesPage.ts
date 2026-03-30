@@ -1,22 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useToast } from '../../../app/providers/ToastProvider';
-import { deleteAllArticles, deleteArticle, fetchArticles } from '../../../entities/article/api/articlesApi';
-import type { ArticlesResponse } from '../../../entities/article/model/types';
+import {
+  deleteAllArticles,
+  deleteArticle,
+  fetchArticles,
+  updateArticleCategory,
+} from '../../../entities/article/api/articlesApi';
+import type { Article, ArticlesResponse } from '../../../entities/article/model/types';
 import { confirmAction } from '../../../shared/lib/browser/dialogs';
 import { getTotalPages } from '../../../shared/lib/pagination/getPaginationPages';
 
 interface ArticlesViewState {
   page: number;
   limit: number;
-  query: string;
-  draft: string;
+  search: string;
+  source: string;
+  category: string;
+  draftSearch: string;
+  draftSource: string;
+  draftCategory: string;
+  editMode: boolean;
 }
 
 const INITIAL_VIEW_STATE: ArticlesViewState = {
   page: 1,
   limit: 20,
-  query: '',
-  draft: '',
+  search: '',
+  source: '',
+  category: '',
+  draftSearch: '',
+  draftSource: '',
+  draftCategory: '',
+  editMode: false,
 };
 
 const INITIAL_DATA: ArticlesResponse = {
@@ -25,6 +40,14 @@ const INITIAL_DATA: ArticlesResponse = {
   limit: 20,
   articles: [],
 };
+
+function normalizeCategory(value: string | null | undefined): string {
+  return value?.trim() ?? '';
+}
+
+function buildCategoryDrafts(articles: Article[]): Record<string, string> {
+  return Object.fromEntries(articles.map((article) => [String(article.id), normalizeCategory(article.category)]));
+}
 
 export function useArticlesPage() {
   const { pushToast } = useToast();
@@ -35,6 +58,8 @@ export function useArticlesPage() {
   const [reloadKey, setReloadKey] = useState(0);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [deletingAll, setDeletingAll] = useState(false);
+  const [savingId, setSavingId] = useState<number | null>(null);
+  const [draftCategoriesById, setDraftCategoriesById] = useState<Record<string, string>>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -43,7 +68,13 @@ export function useArticlesPage() {
       setLoading(true);
 
       try {
-        const response = await fetchArticles(view.page, view.limit, view.query);
+        const response = await fetchArticles({
+          page: view.page,
+          limit: view.limit,
+          search: view.search,
+          source: view.source,
+          category: view.category,
+        });
         if (cancelled) return;
 
         const totalPages = getTotalPages(response.total, response.limit);
@@ -53,6 +84,7 @@ export function useArticlesPage() {
         }
 
         setData(response);
+        setDraftCategoriesById(buildCategoryDrafts(response.articles));
         setError('');
       } catch (loadError) {
         if (cancelled) return;
@@ -69,17 +101,40 @@ export function useArticlesPage() {
     return () => {
       cancelled = true;
     };
-  }, [reloadKey, view.limit, view.page, view.query]);
+  }, [reloadKey, view.limit, view.page, view.search, view.source, view.category]);
 
-  function setDraft(value: string) {
-    setView((current) => ({ ...current, draft: value }));
+  function setDraftSearch(value: string) {
+    setView((current) => ({ ...current, draftSearch: value }));
   }
 
-  function submitSearch() {
+  function setDraftSource(value: string) {
+    setView((current) => ({ ...current, draftSource: value }));
+  }
+
+  function setDraftCategory(value: string) {
+    setView((current) => ({ ...current, draftCategory: value }));
+  }
+
+  function submitFilters() {
     setView((current) => ({
       ...current,
-      query: current.draft.trim(),
+      search: current.draftSearch.trim(),
+      source: current.draftSource.trim(),
+      category: current.draftCategory.trim(),
       page: 1,
+    }));
+  }
+
+  function resetFilters() {
+    setView((current) => ({
+      ...current,
+      page: 1,
+      search: '',
+      source: '',
+      category: '',
+      draftSearch: '',
+      draftSource: '',
+      draftCategory: '',
     }));
   }
 
@@ -89,6 +144,61 @@ export function useArticlesPage() {
 
   function setLimit(limit: number) {
     setView((current) => ({ ...current, limit, page: 1 }));
+  }
+
+  function toggleEditMode() {
+    setView((current) => ({ ...current, editMode: !current.editMode }));
+
+    if (view.editMode) {
+      setDraftCategoriesById(buildCategoryDrafts(data.articles));
+    }
+  }
+
+  function setArticleCategory(id: number, value: string) {
+    setDraftCategoriesById((current) => ({
+      ...current,
+      [String(id)]: value,
+    }));
+  }
+
+  function getDraftCategory(article: Article): string {
+    const key = String(article.id);
+    return draftCategoriesById[key] ?? normalizeCategory(article.category);
+  }
+
+  function hasPendingCategoryChange(article: Article): boolean {
+    return normalizeCategory(getDraftCategory(article)) !== normalizeCategory(article.category);
+  }
+
+  function resetArticleCategory(article: Article) {
+    setDraftCategoriesById((current) => ({
+      ...current,
+      [String(article.id)]: normalizeCategory(article.category),
+    }));
+  }
+
+  async function saveArticleCategory(article: Article) {
+    const nextCategory = normalizeCategory(getDraftCategory(article));
+    setSavingId(article.id);
+
+    try {
+      const response = await updateArticleCategory(article.id, nextCategory || null);
+      const updatedArticle = response.article;
+
+      setData((current) => ({
+        ...current,
+        articles: current.articles.map((item) => (item.id === updatedArticle.id ? updatedArticle : item)),
+      }));
+      setDraftCategoriesById((current) => ({
+        ...current,
+        [String(updatedArticle.id)]: normalizeCategory(updatedArticle.category),
+      }));
+      pushToast('Категория статьи обновлена', 'success');
+    } catch (errorValue) {
+      pushToast(errorValue instanceof Error ? errorValue.message : 'Не удалось обновить категорию статьи', 'error');
+    } finally {
+      setSavingId(null);
+    }
   }
 
   async function removeArticle(id: number) {
@@ -129,11 +239,21 @@ export function useArticlesPage() {
     error,
     deletingId,
     deletingAll,
+    savingId,
     actions: {
-      setDraft,
-      submitSearch,
+      setDraftSearch,
+      setDraftSource,
+      setDraftCategory,
+      submitFilters,
+      resetFilters,
       setPage,
       setLimit,
+      toggleEditMode,
+      setArticleCategory,
+      getDraftCategory,
+      hasPendingCategoryChange,
+      resetArticleCategory,
+      saveArticleCategory,
       removeArticle,
       removeAllArticles,
     },

@@ -34,6 +34,23 @@ function paginationParams(query: Record<string, unknown>) {
   return { page, limit, offset: (page - 1) * limit, search };
 }
 
+function optionalTextParam(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function normalizeNullableText(value: unknown): string | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+}
+
 /** Escape LIKE/ILIKE wildcard characters so user input is treated literally. */
 function escapeLike(s: string): string {
   return s.replace(/[%_\\]/g, '\\$&');
@@ -389,6 +406,8 @@ router.patch('/settings/ria', requirePermissions('settings.manage'), asyncHandle
 
 router.get('/articles', requirePermissions('articles.view'), asyncHandler(async (req, res) => {
   const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);
+  const source = optionalTextParam(req.query.source);
+  const category = optionalTextParam(req.query.category);
   const db = getDb();
 
   let base = db('news_articles');
@@ -396,15 +415,26 @@ router.get('/articles', requirePermissions('articles.view'), asyncHandler(async 
     const escaped = escapeLike(search);
     base = base.where(function () {
       this.whereILike('title', `%${escaped}%`)
+        .orWhereILike('summary', `%${escaped}%`)
         .orWhereILike('source', `%${escaped}%`)
         .orWhereILike('category', `%${escaped}%`);
     });
   }
 
+  if (source) {
+    const escapedSource = escapeLike(source);
+    base = base.whereILike('source', `%${escapedSource}%`);
+  }
+
+  if (category) {
+    const escapedCategory = escapeLike(category);
+    base = base.whereILike('category', `%${escapedCategory}%`);
+  }
+
   const [{ count }] = await base.clone().count('* as count');
   const rows = await base.clone()
     .select('id', 'title', 'summary', 'source', 'source_url', 'category', 'published_at', 'created_at')
-    .orderBy('id', 'desc')
+    .orderBy([{ column: 'published_at', order: 'desc', nulls: 'last' }, { column: 'id', order: 'desc' }])
     .limit(limit)
     .offset(offset);
 
@@ -412,6 +442,44 @@ router.get('/articles', requirePermissions('articles.view'), asyncHandler(async 
 }));
 
 /* ───── companies: EdTech (edtechs.ru) ───── */
+
+router.patch('/articles/:id', requirePermissions('articles.manage'), asyncHandler(async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+
+  if (Number.isNaN(id)) {
+    res.status(400).json({ error: 'Invalid id' });
+    return;
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(req.body ?? {}, 'category')) {
+    res.status(400).json({ error: 'category is required' });
+    return;
+  }
+
+  if (req.body?.category !== null && req.body?.category !== undefined && typeof req.body.category !== 'string') {
+    res.status(400).json({ error: 'category must be a string or null' });
+    return;
+  }
+
+  const categoryValue = normalizeNullableText(req.body?.category);
+
+  if (categoryValue && categoryValue.length > 120) {
+    res.status(400).json({ error: 'category is too long (max 120 chars)' });
+    return;
+  }
+
+  const [article] = await getDb()('news_articles')
+    .where({ id })
+    .update({ category: categoryValue })
+    .returning(['id', 'title', 'summary', 'source', 'source_url', 'category', 'published_at', 'created_at']);
+
+  if (!article) {
+    res.status(404).json({ error: 'Article not found' });
+    return;
+  }
+
+  res.json({ ok: true, article });
+}));
 
 router.get('/companies/edtech', requirePermissions('companies.view'), asyncHandler(async (req, res) => {
   const { page, limit, offset, search } = paginationParams(req.query as Record<string, unknown>);

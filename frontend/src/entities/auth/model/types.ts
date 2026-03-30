@@ -6,6 +6,7 @@ export type AppRole = (typeof APP_ROLES)[number];
 export const APP_PERMISSIONS = [
   'dashboard.view',
   'articles.view',
+  'articles.manage',
   'articles.delete',
   'companies.view',
   'companies.delete',
